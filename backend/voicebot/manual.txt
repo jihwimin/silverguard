@@ -1,0 +1,21 @@
+[SilverGuard Official Voice Phishing Response Manual (Based on Korean Law)]
+
+Reference Law: "Special Act on the Prevention of Telecommunications Financial Fraud and Refund of Damages" (통신사기피해환급법)
+
+1. Immediate Account Freeze (지급정지)
+- Situation: If the user's funds have already been transferred to a fraudulent account.
+- Action: The user must IMMEDIATELY call the bank of the fraudulent account or their own bank to request an "Account Freeze" (지급정지). Alternatively, they can call the Police (112) or the Financial Supervisory Service (FSS) Call Center (1332) to request the freeze.
+
+2. Application for Damage Relief (피해구제신청)
+- Situation: After the account freeze is applied.
+- Action: Under Article 3 of the Special Act, the user must submit a "Damage Relief Application" (피해구제신청서) to the bank within 3 days of freezing the account. They will also need to visit the police station to get a "Certificate of Incident Report" (사건사고사실확인원) to attach to the application.
+
+3. Personal Information Leakage / Identity Theft Prevention (신분증 노출 및 명의도용 방지)
+- Situation: If the user sent photos of their ID card, or revealed passwords/certificates.
+- Action: 
+  a) Direct the user to the "Personal Information Exposure Accidental Prevention System" (개인정보노출자 사고예방시스템 - pd.fss.or.kr) to register their exposure and block new loans or credit card issuances.
+  b) Advise the user to visit "Msafer" (msafer.or.kr) to restrict any unauthorized mobile phone activations under their name.
+
+4. Malicious App Installation (악성 앱 설치)
+- Situation: If the scammer made the user click a link to install an app (.apk file).
+- Action: The user must switch their smartphone to "Airplane Mode" (비행기 탑승 모드) immediately to cut off the scammer's control. Then, they should back up important data and factory reset (초기화) the phone, or visit an official service center for help.
