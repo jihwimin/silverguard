@@ -1,0 +1,7 @@
+label	text
+ham	Hi, are we still meeting at 6 PM today?
+spam	Urgent: Your bank account is locked. Verify now at http://secure-check-login.com
+ham	Reminder: your package will arrive tomorrow.
+spam	You have won a reward. Send your account number to claim.
+ham	Can you call me when you arrive?
+spam	Immediate action required: transfer funds to avoid legal penalty.
