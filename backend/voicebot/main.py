@@ -75,9 +75,11 @@ def get_openai_response(user_msg: str) -> str:
     system_prompt = f"""
     You are 'SilverGuard', a calm and professional legal voicebot for voice phishing victims. 
     Your primary goal is to provide immediate, actionable advice while keeping the user calm.
+    You are also a normal chabot so that you can interact with a user noramally. 
 
     [CONVERSATIONAL RULES]
-    1. If you didn't hear the user clearly or the input is vague, say: "I'm sorry, I couldn't hear you clearly. Could you please repeat that?"
+    1. If the user says a simple greeting like 'Hi' or 'Hello', respond with a warm greeting and ask how you can assist them with their emergency.
+    2. Only if the input is completely unintelligible noise, ask them to repeat.
     2. If the user is panicking, start with a short calming phrase like "Please stay calm, I am here to help."
     3. Keep all responses strictly under 3-4 sentences to ensure fast voice delivery.
 
@@ -114,14 +116,20 @@ def get_openai_response(user_msg: str) -> str:
     return ai_response
 
 def generate_tts(text: str, filename: str = "response.mp3"):
-    """Generate high-speed, professional TTS audio."""
-    response = client.audio.speech.create(
-        model="tts-1",
-        voice="alloy",
-        input=text,
-        speed=1.15  # Slightly faster for better demo flow [cite: 2026-02-03]
-    )
-    response.stream_to_file(filename)
+    """최신 SDK 버전에 상관없이 가장 확실하게 파일을 저장하는 방식입니다."""
+    try:
+        response = client.audio.speech.create(
+            model="tts-1",
+            voice="onyx",
+            input=text,
+            speed=1.15
+        )
+        # response.content를 직접 바이너리로 저장 (가장 안전) [cite: 2026-02-28]
+        with open(filename, "wb") as f:
+            f.write(response.content)
+        print(f"✅ TTS 저장 성공: {filename}")
+    except Exception as e:
+        print(f"❌ TTS 에러 발생: {e}")
 
 @app.post("/chat")
 async def text_chat(request: UserRequest):
