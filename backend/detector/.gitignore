@@ -1,0 +1,20 @@
+# Secrets
+.env
+**/.env
+
+# Kaggle (if you ever use kaggle.json)
+kaggle.json
+**/kaggle.json
+.kaggle/
+**/.kaggle/
+
+# Detector artifacts
+silverguard/backend/detector/data/
+silverguard/backend/detector/models/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+venv/
