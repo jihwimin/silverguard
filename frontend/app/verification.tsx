@@ -45,7 +45,7 @@ export default function VerificationScreen() {
   const formatTime = (seconds: number): string => {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
-    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')} 남음`;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')} left`;
   };
 
   const formatPhone = (value: string): string => {
@@ -65,7 +65,7 @@ export default function VerificationScreen() {
   const handleSendOtp = useCallback(() => {
     const digits = phoneNumber.replace(/\D/g, '');
     if (digits.length < 10) {
-      setError('올바른 휴대폰 번호를 입력해 주세요.');
+      setError('Please enter a valid phone number.');
       return;
     }
     setError('');
@@ -93,7 +93,7 @@ export default function VerificationScreen() {
   const handleVerify = useCallback(async () => {
     const code = otp.join('');
     if (code.length < 6) {
-      setError('6자리 인증번호를 모두 입력해 주세요.');
+      setError('Please enter all 6 digits of the verification code.');
       return;
     }
     setStep('success');
@@ -126,9 +126,9 @@ export default function VerificationScreen() {
           <View style={styles.successIcon}>
             <CheckCircle size={56} color={Colors.primary} strokeWidth={1.8} />
           </View>
-          <Text style={styles.successTitle}>확인 완료</Text>
+          <Text style={styles.successTitle}>Verification complete</Text>
           <Text style={styles.successSubtitle}>
-            SilverGuard 보호가 활성화되었습니다.
+            SilverGuard protection is now active.
           </Text>
         </Animated.View>
       </View>
@@ -150,16 +150,16 @@ export default function VerificationScreen() {
           <View style={styles.headerIcon}>
             <Phone size={28} color={Colors.primary} strokeWidth={2} />
           </View>
-          <Text style={styles.headerTitle}>보호 활성화를 위한{'\n'}1회 본인 확인</Text>
+          <Text style={styles.headerTitle}>One-time verification{'\n'}to activate protection</Text>
           <Text style={styles.headerSubtitle}>
-            보호자 연동 알림과 기기 변경 시{'\n'}보호 상태 유지를 위해 필요합니다.
+            Required for guardian alerts and to keep protection active when you change devices.
           </Text>
         </View>
 
         {step === 'phone' && (
           <View style={styles.formSection}>
             <View style={styles.inputCard}>
-              <Text style={styles.inputLabel}>휴대폰 번호</Text>
+              <Text style={styles.inputLabel}>Phone number</Text>
               <TextInput
                 style={styles.phoneInput}
                 placeholder="010-1234-5678"
@@ -181,12 +181,12 @@ export default function VerificationScreen() {
               activeOpacity={0.85}
               testID="send-otp-button"
             >
-              <Text style={styles.primaryButtonText}>인증 문자 받기</Text>
+              <Text style={styles.primaryButtonText}>Send verification code</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.infoLink}>
               <Info size={16} color={Colors.textTertiary} strokeWidth={2} />
-              <Text style={styles.infoLinkText}>왜 필요한가요?</Text>
+              <Text style={styles.infoLinkText}>Why is this needed?</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -194,7 +194,7 @@ export default function VerificationScreen() {
         {step === 'otp' && (
           <View style={styles.formSection}>
             <Text style={styles.otpInstruction}>
-              {phoneNumber}으로 전송된{'\n'}6자리 인증번호를 입력하세요.
+              Enter the 6-digit code sent to{'\n'}{phoneNumber}.
             </Text>
 
             <View style={styles.otpRow}>
@@ -228,11 +228,11 @@ export default function VerificationScreen() {
               activeOpacity={0.85}
               testID="verify-button"
             >
-              <Text style={styles.primaryButtonText}>확인</Text>
+              <Text style={styles.primaryButtonText}>Verify</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handleResend} style={styles.resendLink}>
-              <Text style={styles.resendText}>문자 다시 받기</Text>
+              <Text style={styles.resendText}>Resend code</Text>
             </TouchableOpacity>
           </View>
         )}

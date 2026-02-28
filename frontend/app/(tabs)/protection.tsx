@@ -55,9 +55,9 @@ export default function ProtectionScreen() {
 
   // 🌟 94번줄 근처 에러 방지를 위한 상태 렌더링 함수 [cite: 2026-02-28]
   const getStatusInfo = () => {
-    if (riskLevel >= 80) return { title: '위험 발생', color: Colors.danger, icon: <ShieldAlert size={20} color={Colors.white} /> };
-    if (riskLevel >= 50) return { title: '주의 요망', color: Colors.caution, icon: <AlertTriangle size={20} color={Colors.white} /> };
-    return { title: '안전함', color: Colors.primary, icon: <ShieldCheck size={20} color={Colors.white} /> };
+    if (riskLevel >= 80) return { title: 'Risk detected', color: Colors.danger, icon: <ShieldAlert size={20} color={Colors.white} /> };
+    if (riskLevel >= 50) return { title: 'Caution', color: Colors.caution, icon: <AlertTriangle size={20} color={Colors.white} /> };
+    return { title: 'Safe', color: Colors.primary, icon: <ShieldCheck size={20} color={Colors.white} /> };
   };
 
   const status = getStatusInfo();
@@ -69,7 +69,7 @@ export default function ProtectionScreen() {
         contentContainerStyle={{ paddingTop: insets.top + 16, paddingBottom: insets.bottom + 100 }}
       >
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>실시간 보호</Text>
+          <Text style={styles.headerTitle}>Live protection</Text>
           <View style={styles.liveBadge}>
             <Activity size={14} color={Colors.primary} />
             <Text style={styles.liveText}>LIVE</Text>
@@ -86,7 +86,7 @@ export default function ProtectionScreen() {
             {status.icon}
           </View>
           <View style={styles.statusInfo}>
-            <Text style={styles.statusLabel}>현재 기기 상태</Text>
+            <Text style={styles.statusLabel}>Current device status</Text>
             <Text style={[styles.statusTitle, { color: status.color }]}>{status.title}</Text>
           </View>
           <TouchableOpacity 
@@ -94,7 +94,7 @@ export default function ProtectionScreen() {
             onPress={startScan}
             disabled={isScanning}
           >
-            <Text style={styles.scanButtonText}>{isScanning ? '검사 중...' : '정밀 검사'}</Text>
+            <Text style={styles.scanButtonText}>{isScanning ? 'Scanning...' : 'Run scan'}</Text>
           </TouchableOpacity>
         </View>
 
@@ -106,14 +106,14 @@ export default function ProtectionScreen() {
             <View style={[styles.actionIcon, { backgroundColor: Colors.primaryLight }]}>
               <MessageCircle size={24} color={Colors.primary} />
             </View>
-            <Text style={styles.actionText}>신고 도우미</Text>
+            <Text style={styles.actionText}>Report assistant</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.actionItem}>
             <View style={[styles.actionIcon, { backgroundColor: Colors.dangerBg }]}>
               <Phone size={24} color={Colors.danger} />
             </View>
-            <Text style={styles.actionText}>차단 목록</Text>
+            <Text style={styles.actionText}>Block list</Text>
           </TouchableOpacity>
         </View>
 
@@ -123,7 +123,7 @@ export default function ProtectionScreen() {
         >
           <View style={styles.warningLeft}>
             <AlertTriangle size={20} color={Colors.caution} />
-            <Text style={styles.warningText}>최근 의심스러운 활동 1건 감지</Text>
+            <Text style={styles.warningText}>1 suspicious activity detected recently</Text>
           </View>
           <ChevronRight size={18} color={Colors.textTertiary} />
         </TouchableOpacity>
@@ -139,9 +139,9 @@ export default function ProtectionScreen() {
             <View style={styles.warningIconBg}>
               <ShieldAlert size={40} color={Colors.danger} />
             </View>
-            <Text style={styles.warningTitle}>피싱 의심 알림</Text>
+            <Text style={styles.warningTitle}>Possible phishing alert</Text>
             <Text style={styles.warningBody}>
-              알 수 없는 번호로부터 소액 결제 문자가 수신되었습니다. 첨부된 링크를 절대 클릭하지 마세요.
+              A text about a small payment was received from an unknown number. Do not click any link in it.
             </Text>
             <TouchableOpacity 
               style={styles.dangerButton}
@@ -150,7 +150,7 @@ export default function ProtectionScreen() {
                 router.push('/reporting-chatbot');
               }}
             >
-              <Text style={styles.dangerButtonText}>신고 도우미 상담하기</Text>
+              <Text style={styles.dangerButtonText}>Talk to report assistant</Text>
             </TouchableOpacity>
           </View>
         </View>

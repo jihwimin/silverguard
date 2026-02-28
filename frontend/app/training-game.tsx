@@ -14,9 +14,9 @@ import Colors from '@/constants/colors';
 type Difficulty = 'easy' | 'medium' | 'hard';
 
 const difficultyLabels: Record<Difficulty, string> = {
-  easy: '쉬움',
-  medium: '보통',
-  hard: '어려움',
+  easy: 'Easy',
+  medium: 'Medium',
+  hard: 'Hard',
 };
 
 export default function TrainingGameScreen() {
@@ -33,7 +33,7 @@ export default function TrainingGameScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: '피싱 대응 훈련',
+          title: 'Phishing response training',
           headerStyle: { backgroundColor: Colors.background },
           headerTintColor: Colors.text,
           headerShadowVisible: false,
@@ -46,14 +46,14 @@ export default function TrainingGameScreen() {
           <View style={styles.heroIcon}>
             <Gamepad2 size={48} color={Colors.primary} strokeWidth={1.5} />
           </View>
-          <Text style={styles.heroTitle}>피싱 대응 훈련</Text>
+          <Text style={styles.heroTitle}>Phishing response training</Text>
           <Text style={styles.heroSubtitle}>
-            실제 피싱 시나리오를 통해{'\n'}대응 능력을 키워보세요.
+            Build your response skills{'\n'}with realistic phishing scenarios.
           </Text>
         </View>
 
         <View style={styles.difficultySection}>
-          <Text style={styles.sectionLabel}>난이도 선택</Text>
+          <Text style={styles.sectionLabel}>Select difficulty</Text>
           <View style={styles.segmentControl}>
             {(Object.keys(difficultyLabels) as Difficulty[]).map((d) => (
               <TouchableOpacity
@@ -82,8 +82,8 @@ export default function TrainingGameScreen() {
           <View style={styles.infoCard}>
             <Shield size={20} color={Colors.primary} strokeWidth={2} />
             <View style={styles.infoCardText}>
-              <Text style={styles.infoTitle}>AI 시나리오 기반</Text>
-              <Text style={styles.infoSub}>실제 피싱 수법을 재현합니다</Text>
+              <Text style={styles.infoTitle}>AI scenario-based</Text>
+              <Text style={styles.infoSub}>Recreates real phishing tactics</Text>
             </View>
           </View>
         </View>
@@ -94,7 +94,7 @@ export default function TrainingGameScreen() {
           activeOpacity={0.85}
           testID="start-training"
         >
-          <Text style={styles.startButtonText}>훈련 시작</Text>
+          <Text style={styles.startButtonText}>Start training</Text>
           <ChevronRight size={22} color={Colors.white} strokeWidth={2.5} />
         </TouchableOpacity>
       </View>

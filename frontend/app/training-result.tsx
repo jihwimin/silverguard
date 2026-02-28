@@ -31,9 +31,9 @@ export default function TrainingResultScreen() {
 
   const getBadge = () => {
     const ratio = correctCount / Math.max(totalNum, 1);
-    if (ratio >= 0.8) return { label: '보안 전문가', color: Colors.primary };
-    if (ratio >= 0.5) return { label: '보안 수습생', color: Colors.caution };
-    return { label: '훈련 필요', color: Colors.danger };
+    if (ratio >= 0.8) return { label: 'Security expert', color: Colors.primary };
+    if (ratio >= 0.5) return { label: 'Security apprentice', color: Colors.caution };
+    return { label: 'Needs practice', color: Colors.danger };
   };
 
   const badge = getBadge();
@@ -50,7 +50,7 @@ export default function TrainingResultScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: '훈련 결과',
+          title: 'Training result',
           headerStyle: { backgroundColor: Colors.background },
           headerTintColor: Colors.text,
           headerShadowVisible: false,
@@ -69,7 +69,7 @@ export default function TrainingResultScreen() {
           </View>
           <Text style={[styles.badgeLabel, { color: badge.color }]}>{badge.label}</Text>
           <Text style={styles.scoreText}>
-            {correctCount}/{totalNum} 정답 · {scoreNum}점
+            {correctCount}/{totalNum} correct · {scoreNum} pts
           </Text>
         </Animated.View>
 
@@ -77,28 +77,28 @@ export default function TrainingResultScreen() {
           <View style={styles.feedbackCard}>
             <View style={styles.feedbackHeader}>
               <CheckCircle size={18} color={Colors.primary} strokeWidth={2} />
-              <Text style={styles.feedbackTitle}>잘한 점</Text>
+              <Text style={styles.feedbackTitle}>What you did well</Text>
             </View>
-            <Text style={styles.feedbackItem}>• 기관 사칭에 대한 올바른 대처 인식</Text>
-            <Text style={styles.feedbackItem}>• 대표번호 확인의 중요성 이해</Text>
+            <Text style={styles.feedbackItem}>• Correct response to agency impersonation</Text>
+            <Text style={styles.feedbackItem}>• Understanding the importance of verifying official numbers</Text>
           </View>
 
           <View style={styles.feedbackCard}>
             <View style={styles.feedbackHeader}>
               <AlertTriangle size={18} color={Colors.caution} strokeWidth={2} />
-              <Text style={styles.feedbackTitle}>위험했던 순간</Text>
+              <Text style={styles.feedbackTitle}>Risky moments</Text>
             </View>
-            <Text style={styles.feedbackItem}>• 긴급 상황 연출에 대한 판단력 강화 필요</Text>
-            <Text style={styles.feedbackItem}>• 문자 링크 클릭 위험성 재인식 필요</Text>
+            <Text style={styles.feedbackItem}>• Need to strengthen judgment in urgent-sounding situations</Text>
+            <Text style={styles.feedbackItem}>• Remember: clicking text links can be dangerous</Text>
           </View>
 
           <View style={styles.feedbackCard}>
             <View style={styles.feedbackHeader}>
               <CheckCircle size={18} color={Colors.safe} strokeWidth={2} />
-              <Text style={styles.feedbackTitle}>다음 대처 방법</Text>
+              <Text style={styles.feedbackTitle}>What to do next</Text>
             </View>
-            <Text style={styles.feedbackItem}>• 의심 전화 시 반드시 끊고 대표번호 확인</Text>
-            <Text style={styles.feedbackItem}>• 문자 링크는 절대 클릭하지 않기</Text>
+            <Text style={styles.feedbackItem}>• If a call seems suspicious, hang up and verify via official number</Text>
+            <Text style={styles.feedbackItem}>• Never click links in suspicious texts</Text>
           </View>
         </Animated.View>
 
@@ -108,12 +108,12 @@ export default function TrainingResultScreen() {
           activeOpacity={0.85}
         >
           <RefreshCw size={20} color={Colors.white} strokeWidth={2} />
-          <Text style={styles.primaryButtonText}>다시 훈련하기</Text>
+          <Text style={styles.primaryButtonText}>Practice again</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.secondaryButton} activeOpacity={0.75}>
           <Share2 size={18} color={Colors.primary} strokeWidth={2} />
-          <Text style={styles.secondaryButtonText}>가족에게 공유</Text>
+          <Text style={styles.secondaryButtonText}>Share with family</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>

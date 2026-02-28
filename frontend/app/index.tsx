@@ -72,7 +72,7 @@ export default function SplashScreen() {
         <Text style={styles.appName}>SilverGuard</Text>
       </Animated.View>
       <Animated.Text style={[styles.tagline, { opacity: taglineFade }]}>
-        실시간 보이스피싱 방어 솔루션
+        Real-time voice phishing defense
       </Animated.Text>
     </View>
   );

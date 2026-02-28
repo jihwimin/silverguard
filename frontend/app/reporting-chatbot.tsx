@@ -36,7 +36,7 @@ export default function ReportingChatbotScreen() {
   // 🤖 백엔드 통신 및 메시지 처리 함수 [cite: 2026-02-03, 2026-02-28]
   const handleChat = async (userText: string) => {
     // 1. 유저 메시지 화면에 표시
-    const userMsg: ChatMessage = { id: `user-${Date.now()}`, text: userText, isBot: false, timestamp: '지금' };
+    const userMsg: ChatMessage = { id: `user-${Date.now()}`, text: userText, isBot: false, timestamp: 'Now' };
     setMessages(prev => [...prev, userMsg]);
     setInputText('');
 
@@ -50,7 +50,7 @@ export default function ReportingChatbotScreen() {
       const data = await response.json();
 
       // 3. AI 답변 화면 표시 및 음성 재생 [cite: 2026-02-03, 2026-02-28]
-      const botMsg: ChatMessage = { id: `bot-${Date.now()}`, text: data.reply, isBot: true, timestamp: '지금' };
+      const botMsg: ChatMessage = { id: `bot-${Date.now()}`, text: data.reply, isBot: true, timestamp: 'Now' };
       setMessages(prev => [...prev, botMsg]);
       if (data.audio_url) playAudioResponse(data.audio_url);
     } catch (e) {
@@ -79,8 +79,8 @@ export default function ReportingChatbotScreen() {
           
           // 음성 인식 결과 및 AI 답변 표시 [cite: 2026-02-03, 2026-02-28]
           setMessages(prev => [...prev, 
-            { id: `user-${Date.now()}`, text: data.user_text, isBot: false, timestamp: '지금' },
-            { id: `bot-${Date.now()}`, text: data.reply, isBot: true, timestamp: '지금' }
+            { id: `user-${Date.now()}`, text: data.user_text, isBot: false, timestamp: 'Now' },
+            { id: `bot-${Date.now()}`, text: data.reply, isBot: true, timestamp: 'Now' }
           ]);
           if (data.audio_url) playAudioResponse(data.audio_url);
         }
@@ -121,7 +121,7 @@ export default function ReportingChatbotScreen() {
           </TouchableOpacity>
           <TextInput
             style={styles.textInput}
-            placeholder="상황을 입력하세요..."
+            placeholder="Describe your situation..."
             value={inputText}
             onChangeText={setInputText}
             onSubmitEditing={() => handleChat(inputText)}
