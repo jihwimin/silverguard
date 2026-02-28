@@ -1,0 +1,150 @@
+================================================================================
+SECTION 6: CREDIT CARD FRAUD (If Scammer Used Card or Opened New Card)
+================================================================================
+
+6.1 UNAUTHORIZED CREDIT CARD CHARGES
+──────────────────────────────────────
+
+Liability:
+  • Federal law (Fair Credit Billing Act - FCBA, 15 U.S.C. § 1666): You are liable 
+    for ONLY $50 maximum per card for unauthorized charges
+  • Visa/Mastercard rules: Often zero liability for cardholders
+  • In practice: Most issuers don't charge cardholders for fraudulent charges
+
+Reporting:
+  • Call credit card issuer IMMEDIATELY upon noticing unauthorized charge
+  • Provide card number, charge amount, date, merchant
+  • Request dispute/chargeback process
+  • Card issuer must investigate within 30-60 days
+  • Issuer must credit back disputed amount while investigating (provisional credit)
+
+FCBA Protection Timeline:
+  • Report within 60 days of billing statement date = Protected
+  • Report after 60 days = No protection (you liable for full amount)
+  • Use statement date, not transaction date (statements may arrive weeks late)
+
+Investigation Process:
+  • Issuer must send written acknowledgment within 30 days of receiving dispute
+  • Full investigation must complete within 2 billing cycles (typically 60 days)
+  • Issuer must credit provisional amount during investigation
+  • Final decision sent to you in writing
+
+6.2 FRAUDULENT ACCOUNT OPENING (Credit Fraud)
+───────────────────────────────────────────────
+
+If scammer opened NEW credit card/account in your name:
+
+Immediate Actions:
+1. Contact credit bureaus (Equifax, Experian, TransUnion)
+2. Place fraud alert or credit freeze on your file
+3. Request credit reports to identify unauthorized accounts
+4. Dispute fraudulent accounts with credit card issuer directly:
+   - Provide written statement that account is fraudulent
+   - Attach police report or IC3 report
+   - Credit card issuer must investigate (dispute process)
+5. Report to Federal Trade Commission identity theft division: 
+   www.identitytheft.gov (creates recovery plan)
+
+Issuer's Obligation:
+  • Must investigate fraudulent account claim
+  • Must close account if determined fraudulent
+  • Should not bill you for charges before fraud determination
+  • May require identity verification (police report, ID theft affidavit)
+
+Credit Bureau Reporting:
+  • Credit bureaus must report fraudulent account as "fraud" on your report
+  • Fraudulent account should NOT impact your credit score
+  • Fraudulent account should not appear when you apply for legitimate credit
+  • If it impacts your score, you have right to dispute
+
+6.3 CHARGEBACK PROCESS (How It Works)
+──────────────────────────────────────
+
+What is a Chargeback?
+  • Issuer disputes transaction with merchant's bank
+  • Merchant bank investigates and makes determination
+  • Provisional credit goes to cardholder immediately
+  • Takes 30-90 days typically
+
+Chargeback Reasons (for voice phishing):
+  • "Unauthorized use" - You did not authorize the charge
+  • "Fraudulent transaction" - Scammer made the charge
+  • "Services not rendered" - If scammer promised service/goods
+  • "Merchandise not received" - If scammer promised goods
+
+Merchant Response:
+  • Merchant has right to respond to chargeback dispute
+  • If merchant provides evidence of authorization, you could lose dispute
+  • Note: Falling for scam alone is not defense (but authorization IS)
+
+6.4 FRAUDULENT ACCOUNT OPENING - LEGAL RIGHTS
+───────────────────────────────────────────────
+
+Illinois Identity Theft Law:
+  • 815 ILCS 530: Illinois Identity Theft Statute
+  • Victims have civil right to sue for damages
+  • Attorney General can prosecute criminal identity theft
+  • Victims can demand identity theft affidavit from businesses
+
+Federal Identity Theft Law:
+  • 18 U.S.C. § 1028: Fraud and related activity with identification documents
+  • 15 U.S.C. § 1681c: Fraud alerts and security freezes
+  • FTC has authority to enforce ID theft rules
+
+Damages You Can Claim:
+  • Actual damages (unauthorized charges)
+  • Statutory damages (additional compensation)
+  • Reasonable costs (credit monitoring, etc.)
+  • Attorney fees (if you sue)
+
+Civil Lawsuit:
+  • Sue issuer if they negligently allowed fraud
+  • Sue identity thief if located/identified
+  • Illinois state court or federal court (depending on claim)
+  • Consult attorney for specific strategy
+
+6.5 CREDIT MONITORING AFTER CARD FRAUD
+────────────────────────────────────────
+
+Immediate (0-7 days):
+  • Change password on credit card account
+  • Enable alerts for new charges
+  • Contact card issuer about reissuing card
+  • Receive new card in 7-10 business days
+
+Short-term (1-30 days):
+  • Place fraud alert with credit bureaus (1 year)
+  • Review all open accounts for unauthorized activity
+  • Check credit reports for new accounts
+  • Dispute fraudulent accounts
+
+Medium-term (1-12 months):
+  • Consider credit freeze (more protective than alert)
+  • Monitor credit reports monthly
+  • Check bank statements weekly
+  • Watch for new account opening attempts
+  • Monitor tax return status (fraudsters may file false returns)
+
+Legal References:
+  - 15 U.S.C. § 1666 (Fair Credit Billing Act)
+  - 815 ILCS 530 (Illinois Identity Theft Act)
+  - 18 U.S.C. § 1028 (Federal ID Theft)
+
+================================================================================
+QUICK REFERENCE - CREDIT CARD PROTECTION
+================================================================================
+
+Unauthorized Charges:
+  • Your liability: $0-$50 maximum (usually $0)
+  • Report window: 60 days from statement date
+  • Bank must investigate: Within 60 days
+  • You get provisional credit: Immediately while investigating
+
+Fraudulent Account Opening:
+  • Not your liability (account opened without authorization)
+  • Place fraud alert: Immediately with one bureau
+  • Place credit freeze: Consider for maximum protection
+  • Monitor credit: Monthly for 12 months
+
+REMEMBER: Call card issuer immediately upon noticing fraudulent charge.
+Liability limits only apply if you report within 60 days.

@@ -1,0 +1,208 @@
+================================================================================
+SECTION 7: SPECIAL SITUATIONS
+================================================================================
+
+7.1 REAL ESTATE OR LARGE PURCHASE SCAMS
+─────────────────────────────────────────
+
+Scenario: Scammer impersonates real estate agent/attorney, requests wire for 
+closing costs.
+
+Red Flags:
+  • Agent/attorney asks you to wire money without meeting in person
+  • Email address slightly different from official firm email
+  • Phone number different from published office number
+  • Request to wire to new/unfamiliar bank account
+  • Urgency: "We need this by end of business today"
+  • Unusual: Attorney/agent usually handles closing account transfers
+
+Legal Framework:
+  • 18 U.S.C. § 1343: Wire Fraud (federal crime, up to 20 years)
+  • 18 U.S.C. § 1344: Bank Fraud (federal crime, up to 30 years)
+  • Common in Chicago/suburban real estate transactions (high-value targets)
+
+What To Do (If You Already Wired):
+  1. STOP - Verify independently through official channels
+     • Call real estate office directly using number on website (NOT from "agent")
+     • Call attorney's office directly using number from bar association/website
+     • Ask: "Did you request a wire for closing?"
+  2. Wire Fraud Report: Call FBI immediately
+     • FBI Chicago Field Office: (312) 421-6700
+     • File IC3 complaint: www.ic3.gov
+  3. Try to recall wire BEFORE it settles:
+     • Call bank IMMEDIATELY (real estate closings often occur same-day)
+     • Request wire reversal/recall
+     • May be possible if recipient bank hasn't settled
+     • Mention "FFKC activation" to bank
+  4. File police report and IC3 complaint
+  5. Contact title company/real estate office about fraud
+
+Likelihood of Recovery:
+  • 40-60% if caught within 24-48 hours
+  • Much lower after settlement (wire is nearly irreversible once settled)
+  • High-value wires have better recovery chances (higher priority)
+
+Prevention (For Future):
+  • NEVER wire closing costs based on email request
+  • Always call attorney/agent directly using published phone number
+  • Attend closing in person if possible
+  • Verify wire instructions in writing from official email
+  • Use attorney-held escrow accounts (standard practice)
+  • Ask title company to handle funds transfer (safer)
+
+7.2 GOVERNMENT/SOCIAL SECURITY IMPERSONATION
+───────────────────────────────────────────────
+
+Scenario: Scammer claims to be IRS, SSA, or law enforcement, threatening arrest 
+unless payment made.
+
+Legal Framework:
+  • 18 U.S.C. § 911: Impersonating government officer (federal crime)
+  • 18 U.S.C. § 1343: Wire fraud (if using phone/internet)
+  • 720 ILCS 5/17-36: Illinois impersonating peace officer statute
+  • Common in Chicago/Midwest (high-volume fraud)
+
+Red Flags (NEVER Real):
+  • Government agencies do NOT call threatening arrest
+  • IRS does NOT demand immediate wire transfer
+  • IRS does NOT accept iTunes cards or Google Play cards as payment
+  • Social Security does NOT threaten benefit cancellation via phone
+  • Police do NOT threaten arrest over phone for debt
+  • Government does NOT request personal info via phone
+  • Social Security does NOT ask for password/PIN
+  • Legitimate agencies send written notices FIRST
+
+What Government Really Does:
+  • IRS: Sends written notice via mail (certified if serious)
+  • SSA: Sends written notice; does NOT threaten benefits by phone
+  • Police: Arrest in person or send written summons
+  • Government: Never asks for immediate payment
+
+What To Do If Targeted:
+  1. Hang up immediately
+  2. Do NOT provide any information or make any transfer
+  3. Do NOT believe threat of arrest (scam tactic)
+  4. If transferred money: Follow standard recovery procedures (Sections 2-5)
+  5. Report to FBI, IC3, local police
+  6. Report to impersonated agency:
+     • IRS: treasury.gov/fraud
+     • Social Security: ssa.gov/fraud
+     • USCIS: dhs.gov/report
+     • FBI: www.ic3.gov
+
+7.3 TECH SUPPORT / RANSOMWARE SCAMS
+─────────────────────────────────────
+
+Scenario: Scammer claims to be Microsoft/Apple support, says your computer is 
+infected, demands payment for "removal."
+
+Red Flags:
+  • Unsolicited call claiming to be tech support
+  • Pop-up on computer saying "Your PC is infected"
+  • Microsoft/Apple would NOT call you (they don't initiate support calls)
+  • Request for remote access to your computer
+  • Demand for payment via gift cards/wire transfer
+  • Pressure: "Your data will be deleted if you don't act now"
+
+Prevention:
+  • Microsoft/Apple NEVER call unsolicited
+  • Pop-ups on computer are scams
+  • Never give remote access to unknown callers
+  • Legitimate support companies accept credit cards (not gift cards)
+
+If You Already Paid:
+  • Report to FBI IC3: www.ic3.gov
+  • Contact your bank for chargeback (if credit card)
+  • File local police report
+  • If gift card was purchased: Contact card issuer (may be recoverable)
+  • If remote access given: Run antivirus scan, change passwords
+
+7.4 LOTTERY/PRIZE WINNING SCAMS
+─────────────────────────────────
+
+Scenario: Scammer claims you won lottery/prize you didn't enter, demands upfront 
+payment or wire for taxes/fees.
+
+Red Flag:
+  • You didn't enter the contest
+  • Legitimate prizes NEVER require upfront payment
+  • You must wire money "for taxes" (scam indicator)
+  • Urgent pressure to claim prize
+
+Legal Reality:
+  • If you didn't enter = you didn't win
+  • Legitimate lotteries send official government notices
+  • Taxes are paid from prize (not by winner upfront)
+  • This is 100% scam with 0% real winnings
+
+If You Already Paid:
+  • Report to FBI IC3: www.ic3.gov
+  • Contact your bank for dispute/chargeback
+  • File local police report
+  • Unfortunately, recovery rate is very low
+
+================================================================================
+COMMON SCAM IMPERSONATIONS - QUICK REFERENCE
+================================================================================
+
+SCAM TYPE              RED FLAG                WHAT TO DO
+────────────────────────────────────────────────────────────────────────
+Real Estate Wire       Agent asks wire via     VERIFY via published phone
+                       email                   number. Don't wire based on email.
+
+IRS/Taxes             Threaten arrest        Hang up. IRS doesn't call.
+                      for unpaid taxes       They mail certified notice first.
+
+Social Security       Threaten benefit       Hang up. SSA doesn't threaten
+                      cancellation            by phone.
+
+Microsoft/Apple       Unsolicited call       Hang up. They don't cold-call.
+Tech Support          about infected PC      Pop-ups are always scams.
+
+Lottery/Prize         Won lottery didn't     Hang up. You didn't enter = scam.
+                      enter                  Legitimate prizes need NO upfront pay.
+
+Grandparent           Grandkid in trouble    Verify via family. Scammers use
+                      needs money urgently   emotional manipulation.
+
+================================================================================
+FEDERAL AGENCIES - REAL CONTACT INFO
+================================================================================
+
+IRS (Tax Issues):
+  • Official website: irs.gov
+  • Fraud line: treasury.gov/fraud
+  • How they contact: Written certified mail ONLY
+
+Social Security:
+  • Official website: ssa.gov
+  • Report fraud: ssa.gov/fraud
+  • How they contact: Written mail, never unsolicited calls
+
+FBI (Crime):
+  • Internet Crime Complaint: www.ic3.gov
+  • Field office finder: www.fbi.gov/contact
+  • Chicago Field Office: (312) 421-6700
+
+USCIS (Immigration):
+  • Official website: uscis.gov
+  • Report fraud: dhs.gov/report
+  • They don't threaten via phone
+
+Illinois Attorney General:
+  • Official website: www.cybercrime.illinois.gov
+  • Phone: (877) 424-7000
+
+================================================================================
+KEY POINT: IF GOVERNMENT THREATENS YOU BY PHONE, IT'S A SCAM
+================================================================================
+
+Legitimate government agencies:
+- Send written notice FIRST (certified mail)
+- Have official processes (court orders, etc.)
+- Do NOT demand immediate payment
+- Do NOT ask for payment via gift cards or wire transfer
+- Do NOT threaten immediate arrest
+
+If threatened over phone: Hang up and call the agency's official number yourself
+to verify (use number from official website, not one given by caller).

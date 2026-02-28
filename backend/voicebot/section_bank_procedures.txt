@@ -1,0 +1,119 @@
+================================================================================
+SECTION 2: BANK ERROR RESOLUTION PROCEDURES
+================================================================================
+
+Illinois and federal law (EFTA/Regulation E) establish specific procedures for 
+disputing unauthorized transfers.
+
+2.1 REPORTING UNAUTHORIZED TRANSFERS
+──────────────────────────────────────
+
+Reporting Deadline (CRITICAL):
+  • You have 60 days from the date your bank statement was MAILED/PROVIDED to 
+    report an unauthorized transfer
+  • Time limit begins on first statement showing the unauthorized transaction
+  • Missing 60-day deadline = bank has NO legal obligation to investigate
+
+How to Report:
+  • Call bank's official customer service number (on card or official website)
+  • Oral notification is sufficient to trigger investigation
+  • Bank may require written confirmation within 10 days of oral notice
+  • But investigation timeline starts from oral notice date, not written confirmation
+
+Required Information to Provide:
+  • Your full name and account number
+  • Date(s) of unauthorized transaction(s)
+  • Amount(s) of transfer(s)
+  • Clear statement: "This transaction is unauthorized. I did not authorize this 
+    transfer."
+
+Legal References:
+  - 15 U.S.C. § 1693e (EFTA: Error Resolution)
+  - 12 CFR 1005.5 (Regulation E: Error Resolution Procedures)
+  - 12 CFR 1005.2(m) (Definition of Unauthorized EFT)
+
+2.2 BANK'S INVESTIGATION OBLIGATIONS
+───────────────────────────────────────
+
+Timeline:
+  • Bank must begin investigation within 1 business day of oral notification
+  • Investigation must be completed within 10 business days
+    (Can extend to 45 days if bank provides provisional credit immediately)
+  • Bank must report findings in writing within 3 business days after investigation 
+    completion
+
+Investigation Requirements (Bank MUST):
+  • NOT require police report as condition of investigation (CFPB 2025 guidance)
+  • NOT use consumer negligence to deny claim (even if you were tricked into 
+    providing credentials)
+  • Investigate whether transfer was truly unauthorized
+  • Verify account access circumstances
+  • Determine if bank's security measures were breached
+
+Provisional Credit:
+  • If investigation extends beyond 10 days, bank must provide provisional credit 
+    immediately (credited back to your account during investigation)
+  • Provisional credit is NOT final decision - if bank's investigation later finds 
+    transfer was authorized, bank can debit provisional credit back out
+
+Liability Caps (for unauthorized EFTs under EFTA):
+  Note: These caps may NOT apply to wire transfers made through online banking, 
+  depending on recent court interpretations. Check with your specific bank.
+  
+  • If you report within 2 business days of first noticing: Liability capped at $50
+  • If you report within 60 days: Liability capped at $500
+  • If you report after 60 days: Bank has NO obligation; you could be liable for 
+    full amount (depending on fraud type and bank's negligence)
+
+Important: Consumer negligence (falling for scam, providing credentials) CANNOT 
+be used to impose greater liability than above limits.
+
+Legal References:
+  - 12 CFR 1005.5 (Investigation Procedures)
+  - 12 CFR 1005.6 (Liability Limits)
+  - 15 U.S.C. § 1693f (Bank Error Correction)
+
+2.3 IF BANK DENIES CLAIM
+──────────────────────────
+
+Civil Action Under EFTA:
+If bank refuses to correct error or fails to follow investigation procedures, you 
+may sue for:
+  • Actual damages (loss amount)
+  • Statutory damages: up to $1,000 (even if actual loss is less)
+  • Treble damages (3x actual damages) if bank acted in bad faith
+  • Reasonable attorney fees and costs
+
+Requirements to Sue:
+  • Bank violated EFTA/Regulation E procedures
+  • Must file within 2 years of discovering violation (or 3 years for ongoing breach)
+  • Federal court (applies to interstate transactions) or Illinois state court 
+    (815 ILCS violations)
+
+Illinois State Consumer Fraud Claim (Alternative):
+Under Illinois Consumer Fraud Act (815 ILCS 505):
+  • Deceptive or unfair business practice in trade/commerce
+  • Damages: actual damages OR $200 per violation (whichever is greater)
+  • Treble damages if defendant's conduct was willful/reckless
+  • Attorney fees awarded to prevailing plaintiff
+
+Legal References:
+  - 15 U.S.C. § 1693m (EFTA: Liability of Financial Institutions)
+  - 15 U.S.C. § 1693n (EFTA: Illegal Action)
+  - 815 ILCS 505/2A (Illinois Consumer Fraud Act)
+
+Consult Attorney:
+Contact a consumer protection attorney in Illinois if bank denies reasonable fraud 
+claim. Many work on contingency (no upfront cost).
+
+================================================================================
+KEY POINTS - BANK PROTECTIONS
+================================================================================
+
+Reporting Window: 60 days from statement date (CRITICAL)
+Investigation Time: Bank must investigate within 10 business days
+Liability Cap: $50 (if reported within 2 days), $500 (if reported within 60 days)
+Police Report: NOT required by bank (per CFPB 2025 guidance)
+Your Negligence: CANNOT be used against you for exceeding liability caps
+
+REMEMBER: Call your bank's fraud line first. They must investigate.
