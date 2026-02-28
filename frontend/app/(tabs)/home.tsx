@@ -33,28 +33,28 @@ interface FeatureCardData {
 
 const features: FeatureCardData[] = [
   {
-    title: '통화 실시간\n탐지',
+    title: 'Real-time call\ndetection',
     icon: <Phone size={26} color={Colors.primary} strokeWidth={2} />,
     color: Colors.primary,
     bgColor: Colors.primaryFaint,
     route: '/(tabs)/protection',
   },
   {
-    title: '스미싱 캡처\n진단',
+    title: 'Smishing capture\n& diagnosis',
     icon: <ScanLine size={26} color={Colors.caution} strokeWidth={2} />,
     color: Colors.caution,
     bgColor: '#FFF8E1',
     route: '/(tabs)/diagnosis',
   },
   {
-    title: '송금\n보호',
+    title: 'Transfer\nprotection',
     icon: <CreditCard size={26} color="#5B8DEF" strokeWidth={2} />,
     color: '#5B8DEF',
     bgColor: '#EEF3FF',
     route: '/transfer-protection',
   },
   {
-    title: '대응 훈련\n게임',
+    title: 'Response\ntraining',
     icon: <Gamepad2 size={26} color="#A78BFA" strokeWidth={2} />,
     color: '#A78BFA',
     bgColor: '#F3F0FF',
@@ -93,18 +93,18 @@ export default function HomeScreen() {
         <Animated.View style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
           <View style={styles.statusCard}>
             <View style={styles.statusHeader}>
-              <Text style={styles.statusLabel}>오늘의 보호 상태</Text>
+              <Text style={styles.statusLabel}>Today's protection status</Text>
               <View style={styles.cautionChip}>
                 <AlertTriangle size={14} color={Colors.cautionText} strokeWidth={2.5} />
-                <Text style={styles.cautionChipText}>주의</Text>
+                <Text style={styles.cautionChipText}>Caution</Text>
               </View>
             </View>
             <View style={styles.statusMetric}>
               <Text style={styles.metricValue}>42%</Text>
-              <Text style={styles.metricLabel}>위험 감지</Text>
+              <Text style={styles.metricLabel}>Risk detected</Text>
             </View>
             <View style={styles.statusDivider} />
-            <Text style={styles.statusSubtext}>최근 24시간 탐지 2건</Text>
+            <Text style={styles.statusSubtext}>2 detections in the last 24 hours</Text>
           </View>
 
           <View style={styles.gridContainer}>
@@ -135,8 +135,8 @@ export default function HomeScreen() {
                 <Mic size={22} color={Colors.primary} strokeWidth={2} />
               </View>
               <View style={styles.reportTextContainer}>
-                <Text style={styles.reportTitle}>신고 도우미</Text>
-                <Text style={styles.reportSubtitle}>피싱 의심 시 즉시 신고를 도와드립니다</Text>
+                <Text style={styles.reportTitle}>Report assistant</Text>
+                <Text style={styles.reportSubtitle}>Get help reporting suspected phishing right away</Text>
               </View>
             </View>
             <TouchableOpacity
@@ -144,7 +144,7 @@ export default function HomeScreen() {
               activeOpacity={0.85}
               onPress={() => router.push('/reporting-chatbot')}
             >
-              <Text style={styles.reportButtonText}>지금 신고 준비</Text>
+              <Text style={styles.reportButtonText}>Prepare report now</Text>
             </TouchableOpacity>
           </TouchableOpacity>
 
@@ -156,17 +156,17 @@ export default function HomeScreen() {
           >
             <View style={styles.guardianLeft}>
               <Users size={18} color={Colors.textTertiary} strokeWidth={2} />
-              <Text style={styles.guardianText}>보호자 미연동</Text>
+              <Text style={styles.guardianText}>No guardian linked</Text>
             </View>
             <View style={styles.guardianAction}>
-              <Text style={styles.guardianActionText}>연동하기</Text>
+              <Text style={styles.guardianActionText}>Link</Text>
               <ChevronRight size={16} color={Colors.primary} strokeWidth={2.5} />
             </View>
           </TouchableOpacity>
 
           <View style={styles.trustBadge}>
             <ShieldCheck size={16} color={Colors.textTertiary} strokeWidth={2} />
-            <Text style={styles.trustText}>AI 분석 기반 · 금융 API 연동 보호</Text>
+            <Text style={styles.trustText}>AI-powered · Financial API protection</Text>
           </View>
         </Animated.View>
       </ScrollView>

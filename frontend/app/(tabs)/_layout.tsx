@@ -24,28 +24,28 @@ export default function TabLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          title: "홈",
+          title: "Home",
           tabBarIcon: ({ color, size }) => <Home size={size} color={color} strokeWidth={2} />,
         }}
       />
       <Tabs.Screen
         name="protection"
         options={{
-          title: "실시간 보호",
+          title: "Live protection",
           tabBarIcon: ({ color, size }) => <ShieldCheck size={size} color={color} strokeWidth={2} />,
         }}
       />
       <Tabs.Screen
         name="diagnosis"
         options={{
-          title: "진단",
+          title: "Diagnosis",
           tabBarIcon: ({ color, size }) => <ScanSearch size={size} color={color} strokeWidth={2} />,
         }}
       />
       <Tabs.Screen
         name="more"
         options={{
-          title: "더보기",
+          title: "More",
           tabBarIcon: ({ color, size }) => <Menu size={size} color={color} strokeWidth={2} />,
         }}
       />

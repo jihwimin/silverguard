@@ -58,7 +58,7 @@ export default function DiagnosisScreen() {
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <ScanSearch size={20} color={Colors.primary} strokeWidth={2.5} />
-        <Text style={styles.headerTitle}>스미싱 진단</Text>
+        <Text style={styles.headerTitle}>Smishing diagnosis</Text>
       </View>
 
       <ScrollView
@@ -71,8 +71,8 @@ export default function DiagnosisScreen() {
               <View style={styles.uploadIconArea}>
                 <Upload size={40} color={Colors.textTertiary} strokeWidth={1.5} />
               </View>
-              <Text style={styles.uploadTitle}>의심스러운 문자를 분석하세요</Text>
-              <Text style={styles.uploadTip}>링크가 보이도록 캡처해 주세요.</Text>
+              <Text style={styles.uploadTitle}>Analyze a suspicious text</Text>
+              <Text style={styles.uploadTip}>Capture a screenshot that shows the link.</Text>
             </View>
 
             <TouchableOpacity
@@ -82,7 +82,7 @@ export default function DiagnosisScreen() {
               testID="upload-button"
             >
               <ImageIcon size={20} color={Colors.white} strokeWidth={2} />
-              <Text style={styles.primaryButtonText}>사진 선택</Text>
+              <Text style={styles.primaryButtonText}>Choose photo</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -90,7 +90,7 @@ export default function DiagnosisScreen() {
               onPress={handleUpload}
               activeOpacity={0.75}
             >
-              <Text style={styles.secondaryButtonText}>최근 캡처 보기</Text>
+              <Text style={styles.secondaryButtonText}>View recent captures</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -102,7 +102,7 @@ export default function DiagnosisScreen() {
               <View style={[styles.skeletonLine, { width: '70%' }]} />
               <View style={[styles.skeletonLine, { width: '85%' }]} />
             </View>
-            <Text style={styles.analyzingText}>AI가 링크와 문구를 분석 중입니다…</Text>
+            <Text style={styles.analyzingText}>AI is analyzing the link and message…</Text>
             <View style={styles.loadingDots}>
               <LoadingDot delay={0} />
               <LoadingDot delay={200} />
@@ -116,52 +116,52 @@ export default function DiagnosisScreen() {
             <View style={styles.resultHeader}>
               <View style={styles.dangerBadge}>
                 <AlertTriangle size={18} color={Colors.dangerText} strokeWidth={2.5} />
-                <Text style={styles.dangerBadgeText}>위험도 87%</Text>
+                <Text style={styles.dangerBadgeText}>Risk 87%</Text>
               </View>
-              <Text style={styles.resultTitle}>스미싱 의심</Text>
+              <Text style={styles.resultTitle}>Smishing suspected</Text>
             </View>
 
             <View style={styles.screenshotMock}>
               <View style={styles.mockMessageBubble}>
-                <Text style={styles.mockSender}>[국외발신]</Text>
+                <Text style={styles.mockSender}>[Unknown sender]</Text>
                 <Text style={styles.mockMessage}>
-                  {"택배 배송 실패. 주소 확인 바랍니다.\n"}
+                  {"Delivery failed. Please confirm your address.\n"}
                   <Text style={styles.mockHighlight}>http://del1very-kr.xyz/track</Text>
                 </Text>
               </View>
               <View style={styles.highlightBox}>
                 <ShieldAlert size={14} color={Colors.danger} strokeWidth={2} />
-                <Text style={styles.highlightText}>위험 URL 감지</Text>
+                <Text style={styles.highlightText}>Risky URL detected</Text>
               </View>
             </View>
 
             <View style={styles.reportCards}>
               <View style={styles.reportCard}>
-                <Text style={styles.reportCardTitle}>의심 포인트</Text>
+                <Text style={styles.reportCardTitle}>Suspicious points</Text>
                 <View style={styles.reportItem}>
                   <View style={styles.bulletDot} />
-                  <Text style={styles.reportItemText}>국외발신 표시 + 택배사 사칭</Text>
+                  <Text style={styles.reportItemText}>Unknown sender + courier impersonation</Text>
                 </View>
                 <View style={styles.reportItem}>
                   <View style={styles.bulletDot} />
-                  <Text style={styles.reportItemText}>URL 도메인이 공식 택배사와 불일치</Text>
+                  <Text style={styles.reportItemText}>URL domain does not match official courier</Text>
                 </View>
               </View>
 
               <View style={styles.reportCard}>
-                <Text style={styles.reportCardTitle}>안전한 대처</Text>
+                <Text style={styles.reportCardTitle}>Safe response</Text>
                 <View style={styles.reportItem}>
                   <View style={[styles.bulletDot, { backgroundColor: Colors.safe }]} />
-                  <Text style={styles.reportItemText}>링크 클릭하지 않기</Text>
+                  <Text style={styles.reportItemText}>Do not click the link</Text>
                 </View>
                 <View style={styles.reportItem}>
                   <View style={[styles.bulletDot, { backgroundColor: Colors.safe }]} />
-                  <Text style={styles.reportItemText}>공식 택배 앱에서 직접 확인</Text>
+                  <Text style={styles.reportItemText}>Check via the official courier app</Text>
                 </View>
               </View>
 
               <View style={styles.urlCard}>
-                <Text style={styles.urlLabel}>탐지된 URL</Text>
+                <Text style={styles.urlLabel}>Detected URL</Text>
                 <View style={styles.urlRow}>
                   <Text style={styles.urlText}>http://del1very-kr.xyz/track</Text>
                   <TouchableOpacity style={styles.copyButton}>
@@ -176,7 +176,7 @@ export default function DiagnosisScreen() {
               activeOpacity={0.85}
             >
               <ExternalLink size={18} color={Colors.white} strokeWidth={2} />
-              <Text style={styles.primaryButtonText}>차단/신고 안내 보기</Text>
+              <Text style={styles.primaryButtonText}>View block/report guide</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -184,7 +184,7 @@ export default function DiagnosisScreen() {
               onPress={() => router.push('/reporting-chatbot')}
               activeOpacity={0.75}
             >
-              <Text style={styles.outlineButtonText}>신고 도우미로 연결</Text>
+              <Text style={styles.outlineButtonText}>Connect to report assistant</Text>
               <ChevronRight size={18} color={Colors.primary} strokeWidth={2} />
             </TouchableOpacity>
 
@@ -193,7 +193,7 @@ export default function DiagnosisScreen() {
               onPress={handleReset}
               activeOpacity={0.75}
             >
-              <Text style={styles.resetLinkText}>다른 문자 분석하기</Text>
+              <Text style={styles.resetLinkText}>Analyze another message</Text>
             </TouchableOpacity>
           </Animated.View>
         )}

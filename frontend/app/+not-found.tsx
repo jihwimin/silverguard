@@ -6,17 +6,17 @@ import Colors from "@/constants/colors";
 export default function NotFoundScreen() {
   return (
     <>
-      <Stack.Screen options={{ title: "페이지를 찾을 수 없습니다" }} />
+      <Stack.Screen options={{ title: "Page not found" }} />
       <View style={styles.container}>
         <View style={styles.iconBg}>
           <Shield size={40} color={Colors.textTertiary} strokeWidth={1.5} />
         </View>
         
-        <Text style={styles.title}>페이지를 찾을 수 없습니다</Text>
-        <Text style={styles.subtitle}>요청하신 화면이 존재하지 않습니다.</Text>
+        <Text style={styles.title}>Page not found</Text>
+        <Text style={styles.subtitle}>The requested screen does not exist.</Text>
 
         <Link href="/" style={styles.link}>
-          <Text style={styles.linkText}>홈으로 돌아가기</Text>
+          <Text style={styles.linkText}>Back to home</Text>
         </Link>
       </View>
     </>

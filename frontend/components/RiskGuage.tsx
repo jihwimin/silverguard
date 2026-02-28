@@ -29,9 +29,9 @@ export default function RiskGauge({ value, size = 200, animated = true }: RiskGa
   };
 
   const getLabel = (v: number) => {
-    if (v >= 80) return '고위험';
-    if (v >= 50) return '주의';
-    return '안전';
+    if (v >= 80) return 'High risk';
+    if (v >= 50) return 'Caution';
+    return 'Safe';
   };
 
   const getLabelBg = (v: number) => {

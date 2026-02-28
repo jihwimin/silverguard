@@ -28,18 +28,18 @@ interface Slide {
 
 const slides: Slide[] = [
   {
-    title: '지금 이 순간에도\n피싱은 진화합니다.',
-    subtitle: 'SilverGuard가 실시간으로 감지합니다.',
+    title: 'Phishing evolves\nevery moment.',
+    subtitle: 'SilverGuard detects it in real time.',
     icon: 'shield',
   },
   {
-    title: '통화·문자·송금\n모두 보호',
-    subtitle: '3가지 핵심 보호 기능을 제공합니다.',
+    title: 'Calls, texts, transfers\nall protected',
+    subtitle: 'Three core protection features.',
     icon: 'features',
   },
   {
-    title: '의심되면,\n바로 대응하세요.',
-    subtitle: 'AI 기반 실시간 분석으로 즉각 대응합니다.',
+    title: 'When in doubt,\nact right away.',
+    subtitle: 'AI-powered real-time analysis for instant response.',
     icon: 'action',
   },
 ];
@@ -104,19 +104,19 @@ export default function OnboardingScreen() {
             <View style={[styles.featureIcon, { backgroundColor: Colors.primaryFaint }]}>
               <Phone size={24} color={Colors.primary} strokeWidth={2} />
             </View>
-            <Text style={styles.featureLabel}>실시간 통화{'\n'}위험 감지</Text>
+            <Text style={styles.featureLabel}>Real-time call{'\n'}risk detection</Text>
           </View>
           <View style={styles.featureCard}>
             <View style={[styles.featureIcon, { backgroundColor: '#FFF3E0' }]}>
               <ScanLine size={24} color={Colors.caution} strokeWidth={2} />
             </View>
-            <Text style={styles.featureLabel}>스미싱 캡처{'\n'}AI 분석</Text>
+            <Text style={styles.featureLabel}>Smishing capture{'\n'}& AI analysis</Text>
           </View>
           <View style={styles.featureCard}>
             <View style={[styles.featureIcon, { backgroundColor: Colors.dangerBg }]}>
               <Ban size={24} color={Colors.danger} strokeWidth={2} />
             </View>
-            <Text style={styles.featureLabel}>위험 송금{'\n'}자동 차단</Text>
+            <Text style={styles.featureLabel}>Risky transfer{'\n'}auto-block</Text>
           </View>
         </View>
       );
@@ -135,7 +135,7 @@ export default function OnboardingScreen() {
       <View style={styles.header}>
         {currentPage < slides.length - 1 && (
           <TouchableOpacity onPress={handleSkip} style={styles.skipButton}>
-            <Text style={styles.skipText}>건너뛰기</Text>
+            <Text style={styles.skipText}>Skip</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -176,7 +176,7 @@ export default function OnboardingScreen() {
           activeOpacity={0.85}
         >
           {currentPage === slides.length - 1 ? (
-            <Text style={styles.primaryButtonText}>시작하기</Text>
+            <Text style={styles.primaryButtonText}>Get started</Text>
           ) : (
             <ArrowRight size={24} color={Colors.white} strokeWidth={2.5} />
           )}

@@ -33,10 +33,10 @@ export default function GuardianHubScreen() {
   const insets = useSafeAreaInsets();
   const [isLinked, setIsLinked] = useState<boolean>(false);
   const [notifications, setNotifications] = useState<NotificationSetting[]>([
-    { id: 'call', label: '고위험 통화 감지 시 알림', enabled: true },
-    { id: 'transfer', label: '송금 차단 발생 시 알림', enabled: true },
-    { id: 'smishing', label: '스미싱 고위험 결과 시 알림', enabled: false },
-    { id: 'emergency', label: '긴급 도움 요청 시 알림', enabled: true },
+    { id: 'call', label: 'Alert on high-risk call detection', enabled: true },
+    { id: 'transfer', label: 'Alert when transfer is blocked', enabled: true },
+    { id: 'smishing', label: 'Alert on high-risk smishing result', enabled: false },
+    { id: 'emergency', label: 'Alert on emergency help request', enabled: true },
   ]);
 
   const toggleNotification = (id: string) => {
@@ -50,7 +50,7 @@ export default function GuardianHubScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: '보호자 연동 및 알림',
+          title: 'Guardian link & alerts',
           headerStyle: { backgroundColor: Colors.background },
           headerTintColor: Colors.text,
           headerShadowVisible: false,
@@ -66,12 +66,12 @@ export default function GuardianHubScreen() {
           <View style={styles.statusIconBg}>
             <Users size={28} color={isLinked ? Colors.primary : Colors.textTertiary} strokeWidth={2} />
           </View>
-          <Text style={styles.statusLabel}>현재 상태</Text>
+          <Text style={styles.statusLabel}>Current status</Text>
           <Text style={[styles.statusValue, isLinked && styles.statusLinked]}>
-            {isLinked ? '보호자 1명 연동됨' : '보호자 미연동'}
+            {isLinked ? '1 guardian linked' : 'No guardian linked'}
           </Text>
           <Text style={styles.statusSubtext}>
-            위험 상황을 보호자에게 알릴 수 있습니다.
+            You can notify your guardian when risks are detected.
           </Text>
         </View>
 
@@ -86,18 +86,18 @@ export default function GuardianHubScreen() {
             testID="link-guardian"
           >
             <UserPlus size={20} color={Colors.white} strokeWidth={2} />
-            <Text style={styles.linkButtonText}>보호자 연동하기</Text>
+            <Text style={styles.linkButtonText}>Link guardian</Text>
           </TouchableOpacity>
         ) : (
           <View style={styles.guardianCard}>
             <View style={styles.guardianInfo}>
               <View style={styles.guardianAvatar}>
-                <Text style={styles.guardianAvatarText}>김</Text>
+                <Text style={styles.guardianAvatarText}>G</Text>
               </View>
               <View style={styles.guardianDetails}>
-                <Text style={styles.guardianName}>김○○ (보호자)</Text>
+                <Text style={styles.guardianName}>Guardian</Text>
                 <View style={styles.relationChip}>
-                  <Text style={styles.relationText}>자녀</Text>
+                  <Text style={styles.relationText}>Child</Text>
                 </View>
                 <Text style={styles.guardianPhone}>010-••••-1234</Text>
               </View>
@@ -109,11 +109,11 @@ export default function GuardianHubScreen() {
                 activeOpacity={0.75}
               >
                 <Link2 size={16} color={Colors.textTertiary} strokeWidth={2} />
-                <Text style={styles.guardianActionText}>연동 해제</Text>
+                <Text style={styles.guardianActionText}>Unlink</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.guardianAction} activeOpacity={0.75}>
                 <Phone size={16} color={Colors.primary} strokeWidth={2} />
-                <Text style={[styles.guardianActionText, { color: Colors.primary }]}>연락하기</Text>
+                <Text style={[styles.guardianActionText, { color: Colors.primary }]}>Contact</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -121,7 +121,7 @@ export default function GuardianHubScreen() {
 
         <View style={styles.sectionHeader}>
           <Bell size={18} color={Colors.text} strokeWidth={2} />
-          <Text style={styles.sectionTitle}>알림 설정</Text>
+          <Text style={styles.sectionTitle}>Alert settings</Text>
         </View>
 
         <View style={styles.notificationCard}>
@@ -147,14 +147,14 @@ export default function GuardianHubScreen() {
         <View style={styles.disclosureCard}>
           <View style={styles.disclosureHeader}>
             <Info size={16} color={Colors.textSecondary} strokeWidth={2} />
-            <Text style={styles.disclosureTitle}>공유되는 정보</Text>
+            <Text style={styles.disclosureTitle}>Shared information</Text>
           </View>
-          <Text style={styles.disclosureItem}>• 위험 유형과 위험도 (예: 91%)</Text>
-          <Text style={styles.disclosureItem}>• 발생 시간</Text>
-          <Text style={styles.disclosureItem}>• 권장 행동 안내</Text>
+          <Text style={styles.disclosureItem}>• Risk type and level (e.g. 91%)</Text>
+          <Text style={styles.disclosureItem}>• Time of occurrence</Text>
+          <Text style={styles.disclosureItem}>• Recommended actions</Text>
           <View style={styles.disclosureDivider} />
           <Text style={styles.disclosureNote}>
-            통화 내용/계좌번호 전체/개인정보는 공유하지 않습니다.
+            Call content, full account numbers, and personal details are not shared.
           </Text>
         </View>
 
@@ -164,7 +164,7 @@ export default function GuardianHubScreen() {
           activeOpacity={0.75}
         >
           <ShieldCheck size={18} color={Colors.primary} strokeWidth={2} />
-          <Text style={styles.alertsButtonText}>보호 알림 보기</Text>
+          <Text style={styles.alertsButtonText}>View guardian alerts</Text>
           <ChevronRight size={18} color={Colors.primary} strokeWidth={2} />
         </TouchableOpacity>
       </ScrollView>

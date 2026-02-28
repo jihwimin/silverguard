@@ -61,7 +61,7 @@ export default function GuardianCodeScreen() {
         <Stack.Screen
           options={{
             headerShown: true,
-            title: '가족 연동',
+            title: 'Family link',
             headerStyle: { backgroundColor: Colors.background },
             headerTintColor: Colors.text,
             headerShadowVisible: false,
@@ -73,9 +73,9 @@ export default function GuardianCodeScreen() {
             <View style={styles.successIcon}>
               <CheckCircle size={56} color={Colors.primary} strokeWidth={1.8} />
             </View>
-            <Text style={styles.successTitle}>연동이 완료되었습니다</Text>
+            <Text style={styles.successTitle}>Link complete</Text>
             <Text style={styles.successSubtitle}>
-              이제 위험 상황이 감지되면{'\n'}알림을 받습니다.
+              You will now receive alerts{'\n'}when risks are detected.
             </Text>
           </Animated.View>
           <View style={[styles.successActions, { paddingBottom: insets.bottom + 24 }]}>
@@ -84,14 +84,14 @@ export default function GuardianCodeScreen() {
               onPress={() => router.push('/guardian-hub')}
               activeOpacity={0.85}
             >
-              <Text style={styles.primaryButtonText}>알림 설정</Text>
+              <Text style={styles.primaryButtonText}>Alert settings</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.outlineButton}
               onPress={() => router.replace('/(tabs)/home')}
               activeOpacity={0.75}
             >
-              <Text style={styles.outlineButtonText}>홈으로</Text>
+              <Text style={styles.outlineButtonText}>Go to home</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -104,7 +104,7 @@ export default function GuardianCodeScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: '가족 연동',
+          title: 'Family link',
           headerStyle: { backgroundColor: Colors.background },
           headerTintColor: Colors.text,
           headerShadowVisible: false,
@@ -122,7 +122,7 @@ export default function GuardianCodeScreen() {
           showsVerticalScrollIndicator={false}
         >
           <Text style={styles.subtitle}>
-            시니어 기기에서 표시된{'\n'}6자리 코드를 입력하세요.
+            Enter the 6-digit code shown{'\n'}on the senior's device.
           </Text>
 
           <View style={styles.codeRow}>
@@ -147,12 +147,12 @@ export default function GuardianCodeScreen() {
             disabled={!consent || code.join('').length < 6}
             activeOpacity={0.85}
           >
-            <Text style={styles.primaryButtonText}>연동하기</Text>
+            <Text style={styles.primaryButtonText}>Link</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.qrLink} activeOpacity={0.75}>
             <QrCode size={18} color={Colors.primary} strokeWidth={2} />
-            <Text style={styles.qrLinkText}>QR 스캔</Text>
+            <Text style={styles.qrLinkText}>Scan QR code</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -163,12 +163,12 @@ export default function GuardianCodeScreen() {
             <View style={[styles.checkbox, consent && styles.checkboxChecked]}>
               {consent && <CheckCircle size={16} color={Colors.white} strokeWidth={2.5} />}
             </View>
-            <Text style={styles.consentText}>위험 알림을 받는 것에 동의합니다.</Text>
+            <Text style={styles.consentText}>I agree to receive risk alerts.</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.infoLink} activeOpacity={0.75}>
             <Info size={14} color={Colors.textTertiary} strokeWidth={2} />
-            <Text style={styles.infoLinkText}>공유되는 정보 보기</Text>
+            <Text style={styles.infoLinkText}>View shared information</Text>
           </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>

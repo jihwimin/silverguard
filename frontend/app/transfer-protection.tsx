@@ -52,7 +52,7 @@ export default function TransferProtectionScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: '송금 보호',
+          title: 'Transfer protection',
           headerStyle: { backgroundColor: Colors.background },
           headerTintColor: Colors.text,
           headerShadowVisible: false,
@@ -68,10 +68,10 @@ export default function TransferProtectionScreen() {
         {step === 'form' && (
           <View style={styles.formSection}>
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>받는 사람</Text>
+              <Text style={styles.inputLabel}>Recipient</Text>
               <TextInput
                 style={styles.input}
-                placeholder="이름을 입력하세요"
+                placeholder="Enter name"
                 placeholderTextColor={Colors.textTertiary}
                 value={recipient}
                 onChangeText={setRecipient}
@@ -79,10 +79,10 @@ export default function TransferProtectionScreen() {
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>계좌번호</Text>
+              <Text style={styles.inputLabel}>Account number</Text>
               <TextInput
                 style={styles.input}
-                placeholder="계좌번호를 입력하세요"
+                placeholder="Enter account number"
                 placeholderTextColor={Colors.textTertiary}
                 keyboardType="number-pad"
                 value={account}
@@ -91,10 +91,10 @@ export default function TransferProtectionScreen() {
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>금액</Text>
+              <Text style={styles.inputLabel}>Amount</Text>
               <TextInput
                 style={styles.input}
-                placeholder="송금할 금액"
+                placeholder="Amount to transfer"
                 placeholderTextColor={Colors.textTertiary}
                 keyboardType="number-pad"
                 value={amount}
@@ -108,7 +108,7 @@ export default function TransferProtectionScreen() {
               activeOpacity={0.85}
               testID="transfer-button"
             >
-              <Text style={styles.primaryButtonText}>송금하기</Text>
+              <Text style={styles.primaryButtonText}>Transfer</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -127,36 +127,36 @@ export default function TransferProtectionScreen() {
               <View style={styles.blockedIconBg}>
                 <Ban size={40} color={Colors.danger} strokeWidth={2} />
               </View>
-              <Text style={styles.blockedTitle}>송금이 취소되었습니다</Text>
+              <Text style={styles.blockedTitle}>Transfer was cancelled</Text>
             </View>
 
             <View style={styles.systemMessage}>
               <ShieldAlert size={18} color={Colors.primary} strokeWidth={2} />
               <Text style={styles.systemText}>
-                Nessie 보안 엔진: 위험 계좌 탐지로 거래가 중단되었습니다.
+                Nessie security engine: Transaction stopped due to risky account detection.
               </Text>
             </View>
 
             <View style={styles.detailsCard}>
               <View style={styles.detailRow}>
-                <Text style={styles.detailLabel}>위험 사유</Text>
-                <Text style={styles.detailValue}>보이스피싱 신고 이력 계좌</Text>
+                <Text style={styles.detailLabel}>Risk reason</Text>
+                <Text style={styles.detailValue}>Account with voice phishing reports</Text>
               </View>
               <View style={styles.detailDivider} />
               <View style={styles.detailRow}>
-                <Text style={styles.detailLabel}>추천 행동</Text>
+                <Text style={styles.detailLabel}>Recommended actions</Text>
                 <View style={styles.recommendList}>
                   <View style={styles.recommendItem}>
                     <AlertTriangle size={14} color={Colors.caution} strokeWidth={2} />
-                    <Text style={styles.recommendText}>해당 계좌 거래 중단</Text>
+                    <Text style={styles.recommendText}>Stop transactions with this account</Text>
                   </View>
                   <View style={styles.recommendItem}>
                     <AlertTriangle size={14} color={Colors.caution} strokeWidth={2} />
-                    <Text style={styles.recommendText}>거래 상대방 신원 재확인</Text>
+                    <Text style={styles.recommendText}>Re-verify the recipient's identity</Text>
                   </View>
                   <View style={styles.recommendItem}>
                     <AlertTriangle size={14} color={Colors.caution} strokeWidth={2} />
-                    <Text style={styles.recommendText}>112 또는 금감원 1332 신고</Text>
+                    <Text style={styles.recommendText}>Report to police or financial authority</Text>
                   </View>
                 </View>
               </View>
@@ -168,12 +168,12 @@ export default function TransferProtectionScreen() {
               activeOpacity={0.85}
             >
               <MessageCircle size={20} color={Colors.white} strokeWidth={2} />
-              <Text style={styles.primaryButtonText}>신고 도우미로 이동</Text>
+              <Text style={styles.primaryButtonText}>Go to report assistant</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.secondaryButton} activeOpacity={0.75}>
               <Save size={18} color={Colors.primary} strokeWidth={2} />
-              <Text style={styles.secondaryButtonText}>내역 저장</Text>
+              <Text style={styles.secondaryButtonText}>Save details</Text>
             </TouchableOpacity>
           </Animated.View>
         )}

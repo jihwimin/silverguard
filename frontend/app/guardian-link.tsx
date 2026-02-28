@@ -60,7 +60,7 @@ export default function GuardianLinkScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: '보호자 연동하기',
+          title: 'Link guardian',
           headerStyle: { backgroundColor: Colors.background },
           headerTintColor: Colors.text,
           headerShadowVisible: false,
@@ -70,14 +70,14 @@ export default function GuardianLinkScreen() {
 
       <Animated.View style={[styles.content, { opacity: fadeAnim, paddingBottom: insets.bottom + 24 }]}>
         <View style={styles.instructionCard}>
-          <Text style={styles.instructionTitle}>보호자에게 아래 코드를 알려주세요.</Text>
-          <Text style={styles.instructionSub}>10분 안에 입력하면 연동됩니다.</Text>
+          <Text style={styles.instructionTitle}>Share the code below with your guardian.</Text>
+          <Text style={styles.instructionSub}>They have 10 minutes to enter it to complete linking.</Text>
         </View>
 
         {!expired ? (
           <View style={styles.codeSection}>
             <Text style={styles.codeText}>{code}</Text>
-            <Text style={styles.timerText}>{formatTime(timer)} 남음</Text>
+            <Text style={styles.timerText}>{formatTime(timer)} left</Text>
             <TouchableOpacity
               style={styles.copyButton}
               onPress={handleCopy}
@@ -86,32 +86,32 @@ export default function GuardianLinkScreen() {
               {copied ? (
                 <>
                   <CheckCircle size={18} color={Colors.white} strokeWidth={2} />
-                  <Text style={styles.copyButtonText}>복사됨</Text>
+                  <Text style={styles.copyButtonText}>Copied</Text>
                 </>
               ) : (
                 <>
                   <Copy size={18} color={Colors.white} strokeWidth={2} />
-                  <Text style={styles.copyButtonText}>코드 복사</Text>
+                  <Text style={styles.copyButtonText}>Copy code</Text>
                 </>
               )}
             </TouchableOpacity>
           </View>
         ) : (
           <View style={styles.expiredSection}>
-            <Text style={styles.expiredText}>코드가 만료되었습니다</Text>
+            <Text style={styles.expiredText}>Code has expired</Text>
             <TouchableOpacity
               style={styles.refreshButton}
               onPress={handleRefresh}
               activeOpacity={0.85}
             >
               <RefreshCw size={18} color={Colors.white} strokeWidth={2} />
-              <Text style={styles.refreshButtonText}>새 코드 받기</Text>
+              <Text style={styles.refreshButtonText}>Get new code</Text>
             </TouchableOpacity>
           </View>
         )}
 
         <View style={styles.qrCard}>
-          <Text style={styles.qrTitle}>QR로도 연동할 수 있어요</Text>
+          <Text style={styles.qrTitle}>You can also link via QR code</Text>
           <View style={styles.qrPlaceholder}>
             <QrCode size={80} color={Colors.textTertiary} strokeWidth={1} />
           </View>
@@ -122,7 +122,7 @@ export default function GuardianLinkScreen() {
           onPress={() => router.back()}
           activeOpacity={0.85}
         >
-          <Text style={styles.confirmButtonText}>연동 완료 확인</Text>
+          <Text style={styles.confirmButtonText}>Confirm link complete</Text>
         </TouchableOpacity>
       </Animated.View>
     </View>

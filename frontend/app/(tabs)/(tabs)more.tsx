@@ -26,24 +26,24 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
-    title: '보호자 연동 및 알림',
+    title: 'Guardian link & alerts',
     icon: <Users size={22} color={Colors.primary} strokeWidth={2} />,
     route: '/guardian-hub',
   },
   {
-    title: '알림 설정',
+    title: 'Alert settings',
     icon: <Bell size={22} color="#5B8DEF" strokeWidth={2} />,
   },
   {
-    title: '권한/접근성 설정',
+    title: 'Permissions / accessibility',
     icon: <Settings size={22} color="#A78BFA" strokeWidth={2} />,
   },
   {
-    title: '개인정보/보안 안내',
+    title: 'Privacy & security',
     icon: <Shield size={22} color={Colors.caution} strokeWidth={2} />,
   },
   {
-    title: '앱 정보',
+    title: 'App info',
     icon: <Info size={22} color={Colors.textTertiary} strokeWidth={2} />,
   },
 ];
@@ -55,7 +55,7 @@ export default function MoreScreen() {
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>더보기</Text>
+        <Text style={styles.headerTitle}>More</Text>
       </View>
 
       <ScrollView
@@ -67,8 +67,8 @@ export default function MoreScreen() {
             <Shield size={28} color={Colors.primary} strokeWidth={2} />
           </View>
           <View style={styles.profileInfo}>
-            <Text style={styles.profileName}>SilverGuard 사용자</Text>
-            <Text style={styles.profileStatus}>보호 활성화됨</Text>
+            <Text style={styles.profileName}>SilverGuard user</Text>
+            <Text style={styles.profileStatus}>Protection active</Text>
           </View>
         </View>
 
@@ -95,7 +95,7 @@ export default function MoreScreen() {
 
         <View style={styles.versionInfo}>
           <Text style={styles.versionText}>SilverGuard v1.0.0</Text>
-          <Text style={styles.copyrightText}>AI 기반 보이스피싱 방어 솔루션</Text>
+          <Text style={styles.copyrightText}>AI-powered voice phishing defense</Text>
         </View>
       </ScrollView>
     </View>

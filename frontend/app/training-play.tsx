@@ -82,7 +82,7 @@ export default function TrainingPlayScreen() {
     return (
       <View style={styles.container}>
         <Stack.Screen options={{ headerShown: false }} />
-        <Text style={styles.emptyText}>문제를 불러올 수 없습니다.</Text>
+        <Text style={styles.emptyText}>Unable to load questions.</Text>
       </View>
     );
   }
@@ -94,7 +94,7 @@ export default function TrainingPlayScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: `문제 ${currentIndex + 1}/${filteredQuestions.length}`,
+          title: `Question ${currentIndex + 1}/${filteredQuestions.length}`,
           headerStyle: { backgroundColor: Colors.background },
           headerTintColor: Colors.text,
           headerShadowVisible: false,
@@ -108,13 +108,13 @@ export default function TrainingPlayScreen() {
       >
         <View style={styles.statusBar}>
           <View style={styles.statusItem}>
-            <Text style={styles.statusLabel}>대응 점수</Text>
+            <Text style={styles.statusLabel}>Score</Text>
             <Text style={styles.statusValue}>{score}</Text>
           </View>
           <View style={styles.statusDivider} />
           <View style={styles.statusItem}>
-            <Text style={styles.statusLabel}>가상 잔액</Text>
-            <Text style={styles.statusValue}>{balance.toLocaleString()}원</Text>
+            <Text style={styles.statusLabel}>Virtual balance</Text>
+            <Text style={styles.statusValue}>${balance.toLocaleString()}</Text>
           </View>
         </View>
 
@@ -180,13 +180,13 @@ export default function TrainingPlayScreen() {
             <View style={styles.resultBubble}>
               <View style={[styles.verdictChip, isCorrect ? styles.verdictCorrect : styles.verdictWrong]}>
                 <Text style={[styles.verdictText, isCorrect ? styles.verdictTextCorrect : styles.verdictTextWrong]}>
-                  {isCorrect ? '정답' : '주의'}
+                  {isCorrect ? 'Correct' : 'Caution'}
                 </Text>
               </View>
 
               <Text style={styles.resultReason}>
                 {isCorrect
-                  ? '올바른 대처입니다!'
+                  ? 'Correct response!'
                   : currentQuestion.explanation.split('.')[0] + '.'}
               </Text>
 
@@ -195,7 +195,7 @@ export default function TrainingPlayScreen() {
                 onPress={() => setShowExplanation(!showExplanation)}
                 activeOpacity={0.75}
               >
-                <Text style={styles.expandText}>근거 보기</Text>
+                <Text style={styles.expandText}>Show explanation</Text>
                 <ChevronDown
                   size={16}
                   color={Colors.primary}
@@ -210,7 +210,7 @@ export default function TrainingPlayScreen() {
             </View>
 
             <View style={styles.summaryTip}>
-              <Text style={styles.summaryTipLabel}>한 줄 요약</Text>
+              <Text style={styles.summaryTipLabel}>Summary</Text>
               <Text style={styles.summaryTipText}>{currentQuestion.summary}</Text>
             </View>
 
@@ -220,7 +220,7 @@ export default function TrainingPlayScreen() {
               activeOpacity={0.85}
             >
               <Text style={styles.nextButtonText}>
-                {currentIndex >= filteredQuestions.length - 1 ? '결과 보기' : '다음 문제'}
+                {currentIndex >= filteredQuestions.length - 1 ? 'See results' : 'Next question'}
               </Text>
               <ChevronRight size={20} color={Colors.white} strokeWidth={2.5} />
             </TouchableOpacity>
@@ -230,7 +230,7 @@ export default function TrainingPlayScreen() {
               onPress={() => router.push('/reporting-chatbot')}
               activeOpacity={0.75}
             >
-              <Text style={styles.chatbotLinkText}>신고 도우미 연습</Text>
+              <Text style={styles.chatbotLinkText}>Practice report assistant</Text>
             </TouchableOpacity>
           </Animated.View>
         )}

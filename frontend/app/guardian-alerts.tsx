@@ -18,23 +18,23 @@ import { guardianAlerts, GuardianAlert } from '../constants/mockData';
 // 🌟 파일 시스템에 적힌 실제 파일명 'RiskGuage'로 수정 [cite: 2026-02-28]
 import RiskGauge from '../components/RiskGuage'; 
 
-type FilterType = '전체' | '고위험' | '송금' | '스미싱';
-const filters: FilterType[] = ['전체', '고위험', '송금', '스미싱'];
+type FilterType = 'All' | 'High risk' | 'Transfer' | 'Smishing';
+const filters: FilterType[] = ['All', 'High risk', 'Transfer', 'Smishing'];
 
 export default function GuardianAlertsScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const [activeFilter, setActiveFilter] = useState<FilterType>('전체');
+  const [activeFilter, setActiveFilter] = useState<FilterType>('All');
   const [selectedAlert, setSelectedAlert] = useState<GuardianAlert | null>(null);
   const detailAnim = useRef(new Animated.Value(0)).current;
 
   // ... 나머지 로직 동일 ...
   
   const filteredAlerts = guardianAlerts.filter((alert) => {
-    if (activeFilter === '전체') return true;
-    if (activeFilter === '고위험') return alert.riskLevel >= 80;
-    if (activeFilter === '송금') return alert.type === '송금';
-    if (activeFilter === '스미싱') return alert.type === '스미싱';
+    if (activeFilter === 'All') return true;
+    if (activeFilter === 'High risk') return alert.riskLevel >= 80;
+    if (activeFilter === 'Transfer') return alert.type === 'Transfer';
+    if (activeFilter === 'Smishing') return alert.type === 'Smishing';
     return true;
   });
 
@@ -46,9 +46,9 @@ export default function GuardianAlertsScreen() {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case '통화': return <Phone size={16} color={Colors.danger} strokeWidth={2} />;
-      case '스미싱': return <ScanLine size={16} color={Colors.caution} strokeWidth={2} />;
-      case '송금': return <CreditCard size={16} color={Colors.danger} strokeWidth={2} />;
+      case 'Call': return <Phone size={16} color={Colors.danger} strokeWidth={2} />;
+      case 'Smishing': return <ScanLine size={16} color={Colors.caution} strokeWidth={2} />;
+      case 'Transfer': return <CreditCard size={16} color={Colors.danger} strokeWidth={2} />;
       default: return <AlertTriangle size={16} color={Colors.textTertiary} strokeWidth={2} />;
     }
   };
@@ -71,7 +71,7 @@ export default function GuardianAlertsScreen() {
         <Stack.Screen
           options={{
             headerShown: true,
-            title: '알림 상세',
+            title: 'Alert details',
             headerStyle: { backgroundColor: Colors.background },
             headerTintColor: Colors.text,
             headerShadowVisible: false,
@@ -93,7 +93,7 @@ export default function GuardianAlertsScreen() {
           </View>
 
           <View style={styles.detailCard}>
-            <Text style={styles.detailCardTitle}>위험 유형</Text>
+            <Text style={styles.detailCardTitle}>Risk type</Text>
             <View style={styles.detailTypeRow}>
               {getTypeIcon(selectedAlert.type)}
               <Text style={styles.detailTypeText}>{selectedAlert.riskType}</Text>
@@ -102,13 +102,13 @@ export default function GuardianAlertsScreen() {
           </View>
 
           <View style={styles.detailCard}>
-            <Text style={styles.detailCardTitle}>권장 행동</Text>
+            <Text style={styles.detailCardTitle}>Recommended action</Text>
             <Text style={styles.detailRecommendation}>{selectedAlert.recommendedAction}</Text>
           </View>
 
           <TouchableOpacity style={styles.primaryButton} activeOpacity={0.85}>
             <BookOpen size={18} color={Colors.white} strokeWidth={2} />
-            <Text style={styles.primaryButtonText}>보호자 가이드 열기</Text>
+            <Text style={styles.primaryButtonText}>Open guardian guide</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -120,7 +120,7 @@ export default function GuardianAlertsScreen() {
             activeOpacity={0.75}
           >
             <MessageCircle size={18} color={Colors.primary} strokeWidth={2} />
-            <Text style={styles.outlineButtonText}>신고 도우미 연결</Text>
+            <Text style={styles.outlineButtonText}>Connect to report assistant</Text>
           </TouchableOpacity>
         </Animated.ScrollView>
       </View>
@@ -132,7 +132,7 @@ export default function GuardianAlertsScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: '보호 알림',
+          title: 'Guardian alerts',
           headerStyle: { backgroundColor: Colors.background },
           headerTintColor: Colors.text,
           headerShadowVisible: false,
@@ -164,7 +164,7 @@ export default function GuardianAlertsScreen() {
         {filteredAlerts.length === 0 ? (
           <View style={styles.emptyState}>
             <ShieldCheck size={48} color={Colors.textTertiary} strokeWidth={1.5} />
-            <Text style={styles.emptyText}>해당하는 알림이 없습니다</Text>
+            <Text style={styles.emptyText}>No matching alerts</Text>
           </View>
         ) : (
           filteredAlerts.map((alert) => (
@@ -177,7 +177,7 @@ export default function GuardianAlertsScreen() {
               <View style={styles.alertTop}>
                 <View style={[styles.riskBadge, { backgroundColor: getRiskBg(alert.riskLevel) }]}>
                   <Text style={[styles.riskBadgeText, { color: getRiskColor(alert.riskLevel) }]}>
-                    {alert.riskLevel >= 80 ? '고위험' : alert.riskLevel >= 50 ? '주의' : '참고'} ({alert.riskLevel}%)
+                    {alert.riskLevel >= 80 ? 'High risk' : alert.riskLevel >= 50 ? 'Caution' : 'Note'} ({alert.riskLevel}%)
                   </Text>
                 </View>
                 <Text style={styles.alertTime}>{alert.time}</Text>
@@ -189,14 +189,14 @@ export default function GuardianAlertsScreen() {
                   onPress={() => handleSelectAlert(alert)}
                   activeOpacity={0.75}
                 >
-                  <Text style={styles.alertActionText}>권장 행동 보기</Text>
+                  <Text style={styles.alertActionText}>View recommended action</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.alertAction}
                   onPress={() => router.push('/reporting-chatbot')}
                   activeOpacity={0.75}
                 >
-                  <Text style={styles.alertActionText}>신고 도우미</Text>
+                  <Text style={styles.alertActionText}>Report assistant</Text>
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
