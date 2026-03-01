@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,9 +7,10 @@ import {
   ScrollView,
   TouchableOpacity,
   Animated,
+  Linking,
   Platform,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter, useLocalSearchParams } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   ScanSearch,
@@ -27,6 +28,7 @@ import * as DocumentPicker from "expo-document-picker";
 
 import Colors from "@/constants/colors";
 import RiskGauge from "@/components/RiskGuage";
+import { consumePendingPhishing } from "@/lib/pendingPhishingStore";
 import { ocrImage, predictText, transcribeAudio } from "@/lib/api";
 
 type DiagnosisStep = "upload" | "analyzing" | "result";
@@ -49,6 +51,7 @@ function badgeColors(severity: "low" | "medium" | "high") {
 export default function DiagnosisScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const params = useLocalSearchParams<{ text?: string; percent?: string }>();
 
   const [step, setStep] = useState<DiagnosisStep>("upload");
   const resultAnim = useRef(new Animated.Value(0)).current;
@@ -213,6 +216,47 @@ export default function DiagnosisScreen() {
     setInputText("");
   }, []);
 
+  // Handle deep link from phishing notification: show result immediately
+  const showResultFromNotification = useCallback(
+    (decoded: string, p: number) => {
+      setInputText(decoded);
+      setExtractedText(decoded);
+      setDetectedUrl(extractFirstUrl(decoded));
+      setRiskPercent(p);
+      setSeverity(p >= 70 ? "high" : p >= 40 ? "medium" : "low");
+      setLabel(p >= 70 ? "phishing" : "safe");
+      setStep("result");
+      startResultAnim();
+    },
+    [startResultAnim]
+  );
+
+  const tryShowFromPending = useCallback(() => {
+    const pending = consumePendingPhishing();
+    if (pending) {
+      showResultFromNotification(pending.text, pending.percent);
+      return;
+    }
+    if (params.text) {
+      const decoded = decodeURIComponent(String(params.text).replace(/\+/g, " ")).trim();
+      const p = params.percent ? parseInt(params.percent, 10) : NaN;
+      if (decoded && !isNaN(p) && p >= 0 && p <= 100) {
+        showResultFromNotification(decoded, p);
+      } else if (decoded) {
+        setInputText(decoded);
+        analyzeTextDirectly(decoded);
+      }
+    }
+  }, [params.text, params.percent, showResultFromNotification, analyzeTextDirectly]);
+
+  useFocusEffect(useCallback(() => tryShowFromPending(), [tryShowFromPending]));
+
+  useEffect(() => {
+    const sub = Linking.addEventListener("url", () => tryShowFromPending());
+    return () => sub.remove();
+  }, [tryShowFromPending]);
+
+
   const badge = badgeColors(severity);
 
   return (
@@ -289,7 +333,7 @@ export default function DiagnosisScreen() {
               <View style={[styles.skeletonLine, { width: "70%" }]} />
               <View style={[styles.skeletonLine, { width: "85%" }]} />
             </View>
-            <Text style={styles.analyzingText}>AI is analyzing the link and message…</Text>
+            <Text style={styles.analyzingText}>Analyzing…</Text>
             <View style={styles.loadingDots}>
               <LoadingDot delay={0} />
               <LoadingDot delay={200} />

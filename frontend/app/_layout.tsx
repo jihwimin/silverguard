@@ -1,10 +1,12 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { AppProvider } from "@/components/providers/AppProvider"; // 경로 확인 필요 [cite: 2026-02-28]
+import { Linking, Platform, PermissionsAndroid } from "react-native";
+import { AppProvider } from "@/components/providers/AppProvider";
 import Colors from "@/constants/colors";
+import { setPendingPhishing } from "@/lib/pendingPhishingStore";
 
 // 스플래시 화면 제어 [cite: 2026-02-28]
 SplashScreen.preventAutoHideAsync();
@@ -12,6 +14,28 @@ SplashScreen.preventAutoHideAsync();
 const queryClient = new QueryClient();
 
 function RootLayoutNav() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const handler = (url: string | null) => {
+      if (!url?.includes("guardian-alerts") && !url?.includes("diagnosis")) return;
+      try {
+        const u = new URL(url);
+        const text = u.searchParams.get("text");
+        const percentStr = u.searchParams.get("percent");
+        const percent = percentStr ? parseInt(percentStr, 10) : NaN;
+        const decodedText = text ? decodeURIComponent(String(text).replace(/\+/g, " ")).trim() : "";
+        if (decodedText && !isNaN(percent) && percent >= 0 && percent <= 100) {
+          setPendingPhishing({ text: decodedText, percent });
+        }
+        router.replace("/(tabs)/diagnosis" as any);
+      } catch (_) {}
+    };
+    Linking.getInitialURL().then(handler);
+    const sub = Linking.addEventListener("url", ({ url }) => handler(url));
+    return () => sub.remove();
+  }, [router]);
+
   return (
     <Stack
       screenOptions={{
@@ -41,8 +65,22 @@ function RootLayoutNav() {
 
 export default function RootLayout() {
   useEffect(() => {
-    // 앱 로드 후 스플래시 숨김 [cite: 2026-02-28]
     SplashScreen.hideAsync();
+  }, []);
+
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      const perms: string[] = [
+        PermissionsAndroid.PERMISSIONS.READ_SMS,
+        PermissionsAndroid.PERMISSIONS.RECEIVE_SMS,
+      ];
+      if (Platform.Version >= 33 && PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS) {
+        perms.push(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+      }
+      if (perms.length) {
+        PermissionsAndroid.requestMultiple(perms as any).catch(() => {});
+      }
+    }
   }, []);
 
   return (
