@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import {
   View,
   Text,
@@ -6,68 +6,85 @@ import {
   ScrollView,
   TouchableOpacity,
   Animated,
-  Modal,
   Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { 
-  Shield, 
-  ShieldAlert, 
-  ShieldCheck, 
-  AlertTriangle, 
-  X, 
-  ChevronRight, 
-  Phone, 
-  MessageCircle,
+  Mic,
+  MicOff,
   Activity
 } from 'lucide-react-native';
-import Colors from '../../constants/colors'; // 🌟 상대 경로 수정 [cite: 2026-02-28]
-import RiskGauge from '../../components/RiskGuage'; // 🌟 파일명 오타 반영 [cite: 2026-02-28]
+import Colors from '../../constants/colors';
+import RiskGauge from '../../components/RiskGuage';
 
 const { width } = Dimensions.get('window');
 
 export default function ProtectionScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const [isScanning, setIsScanning] = useState(false);
-  const [riskLevel, setRiskLevel] = useState(12); // 실시간 위험도 예시 [cite: 2026-02-28]
-  const [showWarning, setShowWarning] = useState(false);
-  
-  const scanAnim = useRef(new Animated.Value(0)).current;
+  const [isListening, setIsListening] = useState(false);
+  const [riskLevel, setRiskLevel] = useState(12);
 
-  // 🔍 검사 애니메이션 로직 [cite: 2026-02-28]
-  const startScan = useCallback(() => {
-    setIsScanning(true);
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(scanAnim, { toValue: 1, duration: 1500, useNativeDriver: true }),
-        Animated.timing(scanAnim, { toValue: 0, duration: 1500, useNativeDriver: true }),
+  const pulseAnim = useRef(new Animated.Value(1)).current;
+  const pulseOpacity = useRef(new Animated.Value(0.6)).current;
+  const pulseLoop = useRef<Animated.CompositeAnimation | null>(null);
+
+  const startPulse = () => {
+    pulseLoop.current = Animated.loop(
+      Animated.parallel([
+        Animated.sequence([
+          Animated.timing(pulseAnim, { toValue: 1.35, duration: 900, useNativeDriver: true }),
+          Animated.timing(pulseAnim, { toValue: 1, duration: 900, useNativeDriver: true }),
+        ]),
+        Animated.sequence([
+          Animated.timing(pulseOpacity, { toValue: 0, duration: 900, useNativeDriver: true }),
+          Animated.timing(pulseOpacity, { toValue: 0.6, duration: 900, useNativeDriver: true }),
+        ]),
       ])
-    ).start();
+    );
+    pulseLoop.current.start();
+  };
 
-    // 3초 후 검사 완료 시뮬레이션 [cite: 2026-02-28]
-    setTimeout(() => {
-      setIsScanning(false);
-      setRiskLevel(Math.floor(Math.random() * 20) + 5);
-    }, 3000);
-  }, [scanAnim]);
+  const stopPulse = () => {
+    pulseLoop.current?.stop();
+    pulseAnim.setValue(1);
+    pulseOpacity.setValue(0.6);
+  };
 
-  // 🌟 94번줄 근처 에러 방지를 위한 상태 렌더링 함수 [cite: 2026-02-28]
+  const handleMicPress = useCallback(() => {
+    if (isListening) {
+      setIsListening(false);
+      stopPulse();
+    } else {
+      setIsListening(true);
+      startPulse();
+    }
+  }, [isListening]);
+
   const getStatusInfo = () => {
-    if (riskLevel >= 80) return { title: 'Risk detected', color: Colors.danger, icon: <ShieldAlert size={20} color={Colors.white} /> };
-    if (riskLevel >= 50) return { title: 'Caution', color: Colors.caution, icon: <AlertTriangle size={20} color={Colors.white} /> };
-    return { title: 'Safe', color: Colors.primary, icon: <ShieldCheck size={20} color={Colors.white} /> };
+    if (riskLevel >= 80) return { title: 'Risk detected', color: Colors.danger };
+    if (riskLevel >= 50) return { title: 'Caution', color: Colors.caution };
+    return { title: 'Safe', color: Colors.primary };
   };
 
   const status = getStatusInfo();
 
   return (
     <View style={styles.container}>
-      <ScrollView 
+      {/* 중앙 밸런스를 위해 contentContainerStyle에 flexGrow: 1과 
+          justifyContent: 'center'를 적용했습니다.
+      */}
+      <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingTop: insets.top + 16, paddingBottom: insets.bottom + 100 }}
+        contentContainerStyle={{ 
+          flexGrow: 1, 
+          justifyContent: 'center',
+          paddingTop: insets.top, 
+          paddingBottom: insets.bottom 
+        }}
       >
+        {/* 헤더 */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Live protection</Text>
           <View style={styles.liveBadge}>
@@ -76,116 +93,122 @@ export default function ProtectionScreen() {
           </View>
         </View>
 
-        {/* 🌟 RiskGauge 컴포넌트 호출 (전달 데이터 안전성 확보) [cite: 2026-02-28] */}
+        {/* 위험도 게이지: 시각적 안정감을 위해 사이즈를 약간 키우고 마진을 조정했습니다. */}
         <View style={styles.gaugeContainer}>
-          <RiskGauge value={riskLevel} size={width * 0.65} />
+          <RiskGauge value={riskLevel} size={width * 0.7} />
         </View>
 
-        <View style={styles.statusCard}>
-          <View style={[styles.statusIndicator, { backgroundColor: status.color }]}>
-            {status.icon}
-          </View>
-          <View style={styles.statusInfo}>
-            <Text style={styles.statusLabel}>Current device status</Text>
-            <Text style={[styles.statusTitle, { color: status.color }]}>{status.title}</Text>
-          </View>
-          <TouchableOpacity 
-            style={styles.scanButton} 
-            onPress={startScan}
-            disabled={isScanning}
+        {/* 마이크 버튼: 게이지와의 황금 비율 거리를 위해 marginTop을 48로 설정했습니다. */}
+        <View style={styles.micWrapper}>
+          {isListening && (
+            <Animated.View
+              style={[
+                styles.pulseRing,
+                {
+                  transform: [{ scale: pulseAnim }],
+                  opacity: pulseOpacity,
+                },
+              ]}
+            />
+          )}
+
+          <TouchableOpacity
+            style={[styles.micButton, isListening && styles.micButtonActive]}
+            onPress={handleMicPress}
+            activeOpacity={0.85}
           >
-            <Text style={styles.scanButtonText}>{isScanning ? 'Scanning...' : 'Run scan'}</Text>
+            {isListening
+              ? <MicOff size={44} color={Colors.white} strokeWidth={1.8} />
+              : <Mic size={44} color={Colors.white} strokeWidth={1.8} />
+            }
           </TouchableOpacity>
+
+          <Text style={styles.micLabel}>
+            {isListening ? 'Listening... tap to stop' : 'Tap to start listening'}
+          </Text>
         </View>
 
-        <View style={styles.actionGrid}>
-          <TouchableOpacity 
-            style={styles.actionItem}
-            onPress={() => router.push('/reporting-chatbot')}
-          >
-            <View style={[styles.actionIcon, { backgroundColor: Colors.primaryLight }]}>
-              <MessageCircle size={24} color={Colors.primary} />
+        {/* 상태 표시: 레이아웃이 덜컹거리지 않도록 고정 높이의 컨테이너를 사용했습니다. */}
+        <View style={styles.statusContainer}>
+          {isListening && (
+            <View style={styles.statusRow}>
+              <View style={[styles.statusDot, { backgroundColor: status.color }]} />
+              <Text style={[styles.statusText, { color: status.color }]}>{status.title}</Text>
             </View>
-            <Text style={styles.actionText}>Report assistant</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.actionItem}>
-            <View style={[styles.actionIcon, { backgroundColor: Colors.dangerBg }]}>
-              <Phone size={24} color={Colors.danger} />
-            </View>
-            <Text style={styles.actionText}>Block list</Text>
-          </TouchableOpacity>
+          )}
         </View>
 
-        <TouchableOpacity 
-          style={styles.warningCard}
-          onPress={() => setShowWarning(true)}
-        >
-          <View style={styles.warningLeft}>
-            <AlertTriangle size={20} color={Colors.caution} />
-            <Text style={styles.warningText}>1 suspicious activity detected recently</Text>
-          </View>
-          <ChevronRight size={18} color={Colors.textTertiary} />
-        </TouchableOpacity>
       </ScrollView>
-
-      {/* 경고 팝업 모달 [cite: 2026-02-28] */}
-      <Modal visible={showWarning} transparent animationType="slide">
-        <View style={styles.warningOverlay}>
-          <View style={styles.warningContent}>
-            <TouchableOpacity onPress={() => setShowWarning(false)} style={styles.warningClose}>
-              <X size={24} color={Colors.textTertiary} />
-            </TouchableOpacity>
-            <View style={styles.warningIconBg}>
-              <ShieldAlert size={40} color={Colors.danger} />
-            </View>
-            <Text style={styles.warningTitle}>Possible phishing alert</Text>
-            <Text style={styles.warningBody}>
-              A text about a small payment was received from an unknown number. Do not click any link in it.
-            </Text>
-            <TouchableOpacity 
-              style={styles.dangerButton}
-              onPress={() => {
-                setShowWarning(false);
-                router.push('/reporting-chatbot');
-              }}
-            >
-              <Text style={styles.dangerButtonText}>Talk to report assistant</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.background },
-  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 24, marginBottom: 24 },
-  headerTitle: { fontSize: 24, fontWeight: '700' as const, color: Colors.text },
-  liveBadge: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 8, paddingVertical: 4, backgroundColor: Colors.primaryFaint, borderRadius: 8 },
-  liveText: { fontSize: 12, fontWeight: '700' as const, color: Colors.primary },
-  gaugeContainer: { alignItems: 'center', justifyContent: 'center', marginVertical: 20 },
-  statusCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.white, marginHorizontal: 24, padding: 20, borderRadius: 20, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 10, elevation: 3 },
-  statusIndicator: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-  statusInfo: { flex: 1, marginLeft: 16 },
-  statusLabel: { fontSize: 13, color: Colors.textTertiary, marginBottom: 2 },
-  statusTitle: { fontSize: 18, fontWeight: '700' as const },
-  scanButton: { backgroundColor: Colors.background, paddingHorizontal: 16, paddingVertical: 10, borderRadius: 12, borderWidth: 1, borderColor: Colors.border },
-  scanButtonText: { fontSize: 14, fontWeight: '600' as const, color: Colors.text },
-  actionGrid: { flexDirection: 'row', paddingHorizontal: 24, gap: 16, marginTop: 24 },
-  actionItem: { flex: 1, backgroundColor: Colors.white, padding: 20, borderRadius: 20, alignItems: 'center', gap: 12 },
-  actionIcon: { width: 56, height: 56, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
-  actionText: { fontSize: 15, fontWeight: '600' as const, color: Colors.text },
-  warningCard: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#FFF9E6', marginHorizontal: 24, marginTop: 24, padding: 16, borderRadius: 16, borderWidth: 1, borderColor: '#FFEBB3' },
-  warningLeft: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  warningText: { fontSize: 14, fontWeight: '600' as const, color: '#856404' },
-  warningOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
-  warningContent: { backgroundColor: Colors.white, borderTopLeftRadius: 32, borderTopRightRadius: 32, padding: 24, paddingBottom: 40, alignItems: 'center' },
-  warningClose: { alignSelf: 'flex-end', padding: 4 },
-  warningIconBg: { width: 80, height: 80, borderRadius: 40, backgroundColor: Colors.dangerBg, alignItems: 'center', justifyContent: 'center', marginBottom: 16 },
-  warningTitle: { fontSize: 24, fontWeight: '700' as const, color: Colors.danger, marginBottom: 8 },
-  warningBody: { fontSize: 16, color: Colors.textSecondary, textAlign: 'center', lineHeight: 24, marginBottom: 32 },
-  dangerButton: { backgroundColor: Colors.danger, width: '100%', height: 56, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
-  dangerButtonText: { color: Colors.white, fontSize: 18, fontWeight: '700' as const },
+  header: {
+    position: 'absolute', // 중앙 정렬을 방해하지 않도록 상단에 고정
+    top: 60,
+    left: 0,
+    right: 0,
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+    zIndex: 10,
+  },
+  headerTitle: { fontSize: 24, fontWeight: '700', color: Colors.text },
+  liveBadge: {
+    flexDirection: 'row', alignItems: 'center', gap: 4,
+    paddingHorizontal: 8, paddingVertical: 4,
+    backgroundColor: Colors.primaryFaint, borderRadius: 8,
+  },
+  liveText: { fontSize: 12, fontWeight: '700', color: Colors.primary },
+  
+  gaugeContainer: { 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    marginTop: 60 // 헤더 영역 확보
+  },
+
+  micWrapper: { 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    marginTop: 48, // 게이지와 마이크 사이의 균형 잡힌 간격
+    marginBottom: 24 
+  },
+  pulseRing: {
+    position: 'absolute',
+    width: 120, height: 120, borderRadius: 60,
+    backgroundColor: Colors.danger,
+  },
+  micButton: {
+    width: 100, height: 100, borderRadius: 50,
+    backgroundColor: Colors.primary,
+    alignItems: 'center', justifyContent: 'center',
+    shadowColor: Colors.primary,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.4, shadowRadius: 12, elevation: 8,
+  },
+  micButtonActive: {
+    backgroundColor: Colors.danger,
+    shadowColor: Colors.danger,
+  },
+  micLabel: {
+    marginTop: 20, 
+    fontSize: 16,
+    color: Colors.textSecondary, 
+    fontWeight: '500',
+  },
+
+  statusContainer: {
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  statusRow: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+    gap: 8,
+  },
+  statusDot: { width: 10, height: 10, borderRadius: 5 },
+  statusText: { fontSize: 16, fontWeight: '700' },
 });
