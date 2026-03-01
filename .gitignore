@@ -13,3 +13,6 @@ backend/node-server/.env
 node_modules/
 backend/node-server/node_modules/
 .DS_Store
+
+# macOS
+.DS_Store

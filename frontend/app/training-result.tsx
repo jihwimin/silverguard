@@ -10,7 +10,7 @@ import {
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Trophy, CheckCircle, AlertTriangle, RefreshCw, Share2 } from 'lucide-react-native';
+import { Trophy, AlertTriangle, CheckCircle, RefreshCw } from 'lucide-react-native';
 import Colors from '@/constants/colors';
 
 export default function TrainingResultScreen() {
@@ -57,7 +57,7 @@ export default function TrainingResultScreen() {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 32 }]}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}
       >
         <Animated.View style={[styles.badgeSection, { transform: [{ scale: scaleAnim }] }]}>
           <View style={[styles.badgeCircle, { backgroundColor: badge.color + '18' }]}>
@@ -72,19 +72,10 @@ export default function TrainingResultScreen() {
         <Animated.View style={[styles.feedbackSection, { opacity: fadeAnim }]}>
           <View style={styles.feedbackCard}>
             <View style={styles.feedbackHeader}>
-              <CheckCircle size={18} color={Colors.primary} strokeWidth={2} />
-              <Text style={styles.feedbackTitle}>What you did well</Text>
-            </View>
-            <Text style={styles.feedbackItem}>• Correct response to agency impersonation</Text>
-            <Text style={styles.feedbackItem}>• Understanding the importance of verifying official numbers</Text>
-          </View>
-
-          <View style={styles.feedbackCard}>
-            <View style={styles.feedbackHeader}>
               <AlertTriangle size={18} color={Colors.caution} strokeWidth={2} />
-              <Text style={styles.feedbackTitle}>Risky moments</Text>
+              <Text style={styles.feedbackTitle}>What to look out for commonly</Text>
             </View>
-            <Text style={styles.feedbackItem}>• Need to strengthen judgment in urgent-sounding situations</Text>
+            <Text style={styles.feedbackItem}>• Watch for urgency tactics that push you to act immediately</Text>
             <Text style={styles.feedbackItem}>• Remember: clicking text links can be dangerous</Text>
           </View>
 
@@ -106,11 +97,6 @@ export default function TrainingResultScreen() {
           <RefreshCw size={20} color={Colors.white} strokeWidth={2} />
           <Text style={styles.primaryButtonText}>Practice again</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.secondaryButton} activeOpacity={0.75}>
-          <Share2 size={18} color={Colors.primary} strokeWidth={2} />
-          <Text style={styles.secondaryButtonText}>Share with family</Text>
-        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -118,32 +104,48 @@ export default function TrainingResultScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.background },
-  scrollContent: { paddingHorizontal: 24, paddingTop: 24 },
-  badgeSection: { alignItems: 'center', marginBottom: 32 },
+
+  // tighter spacing
+  scrollContent: { paddingHorizontal: 24, paddingTop: 16 },
+
+  badgeSection: { alignItems: 'center', marginBottom: 20 },
   badgeCircle: {
-    width: 110, height: 110, borderRadius: 55,
-    alignItems: 'center', justifyContent: 'center', marginBottom: 16,
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 14,
   },
   badgeLabel: { fontSize: 24, fontWeight: '700' as const },
   scoreText: { fontSize: 16, color: Colors.textSecondary, marginTop: 6, fontWeight: '500' as const },
-  feedbackSection: { gap: 12, marginBottom: 24 },
+
+  feedbackSection: { gap: 10, marginBottom: 16 },
   feedbackCard: {
-    backgroundColor: Colors.card, borderRadius: 16, padding: 18,
-    shadowColor: '#000', shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03, shadowRadius: 4, elevation: 1,
+    backgroundColor: Colors.card,
+    borderRadius: 16,
+    padding: 18,
+    minHeight: 190,
+    justifyContent: 'center', 
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 4,
+    elevation: 1,
   },
   feedbackHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
   feedbackTitle: { fontSize: 16, fontWeight: '700' as const, color: Colors.text },
   feedbackItem: { fontSize: 15, color: Colors.textSecondary, lineHeight: 24 },
+
   primaryButton: {
-    backgroundColor: Colors.primary, borderRadius: 16, height: 56,
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    gap: 8, marginBottom: 12,
+    backgroundColor: Colors.primary,
+    borderRadius: 16,
+    height: 56,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    marginBottom: 0,
   },
   primaryButtonText: { color: Colors.white, fontSize: 18, fontWeight: '700' as const },
-  secondaryButton: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    gap: 6, height: 52, borderRadius: 16, borderWidth: 1.5, borderColor: Colors.primary,
-  },
-  secondaryButtonText: { fontSize: 16, color: Colors.primary, fontWeight: '600' as const },
 });

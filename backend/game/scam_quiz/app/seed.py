@@ -77,13 +77,13 @@ QUESTIONS = [
     },
     # --- 20 additional questions (10 phishing / 10 non-phishing) ---
     {
-        "content": "FedEx: Package on hold. Pay $2.99 delivery fee at http://fedex-fee-pay[.]example[.]com to release.",
+        "content": "FedEx: Package on hold. Pay $2.99 delivery fee at http://fedex-fee-pay.com to release.",
         "type": QuestionType.SMS,
         "is_phishing": True,
         "explanation": "Real carriers do not send payment links via SMS; the fake domain and fee demand are smishing cues.",
     },
     {
-        "content": "Subject: Action required – verify your Netflix account. Your payment failed. Update at: https://netflix-billing[.]example[.]com",
+        "content": "Subject: Action required – verify your Netflix account. Your payment failed. Update at: https://netflix-billing.com",
         "type": QuestionType.EMAIL,
         "is_phishing": True,
         "explanation": "Netflix uses netflix.com only; the linked domain is fake and the payment-failure urgency is a common phishing hook.",
@@ -95,7 +95,7 @@ QUESTIONS = [
         "explanation": "Legitimate tech support does not cold-call or ask you to download and run files from unknown sites; this is a support scam.",
     },
     {
-        "content": "Your PayPal has been limited. Log in within 48 hours at https://paypal-secure[.]example[.]com or we will close your account.",
+        "content": "Your PayPal has been limited. Log in within 48 hours at https://paypal-secure.com or we will close your account.",
         "type": QuestionType.SMS,
         "is_phishing": True,
         "explanation": "PayPal does not use SMS links for account verification; the fake domain and account-closure threat are phishing signs.",
@@ -113,13 +113,13 @@ QUESTIONS = [
         "explanation": "The SSA does not call to suspend your SSN; the claim of suspension and pressure to act immediately are hallmarks of a government-impersonation scam.",
     },
     {
-        "content": "Walmart: You won a $500 gift card! Claim at http://walmart-gift[.]example[.]com. Enter your card number to verify.",
+        "content": "Walmart: You won a $500 gift card! Claim at http://walmart-gift.com. Enter your card number to verify.",
         "type": QuestionType.SMS,
         "is_phishing": True,
         "explanation": "Unsolicited 'you won' texts and requests to enter card details on a linked site are classic smishing; Walmart does not verify via SMS links.",
     },
     {
-        "content": "Subject: Your Microsoft 365 license expires in 24 hours. Renew now: https://microsoft-renew[.]example[.]com to avoid losing access.",
+        "content": "Subject: Your Microsoft 365 license expires in 24 hours. Renew now: https://microsoft-renew.com to avoid losing access.",
         "type": QuestionType.EMAIL,
         "is_phishing": True,
         "explanation": "Microsoft uses microsoft.com domains; the fake renewal link and short deadline are typical phishing tactics.",
@@ -131,7 +131,7 @@ QUESTIONS = [
         "explanation": "Cold calls about 'expiring' car warranties that ask for payment details are a well-known scam; real warranty companies do not operate this way.",
     },
     {
-        "content": "Subject: Your DocuSign document is ready. Sign here: https://docusign-sign[.]example[.]com/doc/8821",
+        "content": "Subject: Your DocuSign document is ready. Sign here: https://docusign-sign.com/doc/8821",
         "type": QuestionType.EMAIL,
         "is_phishing": True,
         "explanation": "DocuSign uses docusign.com; a link to a different domain to sign documents is a credential-phishing attempt.",

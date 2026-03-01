@@ -17,6 +17,8 @@ import { Platform } from 'react-native';
 import Colors from '@/constants/colors';
 import { BASE_URL } from '@/constants/config';
 
+import * as Speech from 'expo-speech';
+
 interface Question {
   id: number;
   content: string;
@@ -36,6 +38,7 @@ interface AnswerResult {
 
 type Phase = 'loading' | 'question' | 'result' | 'error';
 
+
 export default function TrainingPlayScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
@@ -48,6 +51,19 @@ export default function TrainingPlayScreen() {
   const [questionCount, setQuestionCount] = useState(0);
   const [score, setScore] = useState(0);
   const resultAnim = useRef(new Animated.Value(0)).current;
+  
+  const renderQuestion = (q: Question) => {
+    switch (q.type) {
+      case 'sms':
+        return <SmsMock content={q.content} />;
+      case 'email':
+        return <EmailMock content={q.content} />;
+      case 'call_transcript':
+        return <CallMock content={q.content} ttsEnabled />;
+      default:
+        return <Text style={styles.questionText}>{q.content}</Text>;
+    }
+  };
 
   const fetchNextQuestion = async () => {
     setPhase('loading');
@@ -164,7 +180,7 @@ export default function TrainingPlayScreen() {
               </View>
               <View style={styles.speechBubble}>
                 <View style={styles.speechTail} />
-                <Text style={styles.questionText}>{quizState.question.content}</Text>
+                {renderQuestion(quizState.question)}
               </View>
             </View>
 
@@ -175,7 +191,7 @@ export default function TrainingPlayScreen() {
                 activeOpacity={0.75}
                 disabled={phase !== 'question'}
               >
-                <Text style={styles.choicePhishingText}>🚨 Phishing</Text>
+                <Text style={styles.choicePhishingText}> Phishing</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.choiceButton, styles.choiceSafe, phase === 'result' && styles.choiceDisabled]}
@@ -183,7 +199,7 @@ export default function TrainingPlayScreen() {
                 activeOpacity={0.75}
                 disabled={phase !== 'question'}
               >
-                <Text style={styles.choiceSafeText}>✅ Safe</Text>
+                <Text style={styles.choiceSafeText}> Safe</Text>
               </TouchableOpacity>
             </View>
 
@@ -241,6 +257,266 @@ export default function TrainingPlayScreen() {
     </View>
   );
 }
+
+function SmsMock({ content }: { content: string }) {
+  return (
+    <View style={smsStyles.phoneFrame}>
+      <View style={smsStyles.statusBar}>
+        <Text style={smsStyles.statusText}>9:41</Text>
+        <View style={smsStyles.statusDots} />
+      </View>
+
+      <View style={smsStyles.smsHeader}>
+        <Text style={smsStyles.contactName}>Unknown Sender</Text>
+        <Text style={smsStyles.contactSub}>+1 (•••) •••-••••</Text>
+      </View>
+
+      <View style={smsStyles.thread}>
+        <View style={smsStyles.bubbleIncoming}>
+          <Text style={smsStyles.bubbleText}>{content}</Text>
+        </View>
+      </View>
+
+      <View style={smsStyles.composer}>
+        <Text style={smsStyles.composerPlaceholder}>iMessage</Text>
+      </View>
+    </View>
+  );
+}
+
+function EmailMock({ content }: { content: string }) {
+  return (
+    <View style={emailStyles.card}>
+      <Text style={emailStyles.subject}>Important Notice</Text>
+
+      <View style={emailStyles.metaRow}>
+        <Text style={emailStyles.metaLabel}>From</Text>
+        <Text style={emailStyles.metaValue}>Support &lt;support@service.com&gt;</Text>
+      </View>
+      <View style={emailStyles.metaRow}>
+        <Text style={emailStyles.metaLabel}>To</Text>
+        <Text style={emailStyles.metaValue}>You</Text>
+      </View>
+
+      <View style={emailStyles.divider} />
+
+      <Text style={emailStyles.body}>{content}</Text>
+    </View>
+  );
+}
+
+function CallMock({ content, ttsEnabled }: { content: string; ttsEnabled?: boolean }) {
+  const [playing, setPlaying] = useState(false);
+  const scrollRef = useRef<ScrollView>(null);
+
+  const TTS_RATE = 0.82;
+
+  const [chunks, setChunks] = useState<string[]>([]);
+  const [visibleCount, setVisibleCount] = useState(0);
+
+  const makeChunks = (text: string) => {
+    const trimmed = text.trim();
+    if (!trimmed) return [];
+
+    const byNewline = trimmed.split('\n').map((s) => s.trim()).filter(Boolean);
+    if (byNewline.length >= 2) return byNewline;
+
+    const bySentence = trimmed
+      .split(/(?<=[.!?])\s+/)
+      .map((s) => s.trim().replace(/^"+|"+$/g, ''))
+      .filter(Boolean);
+
+    // De-dupe consecutive duplicates
+    const deduped: string[] = [];
+    for (const s of bySentence) {
+      if (deduped.length === 0 || deduped[deduped.length - 1] !== s) deduped.push(s);
+    }
+    return deduped;
+  };
+
+  // ✅ Live transcript synced (approx) to TTS rate — single timer chain (no flicker)
+  useEffect(() => {
+    const c = makeChunks(content);
+    setChunks(c);
+    setVisibleCount(0);
+
+    let alive = true;
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+
+    // Rough timing model based on speech rate
+    const baseWpm = 175;
+    const wpm = Math.max(90, baseWpm * TTS_RATE);
+    const msPerWord = 60000 / wpm;
+
+    const delayForChunk = (text: string) => {
+      const words = text.trim().split(/\s+/).filter(Boolean).length;
+      const punctuationPauses = (text.match(/[,.!?]/g)?.length ?? 0) * 140;
+      return Math.max(500, words * msPerWord + punctuationPauses);
+    };
+
+    const step = (i: number) => {
+      if (!alive) return;
+      setVisibleCount(i + 1);
+      if (i + 1 >= c.length) return;
+
+      timeout = setTimeout(() => step(i + 1), delayForChunk(c[i]));
+    };
+
+    // Start quickly (so first chunk appears immediately)
+    timeout = setTimeout(() => {
+      if (c.length > 0) step(0);
+    }, 150);
+
+    return () => {
+      alive = false;
+      if (timeout) clearTimeout(timeout);
+    };
+  }, [content, TTS_RATE]);
+
+  // ✅ TTS
+  useEffect(() => {
+    if (!ttsEnabled) return;
+    if (Platform.OS === 'web') return;
+
+    setPlaying(true);
+    Speech.stop(); // stop any previous utterance
+    Speech.speak(content, {
+      rate: TTS_RATE,
+      onDone: () => setPlaying(false),
+      onStopped: () => setPlaying(false),
+      onError: () => setPlaying(false),
+    });
+
+    return () => {
+      Speech.stop();
+    };
+  }, [content, ttsEnabled, TTS_RATE]);
+
+  return (
+    <View style={callStyles.wrapper}>
+      <View style={callStyles.callHeader}>
+        <View style={callStyles.avatarCircle}>
+          <Text style={callStyles.avatarText}>SC</Text>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text style={callStyles.caller}>Unknown Caller</Text>
+          <Text style={callStyles.status}>{playing ? 'Speaking…' : 'Call transcript'}</Text>
+        </View>
+        <View style={callStyles.callBadge}>
+          <Text style={callStyles.callBadgeText}>LIVE</Text>
+        </View>
+      </View>
+
+      <View style={callStyles.transcriptBox}>
+        <ScrollView
+          ref={scrollRef}
+          onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: true })}
+          showsVerticalScrollIndicator={false}
+        >
+          {chunks.length === 0 ? (
+            <Text style={callStyles.transcriptMuted}>Listening…</Text>
+          ) : (
+            chunks.slice(0, visibleCount).map((l, idx) => (
+              <Text key={idx} style={callStyles.transcriptLine}>
+                {l}
+              </Text>
+            ))
+          )}
+        </ScrollView>
+      </View>
+    </View>
+  );
+}
+
+const smsStyles = StyleSheet.create({
+  phoneFrame: {
+    borderRadius: 26,
+    borderWidth: 2,
+    borderColor: Colors.textTertiary,
+    backgroundColor: '#000',
+    padding: 14,
+  },
+  statusBar: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
+  statusText: { color: '#fff', fontWeight: '700' as const },
+  statusDots: { width: 44, height: 10, borderRadius: 5, backgroundColor: '#222' },
+
+  smsHeader: { alignItems: 'center', marginBottom: 14 },
+  contactName: { color: '#fff', fontWeight: '700' as const, fontSize: 16 },
+  contactSub: { color: '#aaa', fontSize: 12, marginTop: 2 },
+
+  thread: { minHeight: 120, justifyContent: 'flex-end', gap: 10 },
+  bubbleIncoming: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#2c2c2e',
+    borderRadius: 18,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    maxWidth: '88%',
+  },
+  bubbleText: { color: '#fff', fontSize: 15, lineHeight: 20 },
+
+  composer: {
+    marginTop: 14,
+    backgroundColor: '#1c1c1e',
+    borderRadius: 18,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+  },
+  composerPlaceholder: { color: '#777' },
+});
+
+const emailStyles = StyleSheet.create({
+  card: {
+    backgroundColor: Colors.card,
+    borderRadius: 18,
+    padding: 18,
+    borderWidth: 1,
+    borderColor: Colors.primaryFaint,
+  },
+  subject: { fontSize: 18, fontWeight: '800' as const, color: Colors.text, marginBottom: 10 },
+  metaRow: { flexDirection: 'row', gap: 10, marginTop: 4 },
+  metaLabel: { width: 44, color: Colors.textTertiary, fontSize: 13, fontWeight: '700' as const },
+  metaValue: { flex: 1, color: Colors.textSecondary, fontSize: 13 },
+  divider: { height: 1, backgroundColor: Colors.background, marginVertical: 12 },
+  body: { color: Colors.text, fontSize: 15, lineHeight: 22 },
+});
+
+const callStyles = StyleSheet.create({
+  wrapper: { gap: 12 },
+
+  callHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: Colors.card,
+    borderRadius: 18,
+    padding: 14,
+  },
+  avatarCircle: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    backgroundColor: Colors.primaryFaint,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatarText: { fontWeight: '800' as const, color: Colors.primary },
+  caller: { fontSize: 16, fontWeight: '800' as const, color: Colors.text },
+  status: { fontSize: 13, color: Colors.textSecondary, marginTop: 2 },
+  callBadge: { backgroundColor: Colors.dangerBg, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999 },
+  callBadgeText: { color: Colors.danger, fontWeight: '800' as const, fontSize: 12 },
+
+  transcriptBox: {
+    backgroundColor: Colors.background,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: Colors.primaryFaint,
+    padding: 14,
+    height: 220, // ✅ fixed window so old text scrolls away
+  },
+  transcriptMuted: { color: Colors.textTertiary, fontSize: 14 },
+  transcriptLine: { color: Colors.text, fontSize: 15, lineHeight: 22, marginBottom: 8 },
+});
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.background },
