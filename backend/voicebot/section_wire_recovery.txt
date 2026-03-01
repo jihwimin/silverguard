@@ -1,0 +1,111 @@
+================================================================================
+SECTION 4: WIRE TRANSFER RECOVERY OPTIONS
+================================================================================
+
+4.1 FEDERAL FRAUD KILL CHAIN (FFKC)
+────────────────────────────────────
+
+Purpose:
+The FFKC is a coordinated international process (FBI + FinCEN + foreign banking 
+regulators) to STOP fraudulent wire transfers before they reach final destination 
+and recover funds.
+
+Eligibility Criteria (ALL must be met):
+  • Transfer must be detected within ~72 hours of initiation
+  • Wire/transfer must be international OR cross-state lines
+  • Fraudulent nature must be verified
+  • Victim bank must cooperate
+  • Recipient bank must cooperate (foreign or domestic)
+
+Activation Process:
+1. File IC3 complaint at www.ic3.gov immediately
+2. Contact FBI field office with IC3 complaint number
+3. FBI contacts FinCEN with fraud details
+4. FinCEN initiates international banking coordination
+5. Receiving bank is notified to HOLD funds before settlement
+6. If successful, funds are returned to victim (through series of transfers)
+
+Success Rate:
+  • ~50% of FFKC-initiated cases result in recovery if activated within 72 hours
+  • Drops dramatically after 72 hours
+  • Higher success for domestic transfers than international
+
+Time-Critical Action:
+If money was wire transferred or ACH'd out of your account, CALL YOUR BANK 
+IMMEDIATELY and ask:
+  • "Can you activate the Financial Fraud Kill Chain?"
+  • "How long do I have to report for FFKC eligibility?"
+  • Provide IC3 complaint number if already filed
+
+Legal References:
+  - 18 U.S.C. § 1343 (Wire Fraud - criminal basis for FBI action)
+  - 31 U.S.C. § 5318 (FinCEN Authority)
+  - Federal Reserve/OCC Guidance on Wire Fraud Response
+
+Note: FFKC is not guaranteed. Speed and cooperation are essential. Many cases 
+result in only partial recovery or no recovery.
+
+4.2 CIVIL RECOVERY (If Criminal Recovery Fails)
+─────────────────────────────────────────────────
+
+Lawsuit Against Receiving Bank (in some cases):
+Illinois law may allow civil suit against a receiving bank if:
+  • Bank accepted deposits knowing (or should have known) they were proceeds of fraud
+  • Bank failed to implement adequate fraud detection
+  • Bank had suspicious activity indicators but processed anyway
+
+Lawsuit Against Scammer (if identified):
+  • Generally difficult - scammers operate anonymously/internationally
+  • Judgment may be uncollectable
+  • Possible in Illinois state court or federal court
+
+Restitution in Criminal Case (if scammer is prosecuted):
+  • If FBI identifies and prosecutes scammer, court may order restitution
+  • Restitution collected by DOJ and distributed to victims
+  • Takes years; low collection rate
+
+Class Action Against Bank:
+  • If multiple customers defrauded by same incident, class action may be possible
+  • Contact consumer protection attorney
+
+Consult Attorney:
+Given complexity, consult Illinois consumer protection/banking lawyer for civil 
+recovery options.
+
+4.3 WIRE TRANSFER BASICS (What You Should Know)
+─────────────────────────────────────────────────
+
+What is a Wire Transfer?
+  • Fastest method of moving money between banks (usually same-day or next day)
+  • Uses SWIFT network (international) or Fedwire (domestic US)
+  • Irreversible once settled (usually within 24 hours)
+  • Limited fraud protection under federal law
+
+Limited EFTA Protection:
+  • Traditional bank wire transfers are EXEMPT from EFTA liability caps
+  • BUT recent court cases (New York v. Citibank, 2025) suggest wires through 
+    online banking platforms may have some EFTA protection
+  • Check with your specific bank about their wire fraud policies
+
+ACH vs Wire Transfer:
+  • ACH (Automated Clearing House): Slower (1-3 business days), better EFTA protection
+  • Wire: Faster (same-day), limited EFTA protection
+  • Both can be fraudulent; wires are harder to recover
+
+================================================================================
+CRITICAL TIMELINE FOR WIRE FRAUD
+================================================================================
+
+FFKC Window: 72 hours from transfer initiation
+Success Probability at 24 hours: ~70%
+Success Probability at 48 hours: ~60%
+Success Probability at 72 hours: ~40-50%
+Success Probability after 72 hours: <10%
+
+ACTION REQUIRED:
+1. Call your bank IMMEDIATELY (within hours if possible)
+2. File IC3 complaint: www.ic3.gov
+3. Contact FBI: www.fbi.gov/contact
+4. Get IC3 complaint number and provide to bank/FBI
+
+DO NOT DELAY. Time is critical for wire recovery.

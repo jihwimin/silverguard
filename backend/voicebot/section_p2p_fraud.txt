@@ -1,0 +1,148 @@
+================================================================================
+SECTION 5: P2P PAYMENT APP FRAUD (Venmo, PayPal, Square Cash, etc.)
+================================================================================
+
+Increasing risk: Scammers trick victims into sending money via P2P apps, which are 
+harder to reverse than bank transfers.
+
+5.1 IMMEDIATE REPORTING (P2P Apps)
+───────────────────────────────────
+
+P2P apps have limited fraud protection compared to banks.
+
+Steps:
+1. Report to the P2P app immediately:
+   • Go to app settings → Report a Problem
+   • Or contact app's fraud department
+   • Provide transaction ID, recipient username, amount, date
+2. Report to your bank (if linked debit/credit card):
+   • Bank may reverse through underlying payment method
+3. Report to FBI IC3: www.ic3.gov
+4. File police report (local non-emergency)
+
+Likelihood of Recovery:
+  • 20-30% recovery rate (much lower than wire transfers)
+  • P2P apps freeze suspect accounts but don't guarantee return
+  • If recipient already withdrew cash, recovery unlikely
+
+EFTA Protection on P2P:
+  • P2P transfers initiated through linked debit accounts may have SOME EFTA 
+    protection (recent CFPB guidance)
+  • Credit card P2P: May fall under Fair Credit Billing Act (FCBA) instead
+  • Terms vary by app; check app's terms
+
+5.2 DISPUTE PROCEDURES (App-Specific)
+──────────────────────────────────────
+
+Venmo:
+  • Dispute link: Settings → About Venmo → Contact Us → Report an Issue
+  • Success rate: Low if recipient already transferred out
+  • Venmo holds disputed funds but doesn't guarantee return
+  • Must report within reasonable time (check Venmo terms)
+
+PayPal:
+  • File dispute through Resolution Center
+  • May offer buyer protection if linked to PayPal Wallet
+  • But protection limited for person-to-person transfers
+  • Different rules for Goods/Services vs Friends & Family payments
+  • Friends & Family transfers have almost zero protection
+
+Square Cash (Cash App):
+  • Report to Square through app support
+  • Very limited chargeback protections
+  • Recommend contacting linked bank instead
+  • Cash App prioritizes quick transactions over fraud protection
+
+Google Pay & Apple Pay:
+  • P2P transfers through Google Pay/Apple Pay have variable protection
+  • Depends on underlying payment method (debit vs credit card)
+  • Report to payment processor and your bank
+
+Recommendation:
+For all P2P fraud, contact underlying bank first (if debit card linked) as bank 
+has better fraud reversal power than P2P app itself.
+
+5.3 DETAILED RECOVERY STEPS
+─────────────────────────────
+
+Step 1: Contact P2P App (First 24 Hours)
+  • Note exact transaction ID (found in transaction history)
+  • Document recipient username/account name
+  • Note if recipient account is still active
+  • Take screenshots of transaction
+
+Step 2: Contact Your Bank (First 24-48 Hours)
+  • If debit card linked: Bank may reverse transaction as unauthorized debit
+  • Provide P2P app transaction ID and bank transaction details
+  • Request investigation under EFTA (if debit-linked)
+  • Request chargeback under FCBA (if credit card-linked)
+
+Step 3: Freeze Recipient Account (If Possible)
+  • P2P app fraud team can flag recipient account
+  • May prevent recipient from withdrawing funds pending investigation
+  • Success depends on speed of reporting
+
+Step 4: FBI & Police Reporting
+  • File IC3 complaint: www.ic3.gov
+  • File local police report (non-emergency)
+  • Attach bank documentation
+
+5.4 LEGAL PROTECTIONS (Limited)
+─────────────────────────────────
+
+EFTA Protection (Debit Card Linked):
+  • May apply if debit card linked to P2P app
+  • Liability: $50 (if reported within 2 days), $500 (within 60 days)
+  • Bank must investigate
+  • Check specific app's terms
+
+FCBA Protection (Credit Card Linked):
+  • Fair Credit Billing Act may protect credit card P2P transfers
+  • Dispute period: 60 days from charge appearing on statement
+  • Issuer must investigate
+  • Varies by credit card company
+
+Terms & Conditions Loopholes:
+  • Many P2P apps state "Person-to-Person transfers are final"
+  • Terms may exempt fraud protection for P2P
+  • BUT EFTA/FCBA may override unfavorable terms
+  • Consult attorney if app denies claim
+
+Legal References:
+  - 15 U.S.C. § 1693 (EFTA - applies to debit)
+  - 15 U.S.C. § 1666 (FCBA - applies to credit cards)
+
+================================================================================
+APP COMPARISON - FRAUD RECOVERY
+================================================================================
+
+Venmo:        Low recovery (no EFTA), account freeze possible
+PayPal:       Medium recovery (Friends & Family=none, Goods/Services=higher)
+Cash App:     Very low recovery, limited protections
+Google Pay:   Depends on underlying payment method
+Apple Pay:    Depends on underlying payment method
+
+BEST STRATEGY: Use debit card through app (better EFTA protection) rather than 
+P2P-specific "Friends & Family" transfers which have near-zero protection.
+
+================================================================================
+QUICK ACTION PLAN - P2P FRAUD
+================================================================================
+
+WITHIN 24 HOURS:
+☐ Report to P2P app fraud support
+☐ Contact your bank
+☐ File IC3 complaint
+☐ Take screenshots of all transactions
+
+WITHIN 48 HOURS:
+☐ Request bank dispute/chargeback
+☐ File local police report
+☐ Monitor P2P app for account status changes
+
+ONGOING:
+☐ Follow up with bank on investigation
+☐ Monitor recipient account (if accessible)
+☐ Document all communication with app/bank
+
+Recovery odds: 20-30% (much lower than wire transfers)

@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "SilverGuard",
+    "slug": "silverguard",
+    "version": "1.0.0",
+    "scheme": "silverguard",
+    "android": {
+      "package": "com.silverguard.app",
+      "permissions": [
+        "android.permission.RECEIVE_SMS",
+        "android.permission.READ_SMS"
+      ]
+    },
+    "plugins": ["./plugins/withSmsReceiver"]
+  }
+}

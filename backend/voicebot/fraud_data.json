@@ -1,0 +1,126 @@
+{
+  "accounts": {
+    "69a3dc6695150878eaffb63f": {
+      "name": "Unknown Beneficiary",
+      "reason": "Linked to an active phishing ring. Do not transfer funds.",
+      "fraud_count": 18,
+      "nickname": "FRAUD_phishing_01"
+    },
+    "69a3dc6695150878eaffb640": {
+      "name": "Temp Account",
+      "reason": "Used in government agency impersonation scams.",
+      "fraud_count": 12,
+      "nickname": "FRAUD_gov_impersonation"
+    },
+    "69a3dc6695150878eaffb641": {
+      "name": "Prize Center LLC",
+      "reason": "Collects upfront fees from fake lottery winners.",
+      "fraud_count": 34,
+      "nickname": "FRAUD_lottery_scam"
+    },
+    "69a3dc6695150878eaffb642": {
+      "name": "Overseas Partner",
+      "reason": "Romance scam — victim groomed online before money request.",
+      "fraud_count": 27,
+      "nickname": "FRAUD_romance_scam_01"
+    },
+    "69a3dc6695150878eaffb643": {
+      "name": "CryptoBoost Holdings",
+      "reason": "Pump-and-dump crypto investment scheme targeting seniors.",
+      "fraud_count": 41,
+      "nickname": "FRAUD_crypto_pump"
+    },
+    "69a3dc6695150878eaffb644": {
+      "name": "IRS Collections Dept",
+      "reason": "Fake IRS agent demanding immediate wire transfer to avoid arrest.",
+      "fraud_count": 55,
+      "nickname": "FRAUD_irs_imposter"
+    },
+    "69a3dc6795150878eaffb645": {
+      "name": "Emergency Bail Fund",
+      "reason": "Grandparent scam — caller posed as grandchild in legal trouble.",
+      "fraud_count": 23,
+      "nickname": "FRAUD_grandparent_scam"
+    },
+    "69a3dc6795150878eaffb646": {
+      "name": "Microsoft Support Escrow",
+      "reason": "Fake tech support demanded remote access then wire transfer.",
+      "fraud_count": 19,
+      "nickname": "FRAUD_tech_support_01"
+    },
+    "69a3dc6795150878eaffb647": {
+      "name": "Medicare Refund Office",
+      "reason": "Fake Medicare refund scheme harvesting personal and banking data.",
+      "fraud_count": 38,
+      "nickname": "FRAUD_medicare_fraud"
+    },
+    "69a3dc6795150878eaffb648": {
+      "name": "Power & Gas Collections",
+      "reason": "Impersonates utility company threatening immediate shutoff unless payment made.",
+      "fraud_count": 16,
+      "nickname": "FRAUD_utility_shutoff"
+    },
+    "69a3dc6795150878eaffb649": {
+      "name": "Golden Yield Partners",
+      "reason": "Ponzi scheme promising guaranteed 30% monthly returns.",
+      "fraud_count": 62,
+      "nickname": "FRAUD_investment_ponzi"
+    },
+    "69a3dc6795150878eaffb64a": {
+      "name": "Secure Account Transfer",
+      "reason": "Spoofed bank number — victim instructed to move funds to 'safe' account.",
+      "fraud_count": 44,
+      "nickname": "FRAUD_bank_spoof_01"
+    },
+    "69a3dc6795150878eaffb64b": {
+      "name": "Disaster Relief Now",
+      "reason": "Fake charity soliciting donations after a natural disaster.",
+      "fraud_count": 11,
+      "nickname": "FRAUD_charity_fake"
+    },
+    "69a3dc6795150878eaffb64c": {
+      "name": "Federal Loan Forgiveness",
+      "reason": "Charges upfront fees for fake student loan forgiveness program.",
+      "fraud_count": 29,
+      "nickname": "FRAUD_student_loan"
+    },
+    "69a3dc6795150878eaffb64d": {
+      "name": "National Prize Clearing",
+      "reason": "Sweepstakes scam — victim must pay 'tax' to claim non-existent prize.",
+      "fraud_count": 33,
+      "nickname": "FRAUD_sweepstakes_01"
+    },
+    "69a3dc6795150878eaffb64e": {
+      "name": "Property Lien Services",
+      "reason": "Real estate deed theft scheme targeting elderly homeowners.",
+      "fraud_count": 8,
+      "nickname": "FRAUD_deed_theft"
+    },
+    "69a3dc6795150878eaffb64f": {
+      "name": "Rx Discount International",
+      "reason": "Fake prescription discount service collecting payment and health info.",
+      "fraud_count": 14,
+      "nickname": "FRAUD_prescription_scam"
+    },
+    "69a3dc6795150878eaffb650": {
+      "name": "SSA Fraud Division",
+      "reason": "Caller claimed victim's SSN was suspended; demanded wire transfer.",
+      "fraud_count": 47,
+      "nickname": "FRAUD_social_security"
+    },
+    "69a3dc6795150878eaffb651": {
+      "name": "Auto Protect National",
+      "reason": "Robocall scam selling fake extended vehicle warranties.",
+      "fraud_count": 21,
+      "nickname": "FRAUD_vehicle_warranty"
+    },
+    "69a3dc6795150878eaffb652": {
+      "name": "Remote Job Payroll",
+      "reason": "Overpayment check scam — fake employer sends check, requests partial refund.",
+      "fraud_count": 17,
+      "nickname": "FRAUD_check_overpay"
+    }
+  },
+  "merchants": {},
+  "reports": []
+}

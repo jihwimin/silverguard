@@ -1,0 +1,118 @@
+{
+  "sections": [
+    {
+      "id": "immediate_response",
+      "title": "Immediate Response (First 24-72 Hours)",
+      "file": "section_immediate_response.txt",
+      "keywords": ["wire", "transfer", "freeze", "report", "FBI", "IC3", "urgent", "immediately", "now"],
+      "questions": [
+        "I just wired money to a scammer. What do I do?",
+        "How do I report to my bank?",
+        "Should I call the police?",
+        "How do I contact the FBI?",
+        "How quickly do I need to act?"
+      ]
+    },
+    {
+      "id": "bank_procedures",
+      "title": "Bank Error Resolution Procedures",
+      "file": "section_bank_procedures.txt",
+      "keywords": ["EFTA", "investigation", "regulation", "bank", "protection", "liability", "dispute", "chargeback"],
+      "questions": [
+        "What can the bank do for me?",
+        "Is my account protected?",
+        "What's the bank's responsibility?",
+        "What is EFTA?",
+        "How do I file a dispute?"
+      ]
+    },
+    {
+      "id": "identity_theft",
+      "title": "Identity Theft & Personal Information Protection",
+      "file": "section_identity_theft.txt",
+      "keywords": ["identity", "theft", "SSN", "social security", "credit", "freeze", "fraud alert", "driver license"],
+      "questions": [
+        "I sent them my ID photo",
+        "I gave them my password",
+        "I revealed my credit card number",
+        "Can they open accounts in my name?",
+        "What is a credit freeze?"
+      ]
+    },
+    {
+      "id": "wire_recovery",
+      "title": "Wire Transfer Recovery & FFKC",
+      "file": "section_wire_recovery.txt",
+      "keywords": ["FFKC", "recovery", "wire", "international", "retrieve", "timing", "72 hours", "recipient bank"],
+      "questions": [
+        "Can I get my money back?",
+        "What is FFKC?",
+        "Can I cancel the wire?",
+        "What are the chances of recovery?",
+        "What about international wires?"
+      ]
+    },
+    {
+      "id": "p2p_fraud",
+      "title": "P2P Payment App Fraud (Venmo, PayPal, Cash App)",
+      "file": "section_p2p_fraud.txt",
+      "keywords": ["Venmo", "PayPal", "Square", "Cash App", "app", "P2P", "transfer", "friend"],
+      "questions": [
+        "I sent money through Venmo",
+        "PayPal fraud happened to me",
+        "Can I recover money from the app?",
+        "I used Cash App to send money",
+        "What is a P2P app?"
+      ]
+    },
+    {
+      "id": "credit_card",
+      "title": "Credit Card Fraud & Unauthorized Charges",
+      "file": "section_credit_card.txt",
+      "keywords": ["credit card", "unauthorized charge", "FCBA", "chargeback", "billing", "fraud", "account"],
+      "questions": [
+        "They charged my credit card",
+        "What is a chargeback?",
+        "What is FCBA?",
+        "How much am I liable for?",
+        "They opened a new card in my name"
+      ]
+    },
+    {
+      "id": "special_situations",
+      "title": "Special Situations (Real Estate & Government Scams)",
+      "file": "section_special_situations.txt",
+      "keywords": ["real estate", "house", "IRS", "tax", "government", "impersonation", "closing", "threat"],
+      "questions": [
+        "I fell for a real estate scam",
+        "The IRS called me",
+        "A government agency demanded money",
+        "Social Security threatened my benefits",
+        "A real estate agent asked for wire"
+      ]
+    },
+    {
+      "id": "resources_support",
+      "title": "Victim Support & Resources",
+      "file": "section_resources_support.txt",
+      "keywords": ["help", "resources", "counseling", "depression", "shame", "support", "attorney", "legal"],
+      "questions": [
+        "Who should I tell?",
+        "Do I need an attorney?",
+        "I need counseling",
+        "Are there other victims?",
+        "Where do I report?",
+        "How do I get legal help?"
+      ]
+    }
+  ],
+  "legal_terms": {
+    "EFTA": "section_bank_procedures.txt",
+    "Regulation E": "section_bank_procedures.txt",
+    "FFKC": "section_wire_recovery.txt",
+    "Wire Fraud": "section_immediate_response.txt",
+    "IC3": "section_immediate_response.txt",
+    "FCBA": "section_credit_card.txt",
+    "Identity Theft": "section_identity_theft.txt"
+  }
+}

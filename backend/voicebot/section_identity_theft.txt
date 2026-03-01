@@ -1,0 +1,122 @@
+================================================================================
+SECTION 3: IDENTITY THEFT & CREDENTIAL COMPROMISE
+================================================================================
+
+If you revealed sensitive information to scammer, take additional steps:
+
+3.1 PERSONAL INFORMATION EXPOSURE
+──────────────────────────────────
+
+Information at Risk (Common Scenarios):
+  • Account numbers/routing numbers: Risk of unauthorized transfers
+  • Online banking credentials (username/password): Risk of account takeover
+  • Social Security Number: Risk of new credit accounts opened in your name
+  • Government ID photos (driver's license, passport): Risk of identity fraud
+  • Credit card numbers/expiration dates: Risk of unauthorized charges
+  • Answers to security questions: Risk of account reset/takeover
+
+Immediate Actions:
+1. Change password on compromised account IMMEDIATELY (from different device/network 
+   if possible)
+2. Enable two-factor authentication (2FA) on all financial accounts if available
+3. Monitor account statements closely for 30+ days for additional unauthorized 
+   activity
+4. If ID numbers compromised: Consider placing fraud alert or credit freeze
+
+3.2 CREDIT MONITORING & FRAUD ALERTS
+──────────────────────────────────────
+
+Fraud Alert:
+  • Temporary (1 year) flag on credit report
+  • Creditors must verify identity before issuing new credit in your name
+  • To request: Contact any of the 3 major credit bureaus (Equifax, Experian, 
+    TransUnion)
+  • Free to place
+
+Credit Freeze (Security Freeze):
+  • Permanent restriction on who can access your credit file
+  • Prevents criminals from opening accounts in your name
+  • You must temporarily "thaw" to apply for legitimate credit
+  • Illinois law allows free credit freeze (815 ILCS 505/2Q-2Q.1)
+  • More restrictive than fraud alert but more protective
+
+How to Place Freeze (Illinois):
+  • Equifax: www.equifax.com
+  • Experian: www.experian.com
+  • TransUnion: www.transunion.com
+  • Each bureau handles requests independently; do all three
+  • Free under Illinois law (815 ILCS 505/2Q)
+
+Check Credit Reports:
+  • Get FREE annual credit report from each bureau: www.annualcreditreport.com
+  • Review for suspicious accounts/inquiries
+  • Dispute any fraudulent accounts
+
+Illinois-Specific Resources:
+  • Illinois Attorney General Cybercrime Division: www.cybercrime.illinois.gov
+  • Report identity theft to AG's office for coordination
+
+Legal References:
+  - 815 ILCS 505/2Q (Illinois Security Freeze Law)
+  - Federal law: 15 U.S.C. § 1681c (Fraud Alerts & Freezes)
+
+3.3 WHAT TO DO IF SSN OR ID COMPROMISED
+──────────────────────────────────────────
+
+Social Security Number (SSN) Compromised:
+  1. Place fraud alert with credit bureaus immediately
+  2. Consider credit freeze (more protective)
+  3. Check credit reports monthly for 12 months
+  4. Monitor Social Security account (ssa.gov/myaccount)
+  5. Report to Social Security Administration if suspected misuse
+
+Identity Theft Affidavit:
+  • Use Federal Trade Commission's identity theft affidavit: identitytheft.gov
+  • Affidavit helps dispute fraudulent accounts
+  • Create recovery plan through FTC website
+  • Send affidavit to creditors opening fraudulent accounts
+
+Illinois Identity Theft Law:
+  • 815 ILCS 530: Illinois Identity Theft Statute
+  • Victims have civil right to sue for damages
+  • Attorney General can prosecute criminal identity theft
+  • Victims can demand identity theft affidavit from businesses
+
+3.4 MONITORING FOR ONGOING FRAUD
+─────────────────────────────────
+
+First 30-90 Days (Critical Period):
+  • Review bank/credit card statements WEEKLY (not just monthly)
+  • Check credit report for new accounts/inquiries
+  • Monitor Social Security account for unauthorized earnings reports
+  • Look for "soft inquiries" (random credit checks)
+
+First 1 Year:
+  • Continue monthly credit monitoring
+  • Watch for loan/credit applications in your name
+  • Monitor tax return status (fraudsters may file false returns with your SSN)
+  • Save all documentation of fraud attempts
+
+Legal References:
+  - 815 ILCS 530 (Illinois Identity Theft Act)
+  - 16 CFR Part 682 (FTC ID Theft Rules)
+
+================================================================================
+QUICK CHECKLIST - IDENTITY PROTECTION
+================================================================================
+
+If ID/SSN compromised:
+☐ Change banking passwords (from safe device)
+☐ Enable 2FA on financial accounts
+☐ Place fraud alert (contact one bureau; they notify the other two)
+☐ Place credit freeze (contact all three bureaus)
+☐ Get free credit reports from annualcreditreport.com
+☐ Monitor weekly for 90 days, monthly for 12 months
+☐ Register identity theft with FTC: identitytheft.gov
+☐ Report to Social Security if SSN misused
+
+Resources:
+- Illinois Attorney General Cybercrime: www.cybercrime.illinois.gov
+- FTC Identity Theft: identitytheft.gov
+- Annual Credit Report: www.annualcreditreport.com
+- Social Security My Account: ssa.gov/myaccount

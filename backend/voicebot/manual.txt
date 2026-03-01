@@ -1,0 +1,747 @@
+================================================================================
+ILLINOIS VOICE PHISHING FRAUD VICTIM SUPPORT GUIDE
+Educational Resource for Hackathon Project (Prototype Only)
+================================================================================
+
+⚠️ IMPORTANT DISCLAIMER - READ FIRST ⚠️
+
+This document is for EDUCATIONAL AND PROTOTYPE PURPOSES ONLY. It is intended to 
+help fraud victims understand general legal concepts and recovery procedures under 
+Illinois and federal law. This is NOT official legal advice, and should not be 
+treated as a substitute for guidance from:
+  • Your financial institution
+  • Law enforcement (local police, FBI)
+  • Licensed attorneys
+  • Official government agencies
+
+ALWAYS verify information by contacting official sources directly:
+  • Your bank's official customer service line (NOT numbers from fraudster)
+  • FBI Internet Crime Complaint Center (IC3): www.ic3.gov
+  • Federal Trade Commission (FTC): reportfraud.ftc.gov
+  • Illinois Attorney General: www.cybercrime.illinois.gov
+  • Local police non-emergency line (NOT 911 unless immediate danger)
+
+This guide may become outdated. Laws change. Do not rely on this as current legal 
+information. If deployed in any real system, this document must be regularly 
+updated and reviewed by legal professionals.
+
+================================================================================
+SECTION 1: VOICE PHISHING (VISHING) OVERVIEW
+================================================================================
+
+Definition under Illinois and Federal Law:
+Voice phishing is a form of fraud where criminals impersonate legitimate entities 
+(banks, government agencies, tech support) via telephone to deceive victims into:
+  • Revealing banking credentials or account numbers
+  • Transferring money to fraudulent accounts
+  • Authorizing unauthorized transactions
+  • Sharing personal identifying information (SSN, ID photos, etc.)
+
+Legal Classification:
+  • Federal Wire Fraud (18 U.S.C. § 1343): Using interstate phone communications 
+    to perpetrate fraud. Penalties: up to 20 years federal prison, $1 million fine.
+  • Federal Bank Fraud (18 U.S.C. § 1344): Fraud targeting financial institutions. 
+    Penalties: up to 30 years federal prison, $1 million fine.
+  • Illinois Criminal Theft/Fraud (720 ILCS 5/17-1, 5/17-2): State-level charges 
+    for bank fraud or possession of fraudulently obtained funds.
+  • Illinois Consumer Fraud Act (815 ILCS 505): Unfair/deceptive practices. 
+    Victims may seek civil damages including treble damages.
+
+Sources:
+  - 18 U.S.C. § 1343 (Wire Fraud)
+  - 18 U.S.C. § 1344 (Bank Fraud)
+  - 720 ILCS 5/17-1 (Illinois Bank Fraud)
+  - 815 ILCS 505 (Illinois Consumer Fraud Act)
+
+================================================================================
+SECTION 2: IMMEDIATE RESPONSE (First 24-72 Hours)
+================================================================================
+
+CRITICAL: Speed matters. Financial fraud recovery depends heavily on reporting 
+within narrow time windows.
+
+2.1 STOP THE TRANSFER (If Money Left Your Account)
+────────────────────────────────────────────────────
+
+Timing: Report IMMEDIATELY - within 24-72 hours if possible.
+
+Federal Fraud Kill Chain (FFKC) Process:
+The FBI, Financial Crimes Enforcement Network (FinCEN), and international banking 
+networks operate a "Financial Fraud Kill Chain" to stop transfers BEFORE they reach 
+their final destination. This only works within approximately 72 hours of the 
+initial wire/transfer.
+
+What to do:
+1. Contact your bank's OFFICIAL customer service line (use number on your bank card 
+   or official website - NOT any number the scammer provided).
+2. Report the fraudulent transfer and request an IMMEDIATE ACCOUNT FREEZE on any 
+   suspect transactions.
+3. Provide the bank with:
+   - Exact transfer amount
+   - Date/time of transfer
+   - Recipient account number (if you have it)
+   - Recipient bank name/routing number (if known)
+   - Method used (wire, ACH, P2P payment app like Venmo/PayPal, etc.)
+
+Bank's Legal Obligation (EFTA/Regulation E):
+Under the Electronic Fund Transfer Act (15 U.S.C. § 1693, Regulation E per 12 CFR 
+1005), banks are required to:
+  • Investigate error/fraud claims within 10 business days
+  • Provide provisional credit during investigation
+  • Report findings within 3 business days of investigation completion
+  • NOT require police report as prerequisite to investigation (per 2025 CFPB 
+    guidance)
+
+Note: Traditional wire transfers from bank accounts are partially exempt from EFTA 
+protection (no liability caps), BUT recent case law (New York v. Citibank, 2025) 
+suggests wire transfers initiated through online banking platforms may fall under 
+EFTA protections.
+
+2.2 REPORT TO LAW ENFORCEMENT
+──────────────────────────────
+
+FBI Internet Crime Complaint Center (IC3):
+  • Website: www.ic3.gov
+  • File online complaint with details of fraud
+  • Receive IC3 complaint number for reference
+  • FBI uses aggregated IC3 data to identify fraud patterns and coordinate with 
+    FinCEN for FFKC activation
+
+Federal Bureau of Investigation (FBI):
+  • Chicago Field Office: (312) 421-6700
+  • Local FBI field office finder: www.fbi.gov/contact
+  • Call after filing IC3 report; provide IC3 report number
+  • FBI will coordinate with victim's bank and FinCEN if FFKC criteria are met
+
+Local Police (Non-Emergency Line):
+  • Call local police non-emergency line (NOT 911 unless immediate physical danger)
+  • Request to file fraud report/incident report
+  • Keep incident report number and police report document
+
+Note: Police may be slow to investigate, but official incident report is needed 
+for bank fraud investigations and potential civil claims.
+
+Federal Trade Commission (FTC):
+  • Website: reportfraud.ftc.gov
+  • FTC aggregates fraud complaints; does not directly investigate but provides 
+    enforcement support
+  • Complaint helps identify patterns
+
+2.3 DOCUMENT EVERYTHING
+────────────────────────
+
+Preserve evidence for law enforcement and banking investigation:
+  • Screenshot any phone numbers displayed on caller ID
+  • Save voicemails (forward to yourself via email if possible)
+  • Document exact time/date of calls
+  • Write down what the scammer said (recreate conversation if possible)
+  • Keep all bank statements showing fraudulent transactions
+  • Save any emails/texts from scammer
+  • Note account numbers/transfer details provided to scammer (if any)
+
+This documentation will be critical for:
+  • Bank fraud investigation
+  • FBI pursuit of FFKC process
+  • Any civil or criminal proceedings
+
+================================================================================
+SECTION 3: BANK ERROR RESOLUTION PROCEDURES
+================================================================================
+
+Illinois and federal law (EFTA/Regulation E) establish specific procedures for 
+disputing unauthorized transfers.
+
+3.1 REPORTING UNAUTHORIZED TRANSFERS
+──────────────────────────────────────
+
+Reporting Deadline (CRITICAL):
+  • You have 60 days from the date your bank statement was MAILED/PROVIDED to 
+    report an unauthorized transfer
+  • Time limit begins on first statement showing the unauthorized transaction
+  • Missing 60-day deadline = bank has NO legal obligation to investigate
+
+How to Report:
+  • Call bank's official customer service number (on card or official website)
+  • Oral notification is sufficient to trigger investigation
+  • Bank may require written confirmation within 10 days of oral notice
+  • But investigation timeline starts from oral notice date, not written confirmation
+
+Required Information to Provide:
+  • Your full name and account number
+  • Date(s) of unauthorized transaction(s)
+  • Amount(s) of transfer(s)
+  • Clear statement: "This transaction is unauthorized. I did not authorize this 
+    transfer."
+
+Legal References:
+  - 15 U.S.C. § 1693e (EFTA: Error Resolution)
+  - 12 CFR 1005.5 (Regulation E: Error Resolution Procedures)
+  - 12 CFR 1005.2(m) (Definition of Unauthorized EFT)
+
+3.2 BANK'S INVESTIGATION OBLIGATIONS
+───────────────────────────────────────
+
+Timeline:
+  • Bank must begin investigation within 1 business day of oral notification
+  • Investigation must be completed within 10 business days
+    (Can extend to 45 days if bank provides provisional credit immediately)
+  • Bank must report findings in writing within 3 business days after investigation 
+    completion
+
+Investigation Requirements (Bank MUST):
+  • NOT require police report as condition of investigation (CFPB 2025 guidance)
+  • NOT use consumer negligence to deny claim (even if you were tricked into 
+    providing credentials)
+  • Investigate whether transfer was truly unauthorized
+  • Verify account access circumstances
+  • Determine if bank's security measures were breached
+
+Provisional Credit:
+  • If investigation extends beyond 10 days, bank must provide provisional credit 
+    immediately (credited back to your account during investigation)
+  • Provisional credit is NOT final decision - if bank's investigation later finds 
+    transfer was authorized, bank can debit provisional credit back out
+
+Liability Caps (for unauthorized EFTs under EFTA):
+  Note: These caps may NOT apply to wire transfers made through online banking, 
+  depending on recent court interpretations. Check with your specific bank.
+  
+  • If you report within 2 business days of first noticing: Liability capped at $50
+  • If you report within 60 days: Liability capped at $500
+  • If you report after 60 days: Bank has NO obligation; you could be liable for 
+    full amount (depending on fraud type and bank's negligence)
+
+Important: Consumer negligence (falling for scam, providing credentials) CANNOT 
+be used to impose greater liability than above limits.
+
+Legal References:
+  - 12 CFR 1005.5 (Investigation Procedures)
+  - 12 CFR 1005.6 (Liability Limits)
+  - 15 U.S.C. § 1693f (Bank Error Correction)
+
+3.3 IF BANK DENIES CLAIM
+──────────────────────────
+
+Civil Action Under EFTA:
+If bank refuses to correct error or fails to follow investigation procedures, you 
+may sue for:
+  • Actual damages (loss amount)
+  • Statutory damages: up to $1,000 (even if actual loss is less)
+  • Treble damages (3x actual damages) if bank acted in bad faith
+  • Reasonable attorney fees and costs
+
+Requirements to Sue:
+  • Bank violated EFTA/Regulation E procedures
+  • Must file within 2 years of discovering violation (or 3 years for ongoing breach)
+  • Federal court (applies to interstate transactions) or Illinois state court 
+    (815 ILCS violations)
+
+Illinois State Consumer Fraud Claim (Alternative):
+Under Illinois Consumer Fraud Act (815 ILCS 505):
+  • Deceptive or unfair business practice in trade/commerce
+  • Damages: actual damages OR $200 per violation (whichever is greater)
+  • Treble damages if defendant's conduct was willful/reckless
+  • Attorney fees awarded to prevailing plaintiff
+
+Legal References:
+  - 15 U.S.C. § 1693m (EFTA: Liability of Financial Institutions)
+  - 15 U.S.C. § 1693n (EFTA: Illegal Action)
+  - 815 ILCS 505/2A (Illinois Consumer Fraud Act)
+
+Consult Attorney:
+Contact a consumer protection attorney in Illinois if bank denies reasonable fraud 
+claim. Many work on contingency (no upfront cost).
+
+================================================================================
+SECTION 4: IDENTITY THEFT & CREDENTIAL COMPROMISE
+================================================================================
+
+If you revealed sensitive information to scammer, take additional steps:
+
+4.1 PERSONAL INFORMATION EXPOSURE
+──────────────────────────────────
+
+Information at Risk (Common Scenarios):
+  • Account numbers/routing numbers: Risk of unauthorized transfers
+  • Online banking credentials (username/password): Risk of account takeover
+  • Social Security Number: Risk of new credit accounts opened in your name
+  • Government ID photos (driver's license, passport): Risk of identity fraud
+  • Credit card numbers/expiration dates: Risk of unauthorized charges
+  • Answers to security questions: Risk of account reset/takeover
+
+Immediate Actions:
+1. Change password on compromised account IMMEDIATELY (from different device/network 
+   if possible)
+2. Enable two-factor authentication (2FA) on all financial accounts if available
+3. Monitor account statements closely for 30+ days for additional unauthorized 
+   activity
+4. If ID numbers compromised: Consider placing fraud alert or credit freeze
+
+4.2 CREDIT MONITORING & FRAUD ALERTS
+──────────────────────────────────────
+
+Fraud Alert:
+  • Temporary (1 year) flag on credit report
+  • Creditors must verify identity before issuing new credit in your name
+  • To request: Contact any of the 3 major credit bureaus (Equifax, Experian, 
+    TransUnion)
+  • Free to place
+
+Credit Freeze (Security Freeze):
+  • Permanent restriction on who can access your credit file
+  • Prevents criminals from opening accounts in your name
+  • You must temporarily "thaw" to apply for legitimate credit
+  • Illinois law allows free credit freeze (815 ILCS 505/2Q-2Q.1)
+  • More restrictive than fraud alert but more protective
+
+How to Place Freeze (Illinois):
+  • Equifax: www.equifax.com
+  • Experian: www.experian.com
+  • TransUnion: www.transunion.com
+  • Each bureau handles requests independently; do all three
+  • Free under Illinois law (815 ILCS 505/2Q)
+
+Check Credit Reports:
+  • Get FREE annual credit report from each bureau: www.annualcreditreport.com
+  • Review for suspicious accounts/inquiries
+  • Dispute any fraudulent accounts
+
+Illinois-Specific Resources:
+  • Illinois Attorney General Cybercrime Division: www.cybercrime.illinois.gov
+  • Report identity theft to AG's office for coordination
+
+Legal References:
+  - 815 ILCS 505/2Q (Illinois Security Freeze Law)
+  - Federal law: 15 U.S.C. § 1681c (Fraud Alerts & Freezes)
+
+================================================================================
+SECTION 5: WIRE TRANSFER RECOVERY OPTIONS
+================================================================================
+
+5.1 FEDERAL FRAUD KILL CHAIN (FFKC)
+────────────────────────────────────
+
+Purpose:
+The FFKC is a coordinated international process (FBI + FinCEN + foreign banking 
+regulators) to STOP fraudulent wire transfers before they reach final destination 
+and recover funds.
+
+Eligibility Criteria (ALL must be met):
+  • Transfer must be detected within ~72 hours of initiation
+  • Wire/transfer must be international OR cross-state lines
+  • Fraudulent nature must be verified
+  • Victim bank must cooperate
+  • Recipient bank must cooperate (foreign or domestic)
+
+Activation Process:
+1. File IC3 complaint at www.ic3.gov immediately
+2. Contact FBI field office with IC3 complaint number
+3. FBI contacts FinCEN with fraud details
+4. FinCEN initiates international banking coordination
+5. Receiving bank is notified to HOLD funds before settlement
+6. If successful, funds are returned to victim (through series of transfers)
+
+Success Rate:
+  • ~50% of FFKC-initiated cases result in recovery if activated within 72 hours
+  • Drops dramatically after 72 hours
+  • Higher success for domestic transfers than international
+
+Time-Critical Action:
+If money was wire transferred or ACH'd out of your account, CALL YOUR BANK 
+IMMEDIATELY and ask:
+  • "Can you activate the Financial Fraud Kill Chain?"
+  • "How long do I have to report for FFKC eligibility?"
+  • Provide IC3 complaint number if already filed
+
+Legal References:
+  - 18 U.S.C. § 1343 (Wire Fraud - criminal basis for FBI action)
+  - 31 U.S.C. § 5318 (FinCEN Authority)
+  - Federal Reserve/OCC Guidance on Wire Fraud Response
+
+Note: FFKC is not guaranteed. Speed and cooperation are essential. Many cases 
+result in only partial recovery or no recovery.
+
+5.2 CIVIL RECOVERY (If Criminal Recovery Fails)
+─────────────────────────────────────────────────
+
+Lawsuit Against Receiving Bank (in some cases):
+Illinois law may allow civil suit against a receiving bank if:
+  • Bank accepted deposits knowing (or should have known) they were proceeds of fraud
+  • Bank failed to implement adequate fraud detection
+  • Bank had suspicious activity indicators but processed anyway
+
+Lawsuit Against Scammer (if identified):
+  • Generally difficult - scammers operate anonymously/internationally
+  • Judgment may be uncollectable
+  • Possible in Illinois state court or federal court
+
+Restitution in Criminal Case (if scammer is prosecuted):
+  • If FBI identifies and prosecutes scammer, court may order restitution
+  • Restitution collected by DOJ and distributed to victims
+  • Takes years; low collection rate
+
+Class Action Against Bank:
+  • If multiple customers defrauded by same incident, class action may be possible
+  • Contact consumer protection attorney
+
+Consult Attorney:
+Given complexity, consult Illinois consumer protection/banking lawyer for civil 
+recovery options.
+
+================================================================================
+SECTION 6: P2P PAYMENT APP FRAUD (Venmo, PayPal, Square Cash, etc.)
+================================================================================
+
+Increasing risk: Scammers trick victims into sending money via P2P apps, which are 
+harder to reverse than bank transfers.
+
+6.1 IMMEDIATE REPORTING (P2P Apps)
+───────────────────────────────────
+
+P2P apps have limited fraud protection compared to banks.
+
+Steps:
+1. Report to the P2P app immediately:
+   • Go to app settings → Report a Problem
+   • Or contact app's fraud department
+   • Provide transaction ID, recipient username, amount, date
+2. Report to your bank (if linked debit/credit card):
+   • Bank may reverse through underlying payment method
+3. Report to FBI IC3: www.ic3.gov
+4. File police report (local non-emergency)
+
+Likelihood of Recovery:
+  • 20-30% recovery rate (much lower than wire transfers)
+  • P2P apps freeze suspect accounts but don't guarantee return
+  • If recipient already withdrew cash, recovery unlikely
+
+EFTA Protection on P2P:
+  • P2P transfers initiated through linked debit accounts may have SOME EFTA 
+    protection (recent CFPB guidance)
+  • Credit card P2P: May fall under Fair Credit Billing Act (FCBA) instead
+  • Terms vary by app; check app's terms
+
+6.2 DISPUTE PROCEDURES (App-Specific)
+──────────────────────────────────────
+
+Venmo:
+  • Dispute link: Settings → About Venmo → Contact Us → Report an Issue
+  • Success rate: Low if recipient already transferred out
+
+PayPal:
+  • File dispute through Resolution Center
+  • May offer buyer protection if linked to PayPal Wallet
+  • But protection limited for person-to-person transfers
+
+Square Cash (Cash App):
+  • Report to Square through app
+  • Very limited chargeback protections
+  • Recommend contacting linked bank instead
+
+Recommendation:
+For all P2P fraud, contact underlying bank first (if debit card linked) as bank 
+has better fraud reversal power than P2P app itself.
+
+================================================================================
+SECTION 7: CREDIT CARD FRAUD (If Scammer Used Card or Opened New Card)
+================================================================================
+
+7.1 UNAUTHORIZED CREDIT CARD CHARGES
+──────────────────────────────────────
+
+Liability:
+  • Federal law (Fair Credit Billing Act - FCBA, 15 U.S.C. § 1666): You are liable 
+    for ONLY $50 maximum per card for unauthorized charges
+  • Visa/Mastercard rules: Often zero liability for cardholders
+
+Reporting:
+  • Call credit card issuer IMMEDIATELY upon noticing unauthorized charge
+  • Provide card number, charge amount, date, merchant
+  • Request dispute/chargeback process
+  • Card issuer must investigate within 30-60 days
+  • Issuer must credit back disputed amount while investigating
+
+7.2 FRAUDULENT ACCOUNT OPENING (Credit Fraud)
+───────────────────────────────────────────────
+
+If scammer opened NEW credit card/account in your name:
+
+Immediate Actions:
+1. Contact credit bureaus (Equifax, Experian, TransUnion)
+2. Place fraud alert or credit freeze on your file
+3. Request credit reports to identify unauthorized accounts
+4. Dispute fraudulent accounts with credit card issuer directly:
+   - Provide written statement that account is fraudulent
+   - Attach police report or IC3 report
+   - Credit card issuer must investigate (dispute process)
+5. Report to Federal Trade Commission identity theft division: 
+   www.identitytheft.gov (creates recovery plan)
+
+Illinois ID Theft Law:
+  • 815 ILCS 530: Illinois Identity Theft Statute
+  • Victims have civil right to sue for damages
+  • Attorney General can prosecute criminal identity theft
+  • Victims can demand identity theft affidavit from businesses
+
+Legal References:
+  - 15 U.S.C. § 1666 (Fair Credit Billing Act)
+  - 815 ILCS 530 (Illinois Identity Theft Act)
+  - 16 CFR Part 682 (FTC ID Theft Rules)
+
+================================================================================
+SECTION 8: POLICE REPORT & EVIDENCE
+================================================================================
+
+8.1 OBTAINING POLICE REPORT
+─────────────────────────────
+
+Why It Matters:
+  • Banks may request police report to corroborate fraud claim (though legally 
+    cannot REQUIRE it per 2025 CFPB guidance)
+  • FBI may use incident report to verify FFKC eligibility
+  • Evidence for civil lawsuit if pursuing private action
+  • Establishes official record
+
+How to File (Illinois):
+  • Call local police non-emergency line (NOT 911)
+  • Go to local police station and request to file report
+  • Provide details: dates, phone numbers, amounts, what you told scammer
+  • Request written incident report and incident number
+  • Keep copy for records
+
+Challenges:
+  • Police may be reluctant to investigate (no property recovered yet)
+  • Tell police: "I want to file a report for fraud/wire fraud/bank fraud"
+  • Incident number is what matters - police investigation may be minimal
+
+Alternative: FBI as Lead Agency
+  • FBI has primary jurisdiction over wire fraud/bank fraud
+  • FBI typically takes over investigation from local police
+  • File IC3 report (www.ic3.gov) to trigger FBI interest
+  • IC3 complaint number sometimes sufficient without police report
+
+8.2 EVIDENCE PRESERVATION
+──────────────────────────
+
+Critical Evidence to Keep:
+  1. Phone records (itemized bill showing scammer's phone number, call dates/times)
+  2. Screenshots of caller ID
+  3. Voicemails (save audio files)
+  4. Bank statements (showing transfers out)
+  5. Screenshots of P2P app transactions (if applicable)
+  6. Emails/texts from scammer (if any)
+  7. Your own notes (dates, times, what was said)
+  8. Fraud documentation (IC3 receipt, police report, bank investigation letter)
+
+How to Preserve:
+  • Print or screenshot everything
+  • Save copies to personal files/cloud storage
+  • Do NOT delete anything from phone/email (may need for investigation)
+  • Create organized file with dates/descriptions
+
+================================================================================
+SECTION 9: SPECIAL SITUATIONS
+================================================================================
+
+9.1 REAL ESTATE OR LARGE PURCHASE SCAMS
+─────────────────────────────────────────
+
+Scenario: Scammer impersonates real estate agent/attorney, requests wire for 
+closing costs.
+
+Response:
+  1. STOP - Verify independently through official channels
+     • Call real estate office directly using number on website
+     • Call attorney's office directly using number from bar association
+     • Never use contact info provided by "agent"
+  2. Wire Fraud: 18 U.S.C. § 1343 (federal crime)
+     • Report to FBI immediately
+     • FFKC likely applicable if large amount and quick reporting
+  3. Try to recall wire BEFORE it settles:
+     • Call bank IMMEDIATELY (real estate closings often occur same-day)
+     • Request wire reversal/recall
+     • May be possible if recipient bank hasn't settled
+  4. File IC3 complaint + police report
+
+Likelihood of Recovery:
+  • 40-60% if caught within 24-48 hours
+  • Much lower after settlement (wire is nearly irreversible once settled)
+
+9.2 GOVERNMENT/SOCIAL SECURITY IMPERSONATION
+───────────────────────────────────────────────
+
+Scenario: Scammer claims to be IRS, SSA, or law enforcement, threatening arrest 
+unless payment made.
+
+Legal Framework:
+  • 18 U.S.C. § 911: Impersonating government officer (federal crime)
+  • 18 U.S.C. § 1343: Wire fraud (if using phone)
+  • Illinois § 5/17-1: State fraud statute
+
+Red Flags (NEVER real):
+  • Government agencies do NOT call threatening arrest
+  • IRS does NOT demand immediate wire transfer
+  • Social Security does NOT threaten benefit cancellation
+  • Police do NOT threaten arrest over phone
+
+Response:
+  1. Hang up immediately
+  2. Do NOT provide any information or make any transfer
+  3. If transferred money: Follow standard recovery procedures (Section 3)
+  4. Report to FBI, IC3, local police
+  5. Report to impersonated agency:
+     • IRS: treasury.gov/fraud
+     • Social Security: ssa.gov/fraud
+     • USCIS: dhs.gov/report
+
+Recovery Outlook:
+  • Extremely difficult - these scams are international
+  • Focus on bank/FFKC recovery (Section 5) rather than scammer prosecution
+
+================================================================================
+SECTION 10: PSYCHOLOGICAL SUPPORT & RESOURCES
+================================================================================
+
+Important: Many victims experience shame, embarrassment, or depression after 
+voice phishing. This is normal. Scammers are highly trained social engineers.
+
+10.1 REPORTING RESOURCES
+─────────────────────────
+
+Federal:
+  • FBI Internet Crime Complaint Center: www.ic3.gov
+  • Federal Trade Commission: reportfraud.ftc.gov
+  • Consumer Financial Protection Bureau: www.consumerfinance.gov/complaint
+  • U.S. Attorney General Fraud Hotline: (866) 720-5721
+
+Illinois-Specific:
+  • Illinois Attorney General Cybercrime Division: www.cybercrime.illinois.gov
+  • Illinois Attorney General Fraud Bureau: (877) 424-7000
+  • Chicago Police Department Non-Emergency: (311) or (312) 746-6000
+
+Financial Institutions:
+  • Contact your specific bank's fraud department (number on back of card or 
+    statement)
+
+10.2 VICTIM SUPPORT
+────────────────────
+
+Emotional Impact:
+Fraud victimization is traumatic. Consider:
+  • Talking to trusted friends/family
+  • Consulting therapist or counselor
+  • Support groups for fraud victims (some nonprofit organizations offer)
+
+Legal Support:
+  • Legal aid organizations (if low-income)
+  • Consumer protection attorneys (many offer free consultations)
+  • State bar association referral service
+
+Practical Follow-up:
+  • Monitor credit reports regularly (at least monthly for 6-12 months)
+  • Review bank statements weekly for unauthorized activity
+  • Update passwords and security questions
+  • Enable multi-factor authentication everywhere possible
+
+================================================================================
+SECTION 11: QUICK REFERENCE - CRITICAL TIMELINES
+================================================================================
+
+ACTION                                    DEADLINE            WHY
+────────────────────────────────────────  ──────────────────  ────────────────
+Report wire transfer to FBI/bank          24-72 hours         FFKC activation
+File IC3 complaint                        Immediately         FBI coordination
+Activate FFKC with FBI                    72 hours max         Recovery unlikely after
+Report unauthorized transfer to bank      60 days              Bank loses obligation
+Change compromised password               Immediately         Prevent further access
+Place fraud alert on credit               Immediately         Prevent new accounts
+Obtain police/incident report             Within 7 days       Evidence preservation
+File EFTA dispute with bank               Within 60 days      Trigger investigation
+Report FCBA dispute (credit card)         Within 60 days      Chargeback process
+File civil lawsuit (EFTA)                 Within 2 years       Statute of limitations
+File civil suit (Illinois fraud)          Within 3 years      Statute of limitations
+
+================================================================================
+SECTION 12: GLOSSARY OF LEGAL/FINANCIAL TERMS
+================================================================================
+
+ACH (Automated Clearing House)
+  Electronic interbank transfer system. Slower than wire transfers (1-3 business 
+  days). Some EFTA protections apply.
+
+CFPB (Consumer Financial Protection Bureau)
+  Federal agency overseeing consumer financial protection. Enforces EFTA.
+
+Chargeback
+  Dispute mechanism where credit card issuer reverses transaction and investigates.
+
+EFTA (Electronic Fund Transfer Act)
+  Federal law (15 U.S.C. § 1693) protecting consumers in electronic fund transfers.
+
+FinCEN (Financial Crimes Enforcement Network)
+  U.S. Treasury agency coordinating international wire fraud prevention.
+
+FFKC (Financial Fraud Kill Chain)
+  FBI/FinCEN coordination to stop fraudulent wire transfers before settlement.
+
+IC3 (Internet Crime Complaint Center)
+  FBI's public-facing fraud complaint portal.
+
+Regulation E (12 CFR Part 1005)
+  Federal regulations implementing EFTA.
+
+Wire Transfer
+  Fast (usually same-day) transfer of funds between banks via SWIFT/Fedwire networks. 
+  Limited EFTA protection (though recent court cases are expanding this).
+
+Vishing
+  Voice phishing - fraud via telephone calls.
+
+Unauthorized Transfer
+  Electronic fund transfer initiated without actual authority of account holder.
+
+================================================================================
+SECTION 13: SUMMARY FOR CHATBOT RESPONSES
+================================================================================
+
+When responding to voice phishing victims:
+
+IMMEDIATE RESPONSE:
+1. Acknowledge victim is not alone; scammers are sophisticated
+2. Direct to official channels FIRST:
+   - Their bank (official customer service number)
+   - FBI IC3 (www.ic3.gov)
+   - Local police (non-emergency line)
+3. Emphasize: Speed matters (72-hour FFKC window)
+
+GENERAL INFORMATION:
+- Provide law references (not specific legal advice)
+- Direct to official government/bank resources
+- Recommend consulting licensed attorney for civil claims
+- Explain EFTA protections in plain language
+- Clarify common misconceptions (bank CANNOT require police report)
+
+AVOID:
+- Predicting recovery probability (depends on many factors)
+- Specific legal advice ("You should sue..." or "You should claim...")
+- Detailed personal financial advice
+- Technical banking procedures (varies by institution)
+
+ALWAYS CONCLUDE:
+"For specific guidance on your situation, contact:
+  • Your bank's official fraud department
+  • FBI field office (www.fbi.gov/contact)
+  • Licensed consumer protection attorney in Illinois"
+
+================================================================================
+END OF DOCUMENT
+================================================================================
+
+Last Updated: February 28, 2026
+Source Laws Reviewed: 18 U.S.C. § 1343, 18 U.S.C. § 1344, 15 U.S.C. § 1693,
+  12 CFR 1005, 720 ILCS 5/17-1, 815 ILCS 505, 815 ILCS 530
+Additional Sources: CFPB Guidance (Jan 2025), FBI FFKC Documentation, OCC Banking 
+  Guidance
+
+This document is educational only and should be updated if deployed in any real 
+system. Consult licensed professionals for legal advice.

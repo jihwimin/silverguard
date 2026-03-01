@@ -1,3 +1,28 @@
 .idea/
 .venv/
-.idea/workspace.xml
+.idea/workspace.xml.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.db
+
+.env
+backend/node-server/.env
+.env
+backend/node-server/.env
+node_modules/
+backend/node-server/node_modules/
+.DS_Store
+
+# macOS
+.DS_Store
+
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Python cache
+__pycache__/
+*.pyc
