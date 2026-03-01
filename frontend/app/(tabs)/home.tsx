@@ -30,28 +30,28 @@ interface FeatureCardData {
 
 const features: FeatureCardData[] = [
   {
-    title: 'Real-time call\ndetection',
+    title: 'Real-time Call\nDetection',
     icon: <Phone size={36} color={Colors.primary} strokeWidth={2} />,
     color: Colors.primary,
     bgColor: Colors.primaryFaint,
     route: '/(tabs)/protection',
   },
   {
-    title: 'Smishing capture\n& diagnosis',
+    title: 'Smishing Capture\n& Diagnosis',
     icon: <ScanLine size={36} color={Colors.caution} strokeWidth={2} />,
     color: Colors.caution,
     bgColor: '#FFF8E1',
     route: '/(tabs)/diagnosis',
   },
   {
-    title: 'Transfer\nprotection',
+    title: 'Fraund Account Check',
     icon: <CreditCard size={36} color="#5B8DEF" strokeWidth={2} />,
     color: '#5B8DEF',
     bgColor: '#EEF3FF',
     route: '/transfer-protection',
   },
   {
-    title: 'Response\ntraining',
+    title: 'Response\nTraining',
     icon: <Gamepad2 size={36} color="#A78BFA" strokeWidth={2} />,
     color: '#A78BFA',
     bgColor: '#F3F0FF',
