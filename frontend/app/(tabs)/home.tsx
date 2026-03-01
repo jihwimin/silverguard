@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
   Animated,
 } from 'react-native';
@@ -17,9 +16,7 @@ import {
   Gamepad2,
   Mic,
   Users,
-  ShieldCheck,
   ChevronRight,
-  AlertTriangle,
 } from 'lucide-react-native';
 import Colors from '@/constants/colors';
 
@@ -34,28 +31,28 @@ interface FeatureCardData {
 const features: FeatureCardData[] = [
   {
     title: 'Real-time call\ndetection',
-    icon: <Phone size={26} color={Colors.primary} strokeWidth={2} />,
+    icon: <Phone size={36} color={Colors.primary} strokeWidth={2} />,
     color: Colors.primary,
     bgColor: Colors.primaryFaint,
     route: '/(tabs)/protection',
   },
   {
     title: 'Smishing capture\n& diagnosis',
-    icon: <ScanLine size={26} color={Colors.caution} strokeWidth={2} />,
+    icon: <ScanLine size={36} color={Colors.caution} strokeWidth={2} />,
     color: Colors.caution,
     bgColor: '#FFF8E1',
     route: '/(tabs)/diagnosis',
   },
   {
     title: 'Transfer\nprotection',
-    icon: <CreditCard size={26} color="#5B8DEF" strokeWidth={2} />,
+    icon: <CreditCard size={36} color="#5B8DEF" strokeWidth={2} />,
     color: '#5B8DEF',
     bgColor: '#EEF3FF',
     route: '/transfer-protection',
   },
   {
     title: 'Response\ntraining',
-    icon: <Gamepad2 size={26} color="#A78BFA" strokeWidth={2} />,
+    icon: <Gamepad2 size={36} color="#A78BFA" strokeWidth={2} />,
     color: '#A78BFA',
     bgColor: '#F3F0FF',
     route: '/training-game',
@@ -76,7 +73,8 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
+    <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
+      {/* 헤더 */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <View style={styles.logoMini}>
@@ -86,90 +84,66 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
-      >
-        <Animated.View style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
-          <View style={styles.statusCard}>
-            <View style={styles.statusHeader}>
-              <Text style={styles.statusLabel}>Today's protection status</Text>
-              <View style={styles.cautionChip}>
-                <AlertTriangle size={14} color={Colors.cautionText} strokeWidth={2.5} />
-                <Text style={styles.cautionChipText}>Caution</Text>
-              </View>
-            </View>
-            <View style={styles.statusMetric}>
-              <Text style={styles.metricValue}>42%</Text>
-              <Text style={styles.metricLabel}>Risk detected</Text>
-            </View>
-            <View style={styles.statusDivider} />
-            <Text style={styles.statusSubtext}>2 detections in the last 24 hours</Text>
-          </View>
+      <Animated.View style={[styles.content, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
 
-          <View style={styles.gridContainer}>
-            {features.map((feature, index) => (
-              <TouchableOpacity
-                key={index}
-                style={styles.featureCard}
-                activeOpacity={0.75}
-                onPress={() => router.push(feature.route as any)}
-                testID={`feature-card-${index}`}
-              >
-                <View style={[styles.featureIconBg, { backgroundColor: feature.bgColor }]}>
-                  {feature.icon}
-                </View>
-                <Text style={styles.featureTitle}>{feature.title}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          <TouchableOpacity
-            style={styles.reportCard}
-            activeOpacity={0.8}
-            onPress={() => router.push('/reporting-chatbot')}
-            testID="reporting-helper"
-          >
-            <View style={styles.reportLeft}>
-              <View style={styles.reportIconBg}>
-                <Mic size={22} color={Colors.primary} strokeWidth={2} />
-              </View>
-              <View style={styles.reportTextContainer}>
-                <Text style={styles.reportTitle}>Report assistant</Text>
-                <Text style={styles.reportSubtitle}>Get help reporting suspected phishing right away</Text>
-              </View>
-            </View>
+        {/* 4개 카드 그리드 */}
+        <View style={styles.gridContainer}>
+          {features.map((feature, index) => (
             <TouchableOpacity
-              style={styles.reportButton}
-              activeOpacity={0.85}
-              onPress={() => router.push('/reporting-chatbot')}
+              key={index}
+              style={styles.featureCard}
+              activeOpacity={0.75}
+              onPress={() => router.push(feature.route as any)}
+              testID={`feature-card-${index}`}
             >
-              <Text style={styles.reportButtonText}>Prepare report now</Text>
+              <View style={[styles.featureIconBg, { backgroundColor: feature.bgColor }]}>
+                {feature.icon}
+              </View>
+              <Text style={styles.featureTitle}>{feature.title}</Text>
             </TouchableOpacity>
-          </TouchableOpacity>
+          ))}
+        </View>
 
-          <TouchableOpacity
-            style={styles.guardianRow}
-            activeOpacity={0.75}
-            onPress={() => router.push('/guardian-hub')}
-            testID="guardian-status"
-          >
-            <View style={styles.guardianLeft}>
-              <Users size={18} color={Colors.textTertiary} strokeWidth={2} />
-              <Text style={styles.guardianText}>No guardian linked</Text>
+        {/* Voicebot 카드 */}
+        <TouchableOpacity
+          style={styles.reportCard}
+          activeOpacity={0.8}
+          onPress={() => router.push('/reporting-chatbot')}
+          testID="reporting-helper"
+        >
+          <View style={styles.reportLeft}>
+            <View style={styles.reportIconBg}>
+              <Mic size={22} color={Colors.primary} strokeWidth={2} />
             </View>
-            <View style={styles.guardianAction}>
-              <Text style={styles.guardianActionText}>Link</Text>
-              <ChevronRight size={16} color={Colors.primary} strokeWidth={2.5} />
-            </View>
-          </TouchableOpacity>
-
-          <View style={styles.trustBadge}>
-            <ShieldCheck size={16} color={Colors.textTertiary} strokeWidth={2} />
-            <Text style={styles.trustText}>AI-powered · Financial API protection</Text>
+            <Text style={styles.reportTitle}>Voicebot</Text>
           </View>
-        </Animated.View>
-      </ScrollView>
+          <TouchableOpacity
+            style={styles.reportButton}
+            activeOpacity={0.85}
+            onPress={() => router.push('/reporting-chatbot')}
+          >
+            <Text style={styles.reportButtonText}>Start voicebot</Text>
+          </TouchableOpacity>
+        </TouchableOpacity>
+
+        {/* 가디언 */}
+        <TouchableOpacity
+          style={styles.guardianRow}
+          activeOpacity={0.75}
+          onPress={() => router.push('/guardian-hub')}
+          testID="guardian-status"
+        >
+          <View style={styles.guardianLeft}>
+            <Users size={18} color={Colors.textTertiary} strokeWidth={2} />
+            <Text style={styles.guardianText}>No guardian linked</Text>
+          </View>
+          <View style={styles.guardianAction}>
+            <Text style={styles.guardianActionText}>Link</Text>
+            <ChevronRight size={16} color={Colors.primary} strokeWidth={2.5} />
+          </View>
+        </TouchableOpacity>
+
+      </Animated.View>
     </View>
   );
 }
@@ -205,110 +179,56 @@ const styles = StyleSheet.create({
     color: Colors.text,
     letterSpacing: -0.3,
   },
-  scrollContent: {
+  content: {
+    flex: 1,
     paddingHorizontal: 20,
-    paddingBottom: 32,
-  },
-  statusCard: {
-    backgroundColor: Colors.card,
-    borderRadius: 20,
-    padding: 24,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.06,
-    shadowRadius: 16,
-    elevation: 3,
-  },
-  statusHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  statusLabel: {
-    fontSize: 16,
-    fontWeight: '600' as const,
-    color: Colors.textSecondary,
-  },
-  cautionChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-    backgroundColor: Colors.cautionBg,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-  },
-  cautionChipText: {
-    fontSize: 13,
-    fontWeight: '700' as const,
-    color: Colors.cautionText,
-  },
-  statusMetric: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    gap: 8,
-  },
-  metricValue: {
-    fontSize: 42,
-    fontWeight: '700' as const,
-    color: Colors.caution,
-    letterSpacing: -1,
-  },
-  metricLabel: {
-    fontSize: 18,
-    fontWeight: '600' as const,
-    color: Colors.textSecondary,
-  },
-  statusDivider: {
-    height: 1,
-    backgroundColor: Colors.borderLight,
-    marginVertical: 16,
-  },
-  statusSubtext: {
-    fontSize: 14,
-    color: Colors.textTertiary,
-    fontWeight: '500' as const,
   },
   gridContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 12,
     marginBottom: 16,
+    marginTop: 8,
   },
   featureCard: {
     backgroundColor: Colors.card,
     borderRadius: 18,
-    padding: 18,
+    padding: 20,
     width: '48%' as any,
     flexGrow: 1,
     flexBasis: '45%' as any,
+    aspectRatio: 0.80,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
     shadowRadius: 8,
     elevation: 1,
-  },
-  featureIconBg: {
-    width: 50,
-    height: 50,
-    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 14,
+    gap: 16,
+  },
+  featureIconBg: {
+    width: 72,
+    height: 72,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   featureTitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600' as const,
     color: Colors.text,
     lineHeight: 22,
+    textAlign: 'center',
   },
   reportCard: {
     backgroundColor: Colors.card,
     borderRadius: 18,
     padding: 18,
     marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
@@ -319,7 +239,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 14,
-    marginBottom: 14,
   },
   reportIconBg: {
     width: 44,
@@ -329,29 +248,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  reportTextContainer: {
-    flex: 1,
-  },
   reportTitle: {
     fontSize: 17,
     fontWeight: '700' as const,
     color: Colors.text,
   },
-  reportSubtitle: {
-    fontSize: 13,
-    color: Colors.textTertiary,
-    marginTop: 2,
-  },
   reportButton: {
     backgroundColor: Colors.primary,
     borderRadius: 12,
-    height: 48,
+    height: 44,
+    paddingHorizontal: 18,
     alignItems: 'center',
     justifyContent: 'center',
   },
   reportButtonText: {
     color: Colors.white,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '700' as const,
   },
   guardianRow: {
@@ -361,7 +273,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 16,
   },
   guardianLeft: {
     flexDirection: 'row',
@@ -382,17 +293,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.primary,
     fontWeight: '600' as const,
-  },
-  trustBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 12,
-  },
-  trustText: {
-    fontSize: 13,
-    color: Colors.textTertiary,
-    fontWeight: '500' as const,
   },
 });

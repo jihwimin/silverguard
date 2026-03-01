@@ -1,18 +1,26 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   Animated,
+  TextInput,
+  Dimensions,
+  Keyboard,
+  TouchableWithoutFeedback,
+  ScrollView,
+  Platform,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, Stack } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Stack } from 'expo-router';
-import { Copy, QrCode, RefreshCw, CheckCircle } from 'lucide-react-native';
+import { Copy, RefreshCw, CheckCircle } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
-import { Platform } from 'react-native';
 import Colors from '@/constants/colors';
+
+const { width } = Dimensions.get('window');
+// 전체 패딩 48(24*2)을 제외한 영역에서 6개의 칸과 그 사이 간격(각 8px씩 5개 = 40px)을 계산
+const OTP_INPUT_SIZE = (width - 48 - 40) / 6;
 
 export default function GuardianLinkScreen() {
   const router = useRouter();
@@ -21,17 +29,16 @@ export default function GuardianLinkScreen() {
   const [timer, setTimer] = useState<number>(600);
   const [expired, setExpired] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
-  const fadeAnim = React.useRef(new Animated.Value(0)).current;
+  const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
+  const otpRefs = useRef<(TextInput | null)[]>([]);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.timing(fadeAnim, { toValue: 1, duration: 400, useNativeDriver: true }).start();
   }, []);
 
   useEffect(() => {
-    if (timer <= 0) {
-      setExpired(true);
-      return;
-    }
+    if (timer <= 0) { setExpired(true); return; }
     const interval = setInterval(() => setTimer((t) => t - 1), 1000);
     return () => clearInterval(interval);
   }, [timer]);
@@ -44,9 +51,7 @@ export default function GuardianLinkScreen() {
 
   const handleCopy = useCallback(() => {
     setCopied(true);
-    if (Platform.OS !== 'web') {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    }
+    if (Platform.OS !== 'web') Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setTimeout(() => setCopied(false), 2000);
   }, []);
 
@@ -55,199 +60,189 @@ export default function GuardianLinkScreen() {
     setExpired(false);
   }, []);
 
+  // ▽ 6번째 칸 입력 시 자동 닫기 로직 적용
+  const handleOtpChange = useCallback((text: string, index: number) => {
+    const cleanText = text.replace(/\D/g, '').slice(-1);
+    const newOtp = [...otp];
+    newOtp[index] = cleanText;
+    setOtp(newOtp);
+
+    if (cleanText && index < 5) {
+      otpRefs.current[index + 1]?.focus();
+    } else if (cleanText && index === 5) {
+      // 마지막 칸 입력 시 키보드 자동 종료
+      Keyboard.dismiss();
+    }
+  }, [otp]);
+
+  const handleOtpKeyPress = useCallback((key: string, index: number) => {
+    if (key === 'Backspace' && !otp[index] && index > 0) {
+      otpRefs.current[index - 1]?.focus();
+    }
+  }, [otp]);
+
   return (
-    <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          title: 'Link guardian',
-          headerStyle: { backgroundColor: Colors.background },
-          headerTintColor: Colors.text,
-          headerShadowVisible: false,
-          headerTitleStyle: { fontWeight: '700' as const, fontSize: 18 },
-        }}
-      />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            title: 'Link guardian',
+            headerStyle: { backgroundColor: Colors.background },
+            headerTintColor: Colors.text,
+            headerShadowVisible: false,
+            headerTitleStyle: { fontWeight: '700', fontSize: 18 },
+          }}
+        />
 
-      <Animated.View style={[styles.content, { opacity: fadeAnim, paddingBottom: insets.bottom + 24 }]}>
-        <View style={styles.instructionCard}>
-          <Text style={styles.instructionTitle}>Share the code below with your guardian.</Text>
-          <Text style={styles.instructionSub}>They have 10 minutes to enter it to complete linking.</Text>
-        </View>
-
-        {!expired ? (
-          <View style={styles.codeSection}>
-            <Text style={styles.codeText}>{code}</Text>
-            <Text style={styles.timerText}>{formatTime(timer)} left</Text>
-            <TouchableOpacity
-              style={styles.copyButton}
-              onPress={handleCopy}
-              activeOpacity={0.85}
-            >
-              {copied ? (
-                <>
-                  <CheckCircle size={18} color={Colors.white} strokeWidth={2} />
-                  <Text style={styles.copyButtonText}>Copied</Text>
-                </>
-              ) : (
-                <>
-                  <Copy size={18} color={Colors.white} strokeWidth={2} />
-                  <Text style={styles.copyButtonText}>Copy code</Text>
-                </>
-              )}
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.expiredSection}>
-            <Text style={styles.expiredText}>Code has expired</Text>
-            <TouchableOpacity
-              style={styles.refreshButton}
-              onPress={handleRefresh}
-              activeOpacity={0.85}
-            >
-              <RefreshCw size={18} color={Colors.white} strokeWidth={2} />
-              <Text style={styles.refreshButtonText}>Get new code</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        <View style={styles.qrCard}>
-          <Text style={styles.qrTitle}>You can also link via QR code</Text>
-          <View style={styles.qrPlaceholder}>
-            <QrCode size={80} color={Colors.textTertiary} strokeWidth={1} />
-          </View>
-        </View>
-
-        <TouchableOpacity
-          style={styles.confirmButton}
-          onPress={() => router.back()}
-          activeOpacity={0.85}
+        <ScrollView 
+          contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 24 }]}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
         >
-          <Text style={styles.confirmButtonText}>Confirm link complete</Text>
-        </TouchableOpacity>
-      </Animated.View>
-    </View>
+          <Animated.View style={[styles.inner, { opacity: fadeAnim }]}>
+            
+            {/* 안내 카드 */}
+            <View style={styles.instructionCard}>
+              <Text style={styles.instructionTitle}>Share the code with your guardian.</Text>
+            </View>
+
+            {/* 메인 코드 섹션 */}
+            <View style={styles.mainSection}>
+              {!expired ? (
+                <View style={styles.codeContainer}>
+                  <Text style={styles.codeText}>{code}</Text>
+                  <Text style={styles.timerText}>{formatTime(timer)} left</Text>
+                  <TouchableOpacity style={styles.copyButton} onPress={handleCopy} activeOpacity={0.8}>
+                    {copied ? (
+                      <><CheckCircle size={18} color={Colors.white} /><Text style={styles.copyButtonText}>Copied</Text></>
+                    ) : (
+                      <><Copy size={18} color={Colors.white} /><Text style={styles.copyButtonText}>Copy code</Text></>
+                    )}
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <View style={styles.expiredContainer}>
+                  <Text style={styles.expiredText}>Code has expired</Text>
+                  <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
+                    <RefreshCw size={18} color={Colors.white} /><Text style={styles.refreshButtonText}>Get new code</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            </View>
+
+            {/* 분구선 (Visual Divider) */}
+            <View style={styles.divider} />
+
+            {/* 가디언 코드 입력 섹션 */}
+            <View style={styles.otpSection}>
+              <Text style={styles.otpLabel}>Enter guardian's code</Text>
+              <View style={styles.otpRow}>
+                {otp.map((digit, index) => (
+                  <TextInput
+                    key={index}
+                    ref={(ref) => { otpRefs.current[index] = ref; }}
+                    style={[
+                      styles.otpInput,
+                      { width: OTP_INPUT_SIZE, height: OTP_INPUT_SIZE * 1.2 },
+                      digit ? styles.otpInputFilled : null
+                    ]}
+                    value={digit}
+                    onChangeText={(text) => handleOtpChange(text, index)}
+                    onKeyPress={({ nativeEvent }) => handleOtpKeyPress(nativeEvent.key, index)}
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    selectTextOnFocus
+                  />
+                ))}
+              </View>
+            </View>
+
+            {/* 하단 버튼 (중앙 밸런스를 위해 여백 조정) */}
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={() => router.back()}
+              activeOpacity={0.85}
+            >
+              <Text style={styles.confirmButtonText}>Link</Text>
+            </TouchableOpacity>
+
+          </Animated.View>
+        </ScrollView>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 16,
-  },
+  container: { flex: 1, backgroundColor: Colors.background },
+  scrollContent: { flexGrow: 1 },
+  inner: { flex: 1, paddingHorizontal: 24, paddingTop: 12 },
+  
   instructionCard: {
     backgroundColor: Colors.primaryFaint,
-    borderRadius: 16,
-    padding: 18,
-    marginBottom: 24,
+    borderRadius: 16, padding: 16, marginBottom: 32,
   },
   instructionTitle: {
-    fontSize: 17,
-    fontWeight: '600' as const,
-    color: Colors.text,
-    lineHeight: 24,
+    fontSize: 16, fontWeight: '600', color: Colors.text, textAlign: 'center',
   },
-  instructionSub: {
-    fontSize: 14,
-    color: Colors.textSecondary,
-    marginTop: 4,
-  },
-  codeSection: {
-    alignItems: 'center',
-    marginBottom: 24,
-  },
+
+  mainSection: { alignItems: 'center', marginBottom: 40 },
+  codeContainer: { alignItems: 'center' },
   codeText: {
-    fontSize: 52,
-    fontWeight: '700' as const,
-    color: Colors.text,
-    letterSpacing: 8,
-    marginBottom: 8,
+    fontSize: 52, fontWeight: '800', 
+    color: Colors.text, letterSpacing: 6, marginBottom: 4,
   },
   timerText: {
-    fontSize: 15,
-    color: Colors.textTertiary,
-    fontWeight: '500' as const,
-    marginBottom: 16,
+    fontSize: 14, color: Colors.textTertiary,
+    fontWeight: '500', marginBottom: 20,
   },
   copyButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: Colors.primary,
-    paddingHorizontal: 24,
-    paddingVertical: 14,
-    borderRadius: 14,
+    flexDirection: 'row', alignItems: 'center', gap: 8,
+    backgroundColor: Colors.primary, paddingHorizontal: 20,
+    paddingVertical: 12, borderRadius: 12,
   },
-  copyButtonText: {
-    fontSize: 16,
-    color: Colors.white,
-    fontWeight: '700' as const,
-  },
-  expiredSection: {
-    alignItems: 'center',
-    marginBottom: 24,
-    gap: 16,
-  },
-  expiredText: {
-    fontSize: 17,
-    color: Colors.textTertiary,
-    fontWeight: '600' as const,
-  },
+  copyButtonText: { fontSize: 15, color: Colors.white, fontWeight: '700' },
+
+  expiredContainer: { alignItems: 'center', gap: 12 },
+  expiredText: { fontSize: 16, color: Colors.textTertiary, fontWeight: '600' },
   refreshButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: Colors.primary,
-    paddingHorizontal: 24,
-    paddingVertical: 14,
-    borderRadius: 14,
+    flexDirection: 'row', alignItems: 'center', gap: 8,
+    backgroundColor: Colors.textSecondary, paddingHorizontal: 20,
+    paddingVertical: 12, borderRadius: 12,
   },
-  refreshButtonText: {
-    fontSize: 16,
-    color: Colors.white,
-    fontWeight: '700' as const,
+  refreshButtonText: { fontSize: 15, color: Colors.white, fontWeight: '700' },
+
+  divider: {
+    height: 1, backgroundColor: Colors.border,
+    width: '100%', marginBottom: 40, opacity: 0.5,
   },
-  qrCard: {
-    backgroundColor: Colors.card,
-    borderRadius: 18,
-    padding: 24,
-    alignItems: 'center',
-    marginBottom: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 1,
+
+  otpSection: { width: '100%', marginBottom: 40 },
+  otpLabel: {
+    fontSize: 14, color: Colors.textSecondary,
+    fontWeight: '600', marginBottom: 20, textAlign: 'center',
   },
-  qrTitle: {
-    fontSize: 15,
-    color: Colors.textSecondary,
-    fontWeight: '500' as const,
-    marginBottom: 16,
+  otpRow: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', // 양쪽 끝 여백 문제를 해결하는 핵심 속성
   },
-  qrPlaceholder: {
-    width: 160,
-    height: 160,
-    borderRadius: 16,
-    backgroundColor: Colors.background,
-    alignItems: 'center',
-    justifyContent: 'center',
+  otpInput: {
+    borderRadius: 12,
+    backgroundColor: Colors.card, borderWidth: 2,
+    borderColor: Colors.border, fontSize: 24,
+    fontWeight: '700', color: Colors.text, textAlign: 'center',
   },
+  otpInputFilled: { borderColor: Colors.primary, backgroundColor: Colors.primaryFaint },
+
   confirmButton: {
-    height: 56,
-    borderRadius: 16,
-    borderWidth: 1.5,
-    borderColor: Colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: 58, borderRadius: 16,
+    backgroundColor: Colors.primary,
+    alignItems: 'center', justifyContent: 'center',
+    marginTop: 'auto', // 유동적으로 하단에 배치
+    shadowColor: Colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2, shadowRadius: 8, elevation: 4,
   },
-  confirmButtonText: {
-    fontSize: 17,
-    color: Colors.primary,
-    fontWeight: '700' as const,
-  },
+  confirmButtonText: { fontSize: 18, color: Colors.white, fontWeight: '700' },
 });

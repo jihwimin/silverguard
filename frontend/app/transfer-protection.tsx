@@ -7,174 +7,138 @@ import {
   TouchableOpacity,
   TextInput,
   Animated,
+  ActivityIndicator,
+  Keyboard,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, Stack } from 'expo-router'; // useRouter 추가 [cite: 2026-02-28]
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Stack } from 'expo-router';
-import {
-  ArrowLeft,
-  ShieldAlert,
-  Ban,
-  Save,
-  MessageCircle,
-  AlertTriangle,
+import { 
+  Search, 
+  ShieldCheck, 
+  ShieldAlert, 
+  Info, 
+  History, 
+  XCircle,
+  ArrowLeft // 뒤로 가기 아이콘 추가 [cite: 2026-02-28]
 } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { Platform } from 'react-native';
 import Colors from '@/constants/colors';
 
-type TransferStep = 'form' | 'blocked';
-
-export default function TransferProtectionScreen() {
-  const router = useRouter();
+export default function FraudScannerScreen() {
+  const router = useRouter(); // 라우터 선언 [cite: 2026-02-28]
   const insets = useSafeAreaInsets();
-  const [step, setStep] = useState<TransferStep>('form');
-  const [recipient, setRecipient] = useState<string>('');
-  const [account, setAccount] = useState<string>('');
-  const [amount, setAmount] = useState<string>('');
-  const blockAnim = useRef(new Animated.Value(0)).current;
+  const [query, setQuery] = useState('');
+  const [status, setStatus] = useState<'idle' | 'searching' | 'danger' | 'safe'>('idle');
+  const [resultData, setResultData] = useState<any>(null);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
-  const handleTransfer = useCallback(() => {
-    setStep('blocked');
-    Animated.spring(blockAnim, {
-      toValue: 1,
-      tension: 50,
-      friction: 9,
-      useNativeDriver: true,
-    }).start();
-    if (Platform.OS !== 'web') {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-    }
-  }, []);
+  const handleSearch = useCallback(() => {
+    if (!query.trim()) return;
+    Keyboard.dismiss();
+    setStatus('searching');
+    fadeAnim.setValue(0);
+    
+    setTimeout(() => {
+      const lowerQuery = query.toLowerCase();
+      if (lowerQuery.includes('65e') || lowerQuery.includes('police') || lowerQuery.includes('quick')) {
+        setResultData({
+          type: query.includes('65e') ? 'Bank Account' : 'Merchant Entity',
+          name: lowerQuery.includes('police') ? 'Official Police (Impersonated)' : 'Quick Loan Services',
+          reason: 'Flagged in Nessie Security Engine for 15+ fraudulent attempts.',
+          lastReported: '2026-02-28',
+        });
+        setStatus('danger');
+      } else {
+        setStatus('safe');
+      }
+      Animated.timing(fadeAnim, { toValue: 1, duration: 400, useNativeDriver: true }).start();
+      if (Platform.OS !== 'web') Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    }, 1200);
+  }, [query]);
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          title: 'Transfer protection',
-          headerStyle: { backgroundColor: Colors.background },
-          headerTintColor: Colors.text,
-          headerShadowVisible: false,
-          headerTitleStyle: { fontWeight: '700' as const, fontSize: 18 },
-        }}
-      />
+    <View style={[styles.container, { paddingTop: insets.top }]}>
+      {/* Expo Router 헤더 설정 [cite: 2026-02-28] */}
+      <Stack.Screen options={{ headerShown: false }} />
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
+      {/* 커스텀 헤더: 뒤로 가기 + 타이틀 [cite: 2026-02-28] */}
+      <View style={styles.navBar}>
+        <TouchableOpacity 
+          style={styles.backButton} 
+          onPress={() => router.back()} // Home으로 돌아가기 [cite: 2026-02-28]
+        >
+          <ArrowLeft size={24} color={Colors.text} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Nessie Fraud Scanner</Text>
+      </View>
+
+      {/* 검색 영역: flex를 사용하여 Scan 버튼 고정 [cite: 2026-02-28] */}
+      <View style={styles.searchSection}>
+        <View style={styles.searchRow}>
+          <View style={styles.searchBar}>
+            <Search size={18} color={Colors.textTertiary} />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Account or Merchant"
+              placeholderTextColor={Colors.textTertiary}
+              value={query}
+              onChangeText={setQuery}
+              onSubmitEditing={handleSearch}
+              returnKeyType="search"
+            />
+            {query.length > 0 && (
+              <TouchableOpacity onPress={() => setQuery('')}>
+                <XCircle size={18} color={Colors.textTertiary} />
+              </TouchableOpacity>
+            )}
+          </View>
+          <TouchableOpacity style={styles.scanButton} onPress={handleSearch} activeOpacity={0.8}>
+            <Text style={styles.scanButtonText}>Scan</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <ScrollView 
+        contentContainerStyle={[styles.scrollBody, { paddingBottom: insets.bottom + 20 }]}
         keyboardShouldPersistTaps="handled"
       >
-        {step === 'form' && (
-          <View style={styles.formSection}>
-            <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Recipient</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter name"
-                placeholderTextColor={Colors.textTertiary}
-                value={recipient}
-                onChangeText={setRecipient}
-              />
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Account number</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter account number"
-                placeholderTextColor={Colors.textTertiary}
-                keyboardType="number-pad"
-                value={account}
-                onChangeText={setAccount}
-              />
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Amount</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Amount to transfer"
-                placeholderTextColor={Colors.textTertiary}
-                keyboardType="number-pad"
-                value={amount}
-                onChangeText={setAmount}
-              />
-            </View>
-
-            <TouchableOpacity
-              style={styles.primaryButton}
-              onPress={handleTransfer}
-              activeOpacity={0.85}
-              testID="transfer-button"
-            >
-              <Text style={styles.primaryButtonText}>Transfer</Text>
-            </TouchableOpacity>
+        {status === 'idle' && (
+          <View style={styles.centerState}>
+            <Info size={40} color={Colors.border} />
+            <Text style={styles.infoText}>Search accounts or merchants in Nessie DB.</Text>
           </View>
         )}
 
-        {step === 'blocked' && (
-          <Animated.View
-            style={[
-              styles.blockedSection,
-              {
-                opacity: blockAnim,
-                transform: [{ scale: blockAnim.interpolate({ inputRange: [0, 1], outputRange: [0.95, 1] }) }],
-              },
-            ]}
-          >
-            <View style={styles.blockedHeader}>
-              <View style={styles.blockedIconBg}>
-                <Ban size={40} color={Colors.danger} strokeWidth={2} />
-              </View>
-              <Text style={styles.blockedTitle}>Transfer was cancelled</Text>
+        {status === 'searching' && (
+          <View style={styles.centerState}>
+            <ActivityIndicator size="large" color={Colors.primary} />
+            <Text style={styles.loadingText}>Verifying with Nessie DB...</Text>
+          </View>
+        )}
+
+        {status === 'danger' && (
+          <Animated.View style={[styles.card, styles.dangerCard, { opacity: fadeAnim }]}>
+            <View style={styles.cardTop}>
+              <ShieldAlert size={24} color={Colors.danger} />
+              <Text style={styles.dangerTitle}>High Risk Detected</Text>
             </View>
+            <View style={styles.dataRow}><Text style={styles.label}>Type</Text><Text style={styles.val}>{resultData?.type}</Text></View>
+            <View style={styles.dataRow}><Text style={styles.label}>Name</Text><Text style={[styles.val, {color: Colors.danger}]}>{resultData?.name}</Text></View>
+            <View style={styles.line} />
+            <Text style={styles.subLabel}>Analysis</Text>
+            <Text style={styles.descText}>{resultData?.reason}</Text>
+            <View style={styles.badge}><History size={12} color={Colors.danger} /><Text style={styles.badgeText}>{resultData?.lastReported}</Text></View>
+          </Animated.View>
+        )}
 
-            <View style={styles.systemMessage}>
-              <ShieldAlert size={18} color={Colors.primary} strokeWidth={2} />
-              <Text style={styles.systemText}>
-                Nessie security engine: Transaction stopped due to risky account detection.
-              </Text>
+        {status === 'safe' && (
+          <Animated.View style={[styles.card, styles.safeCard, { opacity: fadeAnim }]}>
+            <View style={styles.cardTop}>
+              <ShieldCheck size={24} color="#2F855A" />
+              <Text style={styles.safeTitle}>Verified Secure</Text>
             </View>
-
-            <View style={styles.detailsCard}>
-              <View style={styles.detailRow}>
-                <Text style={styles.detailLabel}>Risk reason</Text>
-                <Text style={styles.detailValue}>Account with voice phishing reports</Text>
-              </View>
-              <View style={styles.detailDivider} />
-              <View style={styles.detailRow}>
-                <Text style={styles.detailLabel}>Recommended actions</Text>
-                <View style={styles.recommendList}>
-                  <View style={styles.recommendItem}>
-                    <AlertTriangle size={14} color={Colors.caution} strokeWidth={2} />
-                    <Text style={styles.recommendText}>Stop transactions with this account</Text>
-                  </View>
-                  <View style={styles.recommendItem}>
-                    <AlertTriangle size={14} color={Colors.caution} strokeWidth={2} />
-                    <Text style={styles.recommendText}>Re-verify the recipient's identity</Text>
-                  </View>
-                  <View style={styles.recommendItem}>
-                    <AlertTriangle size={14} color={Colors.caution} strokeWidth={2} />
-                    <Text style={styles.recommendText}>Report to police or financial authority</Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-
-            <TouchableOpacity
-              style={styles.primaryButton}
-              onPress={() => router.push('/reporting-chatbot')}
-              activeOpacity={0.85}
-            >
-              <MessageCircle size={20} color={Colors.white} strokeWidth={2} />
-              <Text style={styles.primaryButtonText}>Go to report assistant</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.secondaryButton} activeOpacity={0.75}>
-              <Save size={18} color={Colors.primary} strokeWidth={2} />
-              <Text style={styles.secondaryButtonText}>Save details</Text>
-            </TouchableOpacity>
+            <Text style={styles.descText}>No fraudulent records found. Always stay vigilant when transferring funds.</Text>
           </Animated.View>
         )}
       </ScrollView>
@@ -183,144 +147,68 @@ export default function TransferProtectionScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
+  container: { flex: 1, backgroundColor: Colors.background },
+  navBar: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    paddingHorizontal: 16, 
+    paddingVertical: 12,
+    gap: 12
   },
-  scrollContent: {
-    paddingHorizontal: 20,
-    paddingBottom: 40,
-    paddingTop: 16,
+  backButton: {
+    padding: 4,
   },
-  formSection: {
-    gap: 16,
+  headerTitle: { fontSize: 18, fontWeight: '800', color: Colors.text },
+  
+  searchSection: { 
+    paddingHorizontal: 20, 
+    paddingBottom: 15,
+    borderBottomWidth: 1, 
+    borderBottomColor: Colors.borderLight 
   },
-  inputGroup: {
-    gap: 8,
+  searchRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  searchBar: { 
+    flex: 1, // 입력창이 공간을 다 차지하도록 설정 [cite: 2026-02-28]
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    backgroundColor: Colors.card, 
+    borderRadius: 12, 
+    paddingHorizontal: 10, 
+    height: 48,
+    borderWidth: 1.5, 
+    borderColor: Colors.border, 
+    gap: 8 
   },
-  inputLabel: {
-    fontSize: 15,
-    fontWeight: '600' as const,
-    color: Colors.textSecondary,
-    marginLeft: 4,
-  },
-  input: {
-    backgroundColor: Colors.card,
-    borderRadius: 14,
-    height: 56,
-    paddingHorizontal: 18,
-    fontSize: 17,
-    color: Colors.text,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 4,
-    elevation: 1,
-  },
-  primaryButton: {
-    backgroundColor: Colors.primary,
-    borderRadius: 16,
-    height: 56,
-    flexDirection: 'row',
-    alignItems: 'center',
+  searchInput: { flex: 1, fontSize: 15, color: Colors.text },
+  scanButton: { 
+    backgroundColor: Colors.primary, 
+    borderRadius: 12, 
+    height: 48, 
+    paddingHorizontal: 16, 
     justifyContent: 'center',
-    gap: 8,
-    marginTop: 8,
+    minWidth: 70, // 버튼 너비 고정 [cite: 2026-02-28]
   },
-  primaryButtonText: {
-    color: Colors.white,
-    fontSize: 18,
-    fontWeight: '700' as const,
-  },
-  blockedSection: {
-    gap: 16,
-  },
-  blockedHeader: {
-    alignItems: 'center',
-    gap: 16,
-    marginVertical: 16,
-  },
-  blockedIconBg: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: Colors.dangerBg,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  blockedTitle: {
-    fontSize: 24,
-    fontWeight: '700' as const,
-    color: Colors.text,
-  },
-  systemMessage: {
-    backgroundColor: Colors.primaryFaint,
-    borderRadius: 14,
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 10,
-  },
-  systemText: {
-    fontSize: 15,
-    color: Colors.text,
-    lineHeight: 22,
-    flex: 1,
-  },
-  detailsCard: {
-    backgroundColor: Colors.card,
-    borderRadius: 18,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  detailRow: {
-    gap: 8,
-  },
-  detailLabel: {
-    fontSize: 14,
-    fontWeight: '600' as const,
-    color: Colors.textTertiary,
-  },
-  detailValue: {
-    fontSize: 16,
-    fontWeight: '600' as const,
-    color: Colors.danger,
-  },
-  detailDivider: {
-    height: 1,
-    backgroundColor: Colors.borderLight,
-    marginVertical: 14,
-  },
-  recommendList: {
-    gap: 8,
-  },
-  recommendItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  recommendText: {
-    fontSize: 15,
-    color: Colors.textSecondary,
-    lineHeight: 22,
-  },
-  secondaryButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 6,
-    height: 52,
-    borderRadius: 16,
-    borderWidth: 1.5,
-    borderColor: Colors.primary,
-  },
-  secondaryButtonText: {
-    fontSize: 16,
-    color: Colors.primary,
-    fontWeight: '600' as const,
-  },
+  scanButtonText: { color: Colors.white, fontWeight: '700', textAlign: 'center' },
+
+  scrollBody: { padding: 20, flexGrow: 1 },
+  centerState: { flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 80, gap: 15 },
+  infoText: { color: Colors.textTertiary, textAlign: 'center', fontSize: 14, lineHeight: 20 },
+  loadingText: { color: Colors.primary, fontWeight: '600', marginTop: 10 },
+
+  card: { borderRadius: 20, padding: 20, elevation: 3, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 10 },
+  dangerCard: { backgroundColor: '#FFF5F5', borderWidth: 1.5, borderColor: '#FEB2B2' },
+  safeCard: { backgroundColor: '#F0FFF4', borderWidth: 1.5, borderColor: '#9AE6B4' },
+
+  cardTop: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 15 },
+  dangerTitle: { fontSize: 17, fontWeight: '800', color: Colors.danger },
+  safeTitle: { fontSize: 17, fontWeight: '800', color: '#2F855A' },
+
+  dataRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
+  label: { color: Colors.textTertiary, fontSize: 13, fontWeight: '600' },
+  val: { color: Colors.text, fontSize: 14, fontWeight: '700' },
+  line: { height: 1, backgroundColor: Colors.border, marginVertical: 15, opacity: 0.3 },
+  subLabel: { fontSize: 11, fontWeight: '800', color: Colors.textSecondary, marginBottom: 5, textTransform: 'uppercase' },
+  descText: { fontSize: 14, color: Colors.text, lineHeight: 22, fontWeight: '500' },
+  badge: { flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: '#FFEBEB', alignSelf: 'flex-start', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6, marginTop: 15 },
+  badgeText: { fontSize: 11, fontWeight: '700', color: Colors.danger }
 });
