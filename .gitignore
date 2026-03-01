@@ -6,6 +6,7 @@ __pycache__/
 .venv/
 venv/
 *.db
+
 .env
 backend/node-server/.env
 .env
@@ -16,3 +17,8 @@ backend/node-server/node_modules/
 
 # macOS
 .DS_Store
+
+
+# Python cache
+__pycache__/
+*.pyc
