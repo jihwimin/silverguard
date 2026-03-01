@@ -22,3 +22,7 @@ backend/node-server/node_modules/
 # Python cache
 __pycache__/
 *.pyc
+
+# Python cache
+__pycache__/
+*.pyc
