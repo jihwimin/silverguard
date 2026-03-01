@@ -46,7 +46,7 @@ function RootLayoutNav() {
       <Stack.Screen name="index" />
       <Stack.Screen name="onboarding" options={{ gestureEnabled: false }} />
       <Stack.Screen name="verification" options={{ gestureEnabled: false }} />
-      <Stack.Screen name="(tabs)" options={{ gestureEnabled: false }} />
+      <Stack.Screen name="(tabs)" options={{ gestureEnabled: false, title: '' }} />
       <Stack.Screen
         name="reporting-chatbot"
         options={{ presentation: "modal", gestureEnabled: true }}

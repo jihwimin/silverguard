@@ -22,6 +22,7 @@ import {
 } from 'lucide-react-native';
 import Colors from '@/constants/colors';
 
+
 interface NotificationSetting {
   id: string;
   label: string;
@@ -46,11 +47,12 @@ export default function GuardianHubScreen() {
   };
 
   return (
+    
     <View style={styles.container}>
       <Stack.Screen
         options={{
           headerShown: true,
-          title: 'Guardian link & alerts',
+          title: '',
           headerStyle: { backgroundColor: Colors.background },
           headerTintColor: Colors.text,
           headerShadowVisible: false,
@@ -143,30 +145,6 @@ export default function GuardianHubScreen() {
             </View>
           ))}
         </View>
-
-        <View style={styles.disclosureCard}>
-          <View style={styles.disclosureHeader}>
-            <Info size={16} color={Colors.textSecondary} strokeWidth={2} />
-            <Text style={styles.disclosureTitle}>Shared information</Text>
-          </View>
-          <Text style={styles.disclosureItem}>• Risk type and level (e.g. 91%)</Text>
-          <Text style={styles.disclosureItem}>• Time of occurrence</Text>
-          <Text style={styles.disclosureItem}>• Recommended actions</Text>
-          <View style={styles.disclosureDivider} />
-          <Text style={styles.disclosureNote}>
-            Call content, full account numbers, and personal details are not shared.
-          </Text>
-        </View>
-
-        <TouchableOpacity
-          style={styles.alertsButton}
-          onPress={() => router.push('/guardian-alerts')}
-          activeOpacity={0.75}
-        >
-          <ShieldCheck size={18} color={Colors.primary} strokeWidth={2} />
-          <Text style={styles.alertsButtonText}>View guardian alerts</Text>
-          <ChevronRight size={18} color={Colors.primary} strokeWidth={2} />
-        </TouchableOpacity>
       </ScrollView>
     </View>
   );

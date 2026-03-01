@@ -15,7 +15,11 @@ export default function TabLayout() {
           borderTopColor: Colors.borderLight,
           borderTopWidth: 1,
         },
-        tabBarLabelStyle: {
+          tabBarItemStyle: {
+          flex: 1,
+          paddingVertical: 4,
+        },
+          tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: '600' as const,
         },
@@ -31,7 +35,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="protection"
         options={{
-          title: "Live protection",
+          title: "Live Detect",
           tabBarIcon: ({ color, size }) => <ShieldCheck size={size} color={color} strokeWidth={2} />,
         }}
       />
