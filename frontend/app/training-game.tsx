@@ -4,29 +4,39 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
 import { Shield, Gamepad2, ChevronRight } from 'lucide-react-native';
 import Colors from '@/constants/colors';
 
-type Difficulty = 'easy' | 'medium' | 'hard';
-
-const difficultyLabels: Record<Difficulty, string> = {
-  easy: 'Easy',
-  medium: 'Medium',
-  hard: 'Hard',
-};
+import { BASE_URL } from '@/constants/config';
+const USER_ID = "user_001"; // TODO: 실제 유저 ID로 교체
 
 export default function TrainingGameScreen() {
   const router = useRouter();
-  const insets = useSafeAreaInsets();
-  const [difficulty, setDifficulty] = useState<Difficulty>('easy');
+  const [loading, setLoading] = useState(false);
 
-  const handleStart = useCallback(() => {
-    router.push(`/training-play?difficulty=${difficulty}`);
-  }, [difficulty]);
+  const handleStart = useCallback(async () => {
+    setLoading(true);
+    try {
+      // 기존 활성 세션이 있으면 무시하고 새 세션 시작
+      const res = await fetch(`${BASE_URL}/session/start`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: USER_ID }),
+      });
+      if (!res.ok) throw new Error('세션 시작 실패');
+      const data = await res.json();
+      router.push(`/training-play?session_id=${data.session_id}&user_id=${USER_ID}`);
+    } catch (e) {
+      Alert.alert('Connection failed', 'Please check your internet and try again.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -52,32 +62,6 @@ export default function TrainingGameScreen() {
           </Text>
         </View>
 
-        <View style={styles.difficultySection}>
-          <Text style={styles.sectionLabel}>Select difficulty</Text>
-          <View style={styles.segmentControl}>
-            {(Object.keys(difficultyLabels) as Difficulty[]).map((d) => (
-              <TouchableOpacity
-                key={d}
-                style={[
-                  styles.segment,
-                  difficulty === d && styles.segmentActive,
-                ]}
-                onPress={() => setDifficulty(d)}
-                activeOpacity={0.75}
-              >
-                <Text
-                  style={[
-                    styles.segmentText,
-                    difficulty === d && styles.segmentTextActive,
-                  ]}
-                >
-                  {difficultyLabels[d]}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-
         <View style={styles.infoCards}>
           <View style={styles.infoCard}>
             <Shield size={20} color={Colors.primary} strokeWidth={2} />
@@ -89,13 +73,20 @@ export default function TrainingGameScreen() {
         </View>
 
         <TouchableOpacity
-          style={styles.startButton}
+          style={[styles.startButton, loading && { opacity: 0.7 }]}
           onPress={handleStart}
           activeOpacity={0.85}
+          disabled={loading}
           testID="start-training"
         >
-          <Text style={styles.startButtonText}>Start training</Text>
-          <ChevronRight size={22} color={Colors.white} strokeWidth={2.5} />
+          {loading ? (
+            <ActivityIndicator color={Colors.white} />
+          ) : (
+            <>
+              <Text style={styles.startButtonText}>Start training</Text>
+              <ChevronRight size={22} color={Colors.white} strokeWidth={2.5} />
+            </>
+          )}
         </TouchableOpacity>
       </View>
     </View>
@@ -137,44 +128,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 8,
     lineHeight: 24,
-  },
-  difficultySection: {
-    marginBottom: 24,
-  },
-  sectionLabel: {
-    fontSize: 15,
-    fontWeight: '600' as const,
-    color: Colors.textSecondary,
-    marginBottom: 12,
-  },
-  segmentControl: {
-    flexDirection: 'row',
-    backgroundColor: Colors.card,
-    borderRadius: 14,
-    padding: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 1,
-  },
-  segment: {
-    flex: 1,
-    height: 48,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  segmentActive: {
-    backgroundColor: Colors.primary,
-  },
-  segmentText: {
-    fontSize: 16,
-    fontWeight: '600' as const,
-    color: Colors.textTertiary,
-  },
-  segmentTextActive: {
-    color: Colors.white,
   },
   infoCards: {
     gap: 10,

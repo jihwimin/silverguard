@@ -16,21 +16,17 @@ import Colors from '@/constants/colors';
 export default function TrainingResultScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { score, total, answers } = useLocalSearchParams<{
-    score: string;
-    total: string;
-    answers: string;
-  }>();
+  const { score, total } = useLocalSearchParams<{ score: string; total: string }>();
   const scaleAnim = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const scoreNum = parseInt(score || '0', 10);
   const totalNum = parseInt(total || '0', 10);
-  const answerArr = (answers || '').split(',').map((a) => a === 'true');
-  const correctCount = answerArr.filter(Boolean).length;
+  // score는 20점 단위로 쌓이므로 정답 수 = score / 20
+  const correctCount = Math.round(scoreNum / 20);
 
   const getBadge = () => {
-    const ratio = correctCount / Math.max(totalNum, 1);
+    const ratio = totalNum > 0 ? correctCount / totalNum : 0;
     if (ratio >= 0.8) return { label: 'Security expert', color: Colors.primary };
     if (ratio >= 0.5) return { label: 'Security apprentice', color: Colors.caution };
     return { label: 'Needs practice', color: Colors.danger };
@@ -121,94 +117,33 @@ export default function TrainingResultScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  scrollContent: {
-    paddingHorizontal: 24,
-    paddingTop: 24,
-  },
-  badgeSection: {
-    alignItems: 'center',
-    marginBottom: 32,
-  },
+  container: { flex: 1, backgroundColor: Colors.background },
+  scrollContent: { paddingHorizontal: 24, paddingTop: 24 },
+  badgeSection: { alignItems: 'center', marginBottom: 32 },
   badgeCircle: {
-    width: 110,
-    height: 110,
-    borderRadius: 55,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 16,
+    width: 110, height: 110, borderRadius: 55,
+    alignItems: 'center', justifyContent: 'center', marginBottom: 16,
   },
-  badgeLabel: {
-    fontSize: 24,
-    fontWeight: '700' as const,
-  },
-  scoreText: {
-    fontSize: 16,
-    color: Colors.textSecondary,
-    marginTop: 6,
-    fontWeight: '500' as const,
-  },
-  feedbackSection: {
-    gap: 12,
-    marginBottom: 24,
-  },
+  badgeLabel: { fontSize: 24, fontWeight: '700' as const },
+  scoreText: { fontSize: 16, color: Colors.textSecondary, marginTop: 6, fontWeight: '500' as const },
+  feedbackSection: { gap: 12, marginBottom: 24 },
   feedbackCard: {
-    backgroundColor: Colors.card,
-    borderRadius: 16,
-    padding: 18,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 4,
-    elevation: 1,
+    backgroundColor: Colors.card, borderRadius: 16, padding: 18,
+    shadowColor: '#000', shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03, shadowRadius: 4, elevation: 1,
   },
-  feedbackHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 10,
-  },
-  feedbackTitle: {
-    fontSize: 16,
-    fontWeight: '700' as const,
-    color: Colors.text,
-  },
-  feedbackItem: {
-    fontSize: 15,
-    color: Colors.textSecondary,
-    lineHeight: 24,
-  },
+  feedbackHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
+  feedbackTitle: { fontSize: 16, fontWeight: '700' as const, color: Colors.text },
+  feedbackItem: { fontSize: 15, color: Colors.textSecondary, lineHeight: 24 },
   primaryButton: {
-    backgroundColor: Colors.primary,
-    borderRadius: 16,
-    height: 56,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    marginBottom: 12,
+    backgroundColor: Colors.primary, borderRadius: 16, height: 56,
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+    gap: 8, marginBottom: 12,
   },
-  primaryButtonText: {
-    color: Colors.white,
-    fontSize: 18,
-    fontWeight: '700' as const,
-  },
+  primaryButtonText: { color: Colors.white, fontSize: 18, fontWeight: '700' as const },
   secondaryButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 6,
-    height: 52,
-    borderRadius: 16,
-    borderWidth: 1.5,
-    borderColor: Colors.primary,
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+    gap: 6, height: 52, borderRadius: 16, borderWidth: 1.5, borderColor: Colors.primary,
   },
-  secondaryButtonText: {
-    fontSize: 16,
-    color: Colors.primary,
-    fontWeight: '600' as const,
-  },
+  secondaryButtonText: { fontSize: 16, color: Colors.primary, fontWeight: '600' as const },
 });
