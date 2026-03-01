@@ -1,6 +1,7 @@
 import os
 import sys
 import subprocess
+import time
 from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -13,6 +14,7 @@ from pydantic import BaseModel
 # ── Path setup & module imports ───────────────────────────────────────────────
 current_file = Path(__file__).resolve()
 backend_dir = current_file.parent
+# UIUC 환경에 맞춘 경로 설정 유지 [cite: 2025-12-10]
 game_root = backend_dir.parent / "game" / "scam_quiz"
 
 for path in [str(backend_dir), str(game_root)]:
@@ -48,6 +50,7 @@ if quiz and session:
     app.include_router(quiz.router, prefix="/quiz", tags=["Scam Quiz"])
     app.include_router(session.router, prefix="/session", tags=["Quiz Session"])
 
+# 모든 정적 파일 접근 허용 [cite: 2026-02-28]
 app.mount("/static", StaticFiles(directory="."), name="static")
 
 # ── OpenAI & RAG setup ────────────────────────────────────────────────────────
@@ -89,12 +92,21 @@ def get_rag_context(user_msg: str) -> str:
 # ── OpenAI chat completion ────────────────────────────────────────────────────
 def get_openai_response(user_msg: str) -> str:
     guide_context = get_rag_context(user_msg)
-    system_prompt = (
-        "You are 'SilverGuard', a voice assistant designed to protect seniors "
-        "from financial scams and voice phishing. Respond clearly, calmly, and "
-        "concisely. Always prioritize the user's safety.\n\n"
-        f"[Legal & Safety Guide Context]\n{guide_context}"
-    )
+    system_prompt = f"""
+    You are 'SilverGuard', a calm and professional legal voicebot for voice phishing victims. 
+    Your primary goal is to provide immediate, actionable advice while keeping the user calm.
+    
+    [CONVERSATIONAL RULES]
+    1. If the user says a simple greeting, respond with a warm greeting.
+    2. Start with a short calming phrase if the user is panicking.
+    3. Keep all responses strictly under 3-4 sentences for fast delivery.
+
+    [Legal Guide Context]
+    {guide_context}
+
+    [MANDATORY DISCLAIMERS]
+    Always include one if relevant: "Contact your bank's fraud department," "File at www.ic3.gov," or "Call FBI: (312) 421-6700."
+    """
 
     if not chat_history:
         chat_history.append({"role": "system", "content": system_prompt})
@@ -111,46 +123,63 @@ def get_openai_response(user_msg: str) -> str:
     chat_history.append({"role": "assistant", "content": ai_response})
     return ai_response
 
-# ── TTS generation ────────────────────────────────────────────────────────────
-def generate_tts(text: str, filename: str = "response.mp3"):
+# ── TTS generation with Loudness Normalization ────────────────────────────────
+def generate_tts(text: str) -> str:
+    """
+    고유 파일명 생성 + Loudnorm 필터로 음량 표준화 및 증폭 [cite: 2026-02-28]
+    """
+    timestamp = int(time.time())
+    temp_filename = f"temp_{timestamp}.mp3"
+    final_filename = f"res_{timestamp}.mp3"
+    
+    # 1. OpenAI TTS 생성 (고음역대가 또렷한 shimmer 목소리 추천) [cite: 2026-02-28]
     response = client.audio.speech.create(
         model="tts-1",
-        voice="onyx",
+        voice="shimmer", 
         input=text,
-        speed=1.15,
+        speed=1.1,
     )
-    with open(filename, "wb") as f:
+    with open(temp_filename, "wb") as f:
         f.write(response.content)
+
+    # 2. FFmpeg: loudnorm(표준 음량화) + highpass(저음 제거)로 가독성 및 볼륨 확보 [cite: 2026-02-28]
+    try:
+        subprocess.run([
+            r"C:\ffmpeg\bin\ffmpeg.exe", "-y", 
+            "-i", temp_filename,
+            "-filter:a", "loudnorm=I=-14:TP=-1.5:LRA=11,highpass=f=200", 
+            final_filename
+        ], check=True, capture_output=True)
+        # 임시 파일 삭제
+        os.remove(temp_filename)
+        return final_filename
+    except Exception as e:
+        print(f"⚠️ 오디오 처리 실패: {e}")
+        return temp_filename
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────
 @app.post("/chat")
 async def text_chat(request: UserRequest):
-    """Accept a text message, return an AI reply and a TTS audio URL."""
     ai_reply = get_openai_response(request.user_message)
-    generate_tts(ai_reply)
-    return {"reply": ai_reply, "audio_url": f"{BASE_URL}/static/response.mp3"}
-
+    audio_file = generate_tts(ai_reply)
+    return {
+        "reply": ai_reply, 
+        "audio_url": f"{BASE_URL}/static/{audio_file}" 
+    }
 
 @app.post("/voice-chat")
 async def voice_chat(file: UploadFile = File(...)):
-    """
-    Accept a raw WAV upload, transcribe via Whisper,
-    generate an AI reply, and return TTS audio.
-    """
     raw_path, proc_path = "raw.wav", "proc.wav"
 
     with open(raw_path, "wb") as b:
         b.write(await file.read())
 
-    subprocess.run(
-        [
-            r"C:\ffmpeg\bin\ffmpeg.exe",
-            "-y", "-i", raw_path,
-            "-ac", "1", "-ar", "16000",
-            proc_path,
-        ],
-        check=True,
-    )
+    # Whisper를 위한 전처리
+    subprocess.run([
+        r"C:\ffmpeg\bin\ffmpeg.exe", "-y", "-i", raw_path,
+        "-af", "highpass=f=200,lowpass=f=3000,volume=2.0", # 200Hz 이하 소음 제거 + 볼륨 2배 [cite: 2026-02-28]
+        "-ac", "1", "-ar", "16000", proc_path
+    ], check=True)
 
     with open(proc_path, "rb") as f:
         trans = client.audio.transcriptions.create(
@@ -160,16 +189,14 @@ async def voice_chat(file: UploadFile = File(...)):
         )
 
     ai_reply = get_openai_response(trans.text)
-    generate_tts(ai_reply)
+    audio_file = generate_tts(ai_reply) # 고유 파일명 생성 [cite: 2026-02-28]
 
     return {
         "user_text": trans.text,
         "reply": ai_reply,
-        "audio_url": f"{BASE_URL}/static/response.mp3",
+        "audio_url": f"{BASE_URL}/static/{audio_file}",
     }
-
 
 @app.get("/health")
 async def health():
-    """Server health check."""
     return {"status": "ok", "rag": rag_enabled}

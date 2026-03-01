@@ -58,17 +58,28 @@ export default function ReportingChatbotScreen() {
     }
   };
 
-  // 🎤 음성 녹음 시작 및 중단 함수 [cite: 2026-02-28]
   const toggleRecording = async () => {
     if (isRecording) {
-      // 녹음 중단 및 전송
+      // 1. 녹음 중단 상태로 변경 [cite: 2026-02-28]
       setIsRecording(false);
       try {
         await recordingRef.current?.stopAndUnloadAsync();
+        
+        await Audio.setAudioModeAsync({
+          allowsRecordingIOS: false, // 마이크 사용 중단 [cite: 2026-02-28]
+          playsInSilentModeIOS: true,
+          shouldDuckAndroid: true,
+          playThroughEarpieceAndroid: false, // 스피커폰 강제 사용 [cite: 2026-02-28]
+        });
+
         const uri = recordingRef.current?.getURI();
         if (uri) {
           const formData = new FormData();
-          formData.append('file', { uri, name: 'voice.wav', type: 'audio/wav' } as any);
+          formData.append('file', { 
+            uri, 
+            name: `voice_${Date.now()}.wav`, // 캐싱 방지를 위해 파일명에 시간 추가 [cite: 2026-02-28]
+            type: 'audio/wav' 
+          } as any);
           
           const response = await fetch(`${BASE_URL}/voice-chat`, {
             method: 'POST',
@@ -77,23 +88,38 @@ export default function ReportingChatbotScreen() {
           });
           const data = await response.json();
           
-          // 음성 인식 결과 및 AI 답변 표시 [cite: 2026-02-03, 2026-02-28]
+          // 메시지 UI 업데이트 [cite: 2026-02-03, 2026-02-28]
           setMessages(prev => [...prev, 
             { id: `user-${Date.now()}`, text: data.user_text, isBot: false, timestamp: 'Now' },
             { id: `bot-${Date.now()}`, text: data.reply, isBot: true, timestamp: 'Now' }
           ]);
-          if (data.audio_url) playAudioResponse(data.audio_url);
+          
+          if (data.audio_url) {
+            console.log("🔊 Playing Audio:", data.audio_url);
+            playAudioResponse(data.audio_url);
+          }
         }
-      } catch (e) { console.error(e); }
+      } catch (e) { 
+        console.error("Recording Stop Error:", e); 
+      }
     } else {
-      // 녹음 시작 [cite: 2026-02-28]
+      // 2. 녹음 시작 [cite: 2026-02-28]
       try {
         await Audio.requestPermissionsAsync();
-        await Audio.setAudioModeAsync({ allowsRecordingIOS: true, playsInSilentModeIOS: true });
-        const { recording } = await Audio.Recording.createAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY);
+        // 녹음을 위해 오디오 세션 카테고리 변경 [cite: 2026-02-28]
+        await Audio.setAudioModeAsync({ 
+          allowsRecordingIOS: true, 
+          playsInSilentModeIOS: true 
+        });
+        
+        const { recording } = await Audio.Recording.createAsync(
+          Audio.RecordingOptionsPresets.HIGH_QUALITY
+        );
         recordingRef.current = recording;
         setIsRecording(true);
-      } catch (e) { console.error(e); }
+      } catch (e) { 
+        console.error("Recording Start Error:", e); 
+      }
     }
   };
 
