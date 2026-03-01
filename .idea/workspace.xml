@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a357497-faf3-49fa-a68b-a63547df3b80" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/backend/detector/base.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/detector/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/detector/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/(tabs)/diagnosis.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/(tabs)/diagnosis.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/guardian-alerts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/guardian-alerts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/constants/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/constants/config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +56,7 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "detector-ai",
+    "git-widget-placeholder": "#1 on feat/voicebot",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/jihwimin/silverguard",
     "project.structure.last.edited": "Project",

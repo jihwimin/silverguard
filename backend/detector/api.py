@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from predict import load_latest_model
 import base64
 import mimetypes
+from fastapi.middleware.cors import CORSMiddleware
 
 # --- OpenAI SDK (modern) ---
 from openai import OpenAI
@@ -22,7 +23,13 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
 
 app = FastAPI(title="SilverGuard Detector API", version="1.0.0")
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # hackathon/dev. tighten later.
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Load phishing model once
 model = None
 
