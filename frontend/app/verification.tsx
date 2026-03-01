@@ -13,20 +13,24 @@ import {
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Phone, CheckCircle, Info } from 'lucide-react-native';
-import Colors from '../constants/colors';
+import Colors from '../constants/colors'; // 🌟 상대 경로로 안전하게 수정 [cite: 2026-02-28]
+
+// 🌟 탐색기(image_14f378) 기준 실제 경로: components/providers/AppProvider
 import { useApp } from '../components/providers/AppProvider';
+import { otpSend, otpVerify, toE164 } from '../lib/authApi';
 
 type Step = 'phone' | 'otp' | 'success';
 
 export default function VerificationScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { completeVerification } = useApp();
+  const { setAuth } = useApp();
   const [step, setStep] = useState<Step>('phone');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
   const [timer, setTimer] = useState<number>(180);
   const [error, setError] = useState<string>('');
+  const [sending, setSending] = useState(false);
   const otpRefs = useRef<(TextInput | null)[]>([]);
   const successAnim = useRef(new Animated.Value(0)).current;
   const successScale = useRef(new Animated.Value(0.5)).current;
@@ -47,10 +51,10 @@ export default function VerificationScreen() {
   };
 
   const formatPhone = (value: string): string => {
-    const digits = value.replace(/\D/g, '').slice(0, 10);
+    const digits = value.replace(/\D/g, '');
     if (digits.length <= 3) return digits;
-    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
-    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    if (digits.length <= 6) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+    return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
   };
 
   const handlePhoneChange = useCallback((text: string) => {
@@ -60,15 +64,24 @@ export default function VerificationScreen() {
     }
   }, []);
 
-  const handleSendOtp = useCallback(() => {
+  const handleSendOtp = useCallback(async () => {
     const digits = phoneNumber.replace(/\D/g, '');
     if (digits.length < 10) {
-      setError('Please enter a valid 10-digit phone number.');
+      setError('Please enter a valid phone number.');
       return;
     }
     setError('');
-    setStep('otp');
-    setTimer(180);
+    setSending(true);
+    try {
+      const phoneE164 = toE164(phoneNumber);
+      await otpSend(phoneE164);
+      setStep('otp');
+      setTimer(180);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to send code');
+    } finally {
+      setSending(false);
+    }
   }, [phoneNumber]);
 
   const handleOtpChange = useCallback((text: string, index: number) => {
@@ -90,29 +103,48 @@ export default function VerificationScreen() {
   const handleVerify = useCallback(async () => {
     const code = otp.join('');
     if (code.length < 6) {
-      setError('Please enter all 6 digits.');
+      setError('Please enter all 6 digits of the verification code.');
       return;
     }
-    setStep('success');
-    Animated.parallel([
-      Animated.timing(successAnim, { toValue: 1, duration: 400, useNativeDriver: true }),
-      Animated.spring(successScale, { toValue: 1, tension: 50, friction: 7, useNativeDriver: true }),
-    ]).start();
-
+    setError('');
+    setSending(true);
     try {
-      await completeVerification();
-    } catch (_) {}
+      const phoneE164 = toE164(phoneNumber);
+      const { token, user } = await otpVerify({ phoneE164, code, role: 'senior' });
+      setAuth(token, user);
+      setStep('success');
+      Animated.parallel([
+        Animated.timing(successAnim, { toValue: 1, duration: 400, useNativeDriver: true }),
+        Animated.spring(successScale, { toValue: 1, tension: 50, friction: 7, useNativeDriver: true }),
+      ]).start();
+      setTimeout(() => {
+        router.replace('/(tabs)/home');
+      }, 1800);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Invalid verification code');
+    } finally {
+      setSending(false);
+    }
+  }, [otp, phoneNumber, setAuth, router, successAnim, successScale]);
 
-    setTimeout(() => {
-      router.replace('/(tabs)/home');
-    }, 1800);
-  }, [otp, completeVerification, router, successAnim, successScale]);
+  const handleResend = useCallback(async () => {
+    setError('');
+    setSending(true);
+    try {
+      const phoneE164 = toE164(phoneNumber);
+      await otpSend(phoneE164);
+      setTimer(180);
+      setOtp(['', '', '', '', '', '']);
+      otpRefs.current[0]?.focus();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to resend code');
+    } finally {
+      setSending(false);
+    }
+  }, [phoneNumber]);
 
-  const handleResend = useCallback(() => {
-    setTimer(180);
-    setOtp(['', '', '', '', '', '']);
-    setTimeout(() => otpRefs.current[0]?.focus(), 100);
-  }, []);
+  // ... (이후 렌더링 부분은 민석님이 주신 것과 동일하게 유지하되, 스타일 충돌 방지) ...
+  // 중략: 민석님의 return 및 styles 코드를 그대로 사용하세요.
 
   if (step === 'success') {
     return (
@@ -157,12 +189,12 @@ export default function VerificationScreen() {
               <Text style={styles.inputLabel}>Phone number</Text>
               <TextInput
                 style={styles.phoneInput}
-                placeholder="(555) 000-0000"
+                placeholder="217-555-1234"
                 placeholderTextColor={Colors.textTertiary}
                 keyboardType="phone-pad"
                 value={phoneNumber}
                 onChangeText={handlePhoneChange}
-                maxLength={14}
+                maxLength={12}
                 testID="phone-input"
               />
             </View>
@@ -170,13 +202,13 @@ export default function VerificationScreen() {
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
             <TouchableOpacity
-              style={[styles.primaryButton, phoneNumber.replace(/\D/g, '').length < 10 && styles.buttonDisabled]}
+              style={[styles.primaryButton, (!phoneNumber || sending) && styles.buttonDisabled]}
               onPress={handleSendOtp}
-              disabled={phoneNumber.replace(/\D/g, '').length < 10}
+              disabled={!phoneNumber || sending}
               activeOpacity={0.85}
               testID="send-otp-button"
             >
-              <Text style={styles.primaryButtonText}>Send verification code</Text>
+              <Text style={styles.primaryButtonText}>{sending ? 'Sending...' : 'Send verification code'}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.infoLink}>
@@ -218,15 +250,16 @@ export default function VerificationScreen() {
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
             <TouchableOpacity
-              style={styles.primaryButton}
+              style={[styles.primaryButton, sending && styles.buttonDisabled]}
               onPress={handleVerify}
+              disabled={sending}
               activeOpacity={0.85}
               testID="verify-button"
             >
-              <Text style={styles.primaryButtonText}>Verify</Text>
+              <Text style={styles.primaryButtonText}>{sending ? 'Verifying...' : 'Verify'}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleResend} style={styles.resendLink}>
+            <TouchableOpacity onPress={handleResend} disabled={sending} style={styles.resendLink}>
               <Text style={styles.resendText}>Resend code</Text>
             </TouchableOpacity>
           </View>
@@ -237,72 +270,171 @@ export default function VerificationScreen() {
 }
 
 const styles = StyleSheet.create({
-  flex: { flex: 1 },
-  container: { flex: 1, backgroundColor: Colors.background },
-  centerContent: { alignItems: 'center', justifyContent: 'center' },
-  scrollContent: { paddingHorizontal: 24 },
-  headerSection: { marginTop: 32, marginBottom: 32 },
+  flex: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
+  centerContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  scrollContent: {
+    paddingHorizontal: 24,
+  },
+  headerSection: {
+    marginTop: 32,
+    marginBottom: 32,
+  },
   headerIcon: {
-    width: 56, height: 56, borderRadius: 16,
+    width: 56,
+    height: 56,
+    borderRadius: 16,
     backgroundColor: Colors.primaryLight,
-    alignItems: 'center', justifyContent: 'center', marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
   },
   headerTitle: {
-    fontSize: 28, fontWeight: '700' as const,
-    color: Colors.text, lineHeight: 36, letterSpacing: -0.5,
+    fontSize: 28,
+    fontWeight: '700' as const,
+    color: Colors.text,
+    lineHeight: 36,
+    letterSpacing: -0.5,
   },
   headerSubtitle: {
-    fontSize: 16, color: Colors.textSecondary, marginTop: 10, lineHeight: 23,
+    fontSize: 16,
+    color: Colors.textSecondary,
+    marginTop: 10,
+    lineHeight: 23,
   },
-  formSection: { gap: 16 },
+  formSection: {
+    gap: 16,
+  },
   inputCard: {
-    backgroundColor: Colors.card, borderRadius: 16, padding: 20,
-    shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05, shadowRadius: 8, elevation: 2,
+    backgroundColor: Colors.card,
+    borderRadius: 16,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   inputLabel: {
-    fontSize: 14, fontWeight: '600' as const,
-    color: Colors.textSecondary, marginBottom: 10,
+    fontSize: 14,
+    fontWeight: '600' as const,
+    color: Colors.textSecondary,
+    marginBottom: 10,
   },
   phoneInput: {
-    fontSize: 22, fontWeight: '600' as const,
-    color: Colors.text, padding: 0, height: 36,
+    fontSize: 22,
+    fontWeight: '600' as const,
+    color: Colors.text,
+    padding: 0,
+    height: 36,
   },
   otpInstruction: {
-    fontSize: 17, color: Colors.textSecondary, lineHeight: 24, textAlign: 'center',
+    fontSize: 17,
+    color: Colors.textSecondary,
+    lineHeight: 24,
+    textAlign: 'center',
   },
   otpRow: {
-    flexDirection: 'row', justifyContent: 'center', gap: 10, marginVertical: 8,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10,
+    marginVertical: 8,
   },
   otpInput: {
-    width: 48, height: 60, borderRadius: 14,
-    backgroundColor: Colors.card, borderWidth: 2, borderColor: Colors.border,
-    fontSize: 24, fontWeight: '700' as const, color: Colors.text, textAlign: 'center',
+    width: 48,
+    height: 60,
+    borderRadius: 14,
+    backgroundColor: Colors.card,
+    borderWidth: 2,
+    borderColor: Colors.border,
+    fontSize: 24,
+    fontWeight: '700' as const,
+    color: Colors.text,
+    textAlign: 'center',
   },
-  otpInputFilled: { borderColor: Colors.primary, backgroundColor: Colors.primaryFaint },
-  otpInputError: { borderColor: Colors.danger },
+  otpInputFilled: {
+    borderColor: Colors.primary,
+    backgroundColor: Colors.primaryFaint,
+  },
+  otpInputError: {
+    borderColor: Colors.danger,
+  },
   timerText: {
-    fontSize: 15, color: Colors.textTertiary, textAlign: 'center', fontWeight: '500' as const,
+    fontSize: 15,
+    color: Colors.textTertiary,
+    textAlign: 'center',
+    fontWeight: '500' as const,
   },
-  errorText: { fontSize: 14, color: Colors.danger, textAlign: 'center' },
+  errorText: {
+    fontSize: 14,
+    color: Colors.danger,
+    textAlign: 'center',
+  },
   primaryButton: {
-    backgroundColor: Colors.primary, borderRadius: 16, height: 56,
-    alignItems: 'center', justifyContent: 'center',
+    backgroundColor: Colors.primary,
+    borderRadius: 16,
+    height: 56,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  buttonDisabled: { opacity: 0.5 },
-  primaryButtonText: { color: Colors.white, fontSize: 18, fontWeight: '700' as const },
+  buttonDisabled: {
+    opacity: 0.5,
+  },
+  primaryButtonText: {
+    color: Colors.white,
+    fontSize: 18,
+    fontWeight: '700' as const,
+  },
   infoLink: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingVertical: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 8,
   },
-  infoLinkText: { fontSize: 14, color: Colors.textTertiary, fontWeight: '500' as const },
-  resendLink: { alignItems: 'center', paddingVertical: 8 },
-  resendText: { fontSize: 15, color: Colors.primary, fontWeight: '600' as const },
-  successContainer: { alignItems: 'center', gap: 16 },
+  infoLinkText: {
+    fontSize: 14,
+    color: Colors.textTertiary,
+    fontWeight: '500' as const,
+  },
+  resendLink: {
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  resendText: {
+    fontSize: 15,
+    color: Colors.primary,
+    fontWeight: '600' as const,
+  },
+  successContainer: {
+    alignItems: 'center',
+    gap: 16,
+  },
   successIcon: {
-    width: 96, height: 96, borderRadius: 48,
+    width: 96,
+    height: 96,
+    borderRadius: 48,
     backgroundColor: Colors.primaryLight,
-    alignItems: 'center', justifyContent: 'center', marginBottom: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
   },
-  successTitle: { fontSize: 24, fontWeight: '700' as const, color: Colors.text },
-  successSubtitle: { fontSize: 16, color: Colors.textSecondary, textAlign: 'center' },
+  successTitle: {
+    fontSize: 24,
+    fontWeight: '700' as const,
+    color: Colors.text,
+  },
+  successSubtitle: {
+    fontSize: 16,
+    color: Colors.textSecondary,
+    textAlign: 'center',
+  },
 });

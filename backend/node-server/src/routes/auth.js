@@ -69,7 +69,8 @@ router.post("/otp/send", async (req, res) => {
     console.log("details:", e?.details);
     console.log("raw:", JSON.stringify(e, null, 2));
     console.log("=== TWILIO SEND ERROR END ===");
-    return res.status(500).json({ error: "Failed to send OTP" });
+    const msg = e?.message || "Failed to send OTP";
+    return res.status(500).json({ error: "Failed to send OTP", details: msg });
   }
 });
 
@@ -104,7 +105,7 @@ router.post("/otp/verify", async (req, res) => {
 
     // 해커톤 정책: 없으면 생성, 있으면 기존 role 유지
     if (!user) {
-      user = await User.create({ phoneE164, role });
+      user = await User.create({ phoneE164, role, linkedUserId: null });
     }
 
     const token = jwt.sign(
@@ -222,7 +223,26 @@ router.post("/link/confirm", requireAuth, async (req, res) => {
 });
 
 /** -----------------------
- *  5) ME (내 정보 + 연동 상태)
+ *  5) UNLINK (연동 해제)
+ *  ----------------------*/
+router.post("/link/unlink", requireAuth, async (req, res) => {
+  const me = await User.findById(req.user.userId);
+  if (!me) return res.status(404).json({ error: "User not found" });
+  if (!me.linkedUserId) return res.status(400).json({ error: "Not linked" });
+
+  const other = await User.findById(me.linkedUserId);
+  if (other) {
+    other.linkedUserId = null;
+    await other.save();
+  }
+  me.linkedUserId = null;
+  await me.save();
+
+  return res.json({ ok: true });
+});
+
+/** -----------------------
+ *  6) ME (내 정보 + 연동 상태)
  *  ----------------------*/
 router.get("/me", requireAuth, async (req, res) => {
   const me = await User.findById(req.user.userId).select(
@@ -231,12 +251,26 @@ router.get("/me", requireAuth, async (req, res) => {
 
   if (!me) return res.status(404).json({ error: "User not found" });
 
+  let linkedUserId = null;
+  let linkedUserPhone = null;
+  if (me.linkedUserId) {
+    const other = await User.findById(me.linkedUserId);
+    if (other) {
+      linkedUserId = me.linkedUserId.toString();
+      linkedUserPhone = other.phoneE164;
+    } else {
+      me.linkedUserId = null;
+      await me.save();
+    }
+  }
+
   return res.json({
     ok: true,
     userId: me._id.toString(),
     phoneE164: me.phoneE164,
     role: me.role,
-    linkedUserId: me.linkedUserId ? me.linkedUserId.toString() : null,
+    linkedUserId,
+    linkedUserPhone,
     linkCode: me.linkCode,
     linkCodeExpiresAt: me.linkCodeExpiresAt,
     createdAt: me.createdAt,

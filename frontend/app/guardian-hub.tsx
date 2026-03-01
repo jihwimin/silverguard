@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -6,8 +6,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Switch,
+  Linking,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
 import {
@@ -20,6 +21,8 @@ import {
   Info,
   ChevronRight,
 } from 'lucide-react-native';
+import { useApp } from '@/components/providers/AppProvider';
+import { getMe, linkUnlink } from '@/lib/authApi';
 import Colors from '@/constants/colors';
 
 
@@ -32,7 +35,10 @@ interface NotificationSetting {
 export default function GuardianHubScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { authToken } = useApp();
   const [isLinked, setIsLinked] = useState<boolean>(false);
+  const [linkedUserPhone, setLinkedUserPhone] = useState<string | null>(null);
+  const [unlinking, setUnlinking] = useState(false);
   const [notifications, setNotifications] = useState<NotificationSetting[]>([
     { id: 'call', label: 'Alert on high-risk call detection', enabled: true },
     { id: 'transfer', label: 'Alert when transfer is blocked', enabled: true },
@@ -45,6 +51,37 @@ export default function GuardianHubScreen() {
       prev.map((n) => (n.id === id ? { ...n, enabled: !n.enabled } : n))
     );
   };
+
+  const fetchLinkStatus = useCallback(async () => {
+    if (!authToken) return;
+    try {
+      const res = await getMe(authToken);
+      setIsLinked(!!res.linkedUserId);
+      setLinkedUserPhone(res.linkedUserPhone ?? null);
+    } catch (_) {}
+  }, [authToken]);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchLinkStatus();
+    }, [fetchLinkStatus])
+  );
+
+  const handleUnlink = useCallback(async () => {
+    if (!authToken || unlinking) return;
+    setUnlinking(true);
+    try {
+      await linkUnlink(authToken);
+      setIsLinked(false);
+    } catch (_) {}
+    finally { setUnlinking(false); }
+  }, [authToken, unlinking]);
+
+  const handleContact = useCallback(() => {
+    if (linkedUserPhone) {
+      Linking.openURL(`tel:${linkedUserPhone}`);
+    }
+  }, [linkedUserPhone]);
 
   return (
     
@@ -80,10 +117,7 @@ export default function GuardianHubScreen() {
         {!isLinked ? (
           <TouchableOpacity
             style={styles.linkButton}
-            onPress={() => {
-              router.push('/guardian-link');
-              setTimeout(() => setIsLinked(true), 3000);
-            }}
+            onPress={() => router.push('/guardian-link')}
             activeOpacity={0.85}
             testID="link-guardian"
           >
@@ -98,22 +132,27 @@ export default function GuardianHubScreen() {
               </View>
               <View style={styles.guardianDetails}>
                 <Text style={styles.guardianName}>Guardian</Text>
-                <View style={styles.relationChip}>
-                  <Text style={styles.relationText}>Child</Text>
-                </View>
-                <Text style={styles.guardianPhone}>010-••••-1234</Text>
+                {linkedUserPhone ? (
+                  <Text style={styles.guardianPhone}>{linkedUserPhone}</Text>
+                ) : null}
               </View>
             </View>
             <View style={styles.guardianActions}>
               <TouchableOpacity
                 style={styles.guardianAction}
-                onPress={() => setIsLinked(false)}
+                onPress={handleUnlink}
+                disabled={unlinking}
                 activeOpacity={0.75}
               >
                 <Link2 size={16} color={Colors.textTertiary} strokeWidth={2} />
-                <Text style={styles.guardianActionText}>Unlink</Text>
+                <Text style={styles.guardianActionText}>{unlinking ? 'Unlinking...' : 'Unlink'}</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.guardianAction} activeOpacity={0.75}>
+              <TouchableOpacity
+                style={styles.guardianAction}
+                onPress={handleContact}
+                disabled={!linkedUserPhone}
+                activeOpacity={0.75}
+              >
                 <Phone size={16} color={Colors.primary} strokeWidth={2} />
                 <Text style={[styles.guardianActionText, { color: Colors.primary }]}>Contact</Text>
               </TouchableOpacity>
@@ -253,18 +292,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '700' as const,
     color: Colors.text,
-  },
-  relationChip: {
-    alignSelf: 'flex-start',
-    backgroundColor: Colors.primaryFaint,
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderRadius: 8,
-  },
-  relationText: {
-    fontSize: 12,
-    color: Colors.primary,
-    fontWeight: '600' as const,
   },
   guardianPhone: {
     fontSize: 14,

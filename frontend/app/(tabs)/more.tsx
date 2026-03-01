@@ -15,7 +15,9 @@ import {
   Shield,
   Info,
   ChevronRight,
+  LogOut,
 } from 'lucide-react-native';
+import { useApp } from '@/components/providers/AppProvider';
 import Colors from '@/constants/colors';
 
 interface MenuItem {
@@ -51,6 +53,12 @@ const menuItems: MenuItem[] = [
 export default function MoreScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { logout } = useApp();
+
+  const handleLogout = async () => {
+    await logout();
+    router.replace('/verification');
+  };
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -92,6 +100,15 @@ export default function MoreScreen() {
             </TouchableOpacity>
           ))}
         </View>
+
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.7}
+        >
+          <LogOut size={22} color={Colors.danger} strokeWidth={2} />
+          <Text style={styles.logoutText}>Log out</Text>
+        </TouchableOpacity>
 
         <View style={styles.versionInfo}>
           <Text style={styles.versionText}>SilverGuard v1.0.0</Text>
@@ -194,6 +211,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600' as const,
     color: Colors.text,
+  },
+  logoutButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    paddingVertical: 16,
+    marginTop: 20,
+    borderRadius: 16,
+    backgroundColor: Colors.dangerBg,
+    borderWidth: 1,
+    borderColor: Colors.danger,
+  },
+  logoutText: {
+    fontSize: 16,
+    fontWeight: '700' as const,
+    color: Colors.danger,
   },
   versionInfo: {
     alignItems: 'center',

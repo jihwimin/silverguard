@@ -1,8 +1,11 @@
 import os
 import time
+import subprocess
+import tempfile
 from typing import Dict, Optional
 
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi import FastAPI, HTTPException, UploadFile, File, Request
+from fastapi.exceptions import RequestValidationError
 from pydantic import BaseModel, Field
 
 from dotenv import load_dotenv
@@ -23,6 +26,21 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
 
 app = FastAPI(title="SilverGuard Detector API", version="1.0.0")
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    """Log 422 validation errors for debugging."""
+    try:
+        body = await request.body()
+        print(f"[422] Validation error: {exc.errors()}")
+        print(f"[422] Request body: {body[:500]!r}")
+    except Exception:
+        pass
+    from fastapi.responses import JSONResponse
+    return JSONResponse(status_code=422, content={"detail": exc.errors()})
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # hackathon/dev. tighten later.
@@ -144,8 +162,8 @@ def predict(req: PredictRequest):
 
 
 class StreamUpdateRequest(BaseModel):
-    session_id: str = Field(..., min_length=3, max_length=64)
-    text: str = Field(..., min_length=1, max_length=20000)
+    session_id: str = Field(..., min_length=1, max_length=64)
+    text: str = Field(..., min_length=0, max_length=20000)
     is_final: bool = False
 
 
@@ -190,6 +208,19 @@ def stream_update(req: StreamUpdateRequest):
 
     SESSIONS[req.session_id] = {"last_seen": now}
 
+    if not req.text.strip():
+        return StreamUpdateResponse(
+            session_id=req.session_id,
+            probability=0.0,
+            percent=0.0,
+            label="safe",
+            severity="low",
+            threshold=0.70,
+            latency_ms=0.0,
+            chars=0,
+            is_final=req.is_final,
+        )
+
     t0 = time.time()
     prob = float(model.predict_proba([req.text])[0, 1])
     percent = prob * 100.0
@@ -220,26 +251,71 @@ class STTResponse(BaseModel):
     model: str
 
 
+def _convert_to_whisper_format(raw_bytes: bytes, input_ext: str) -> Optional[bytes]:
+    """Convert audio to 16kHz mono WAV (like voicebot) for best Whisper accuracy."""
+    try:
+        with tempfile.NamedTemporaryFile(suffix=input_ext, delete=False) as raw_f:
+            raw_f.write(raw_bytes)
+            raw_path = raw_f.name
+        processed_path = raw_path + "_processed.wav"
+        result = subprocess.run(
+            ["ffmpeg", "-y", "-i", raw_path, "-ac", "1", "-ar", "16000", processed_path],
+            capture_output=True,
+            timeout=10,
+        )
+        os.unlink(raw_path)
+        if result.returncode != 0:
+            return None
+        with open(processed_path, "rb") as f:
+            data = f.read()
+        os.unlink(processed_path)
+        return data
+    except Exception:
+        return None
+
+
 @app.post("/stt/chunk", response_model=STTResponse)
 async def stt_chunk(audio: UploadFile = File(...)):
     """
-    Upload a short audio chunk (e.g., 1–2 seconds). Returns transcript text.
+    Upload a short audio chunk. Converts to 16kHz mono (like voicebot) for best accuracy.
+    Returns English transcript via OpenAI Whisper. Requires OPENAI_API_KEY and ffmpeg.
     """
     if client is None:
-        raise HTTPException(status_code=503, detail="OPENAI_API_KEY not configured")
+        raise HTTPException(
+            status_code=503,
+            detail="OPENAI_API_KEY not configured. Add it to backend/detector/.env",
+        )
 
     t0 = time.time()
     audio_bytes = await audio.read()
+    filename = audio.filename or "chunk.m4a"
+    ext = ".m4a"
+    for e in (".m4a", ".mp3", ".wav", ".webm", ".mp4"):
+        if filename.lower().endswith(e):
+            ext = e
+            break
 
-    # Use OpenAI Audio Transcriptions API
-    # Models: gpt-4o-transcribe (higher quality) or whisper-1 (classic) :contentReference[oaicite:2]{index=2}
-    transcript = client.audio.transcriptions.create(
-        model="gpt-4o-transcribe",
-        file=(audio.filename or "chunk.wav", audio_bytes),
-    )
+    processed = _convert_to_whisper_format(audio_bytes, ext)
+    if processed is not None:
+        audio_bytes = processed
+        filename = "chunk.wav"
+
+    try:
+        transcript = client.audio.transcriptions.create(
+            model="whisper-1",
+            file=(filename, audio_bytes),
+            language="en",
+        )
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(
+            status_code=502,
+            detail=f"OpenAI Whisper error: {str(e)}",
+        )
 
     text = transcript.text if hasattr(transcript, "text") else str(transcript)
-    return STTResponse(text=text, latency_ms=(time.time() - t0) * 1000.0, model="gpt-4o-transcribe")
+    return STTResponse(text=text, latency_ms=(time.time() - t0) * 1000.0, model="whisper-1")
 
 @app.post("/ocr", response_model=OCRResponse)
 async def ocr(image: UploadFile = File(...)):
